@@ -1,0 +1,18 @@
+.dcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.main-content {
+  flex: 1;
+  margin: 20px;
+  height: auto;
+  width: 100%;
+}

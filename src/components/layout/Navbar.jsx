@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { logout } from './../../redux/auth/authActions';
 
 const Navbar = ({ auth, title, icon, logout }) => {
+  let history = useHistory();
   const onLogout = () => {
     logout();
+    history.push('/');
   };
 
   const { user, isAuthenticated } = auth;
@@ -12,7 +15,7 @@ const Navbar = ({ auth, title, icon, logout }) => {
     <Fragment>
       <li>Hello {user && user.name}</li>
       <li>
-        <a onClick={onLogout} href='/'>
+        <a onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt'></i>{' '}
           <span className='hide-sm'>Logout</span>
         </a>
@@ -33,7 +36,7 @@ const Navbar = ({ auth, title, icon, logout }) => {
 
 Navbar.defaultProps = {
   title: 'WHSE ONLINE ORDERING',
-  icon: 'fas fa-id-card-alt',
+  icon: 'fas fa-box-open',
 };
 
 const mapStateToProps = (state) => ({

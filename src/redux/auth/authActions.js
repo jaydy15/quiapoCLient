@@ -6,7 +6,6 @@ import {
   LOGOUT,
 } from './authTypes';
 import axios from 'axios';
-import { setAlert } from './../alert/alertActions';
 import setAuthToken from './../../utils/setAuthToken';
 
 export const loadUser = () => async (dispatch) => {
@@ -36,7 +35,17 @@ export const login = (formData) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
-    loadUser();
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+
+    try {
+      const res = await axios.get('/api/auth');
+
+      dispatch({ type: USER_LOADED, payload: res.data });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,

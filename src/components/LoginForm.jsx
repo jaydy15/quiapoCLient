@@ -31,7 +31,6 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
-    loadUser();
   };
 
   return (
