@@ -25,7 +25,9 @@ const Navbar = ({ auth, title, icon, logout }) => {
   return (
     <div className='navbar bg-primary container-fluid'>
       <h1>
-        <i className={icon} />
+        <a href='/home'>
+          <i className={icon} />
+        </a>
         {title}
       </h1>
 

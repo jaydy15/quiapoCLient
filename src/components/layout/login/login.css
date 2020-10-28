@@ -20,9 +20,10 @@ h2 {
   background-color: aqua;
 }
 
-.colOne > img {
-  width: 100%;
+.colOne {
+  background-image: url('https://i.postimg.cc/DydQLx35/aacf9705e4162910489bf783d40663e8.jpg');
   height: 100vh;
+  width: auto;
 }
 
 .colTwo {

@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './../Navbar';
 import Sidebar from './../Sidebar';
+import CartList from './CartList';
 
 const Cart = () => {
   return (
@@ -12,6 +13,7 @@ const Cart = () => {
         </div>
         <div className='main-content'>
           <h1>Cart</h1>
+          <CartList />
         </div>
       </div>
     </div>

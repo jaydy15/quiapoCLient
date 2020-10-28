@@ -1,9 +1,15 @@
-import React from 'react';
-import Dashboard from '../../Dashboard';
+import React, { useEffect } from 'react';
 import Navbar from './../Navbar';
 import Sidebar from './../Sidebar';
+import OrderFields from './OrderFields';
+import { loadUser } from './../../../redux/auth/authActions';
+import { connect } from 'react-redux';
 
 const Order = () => {
+  useEffect(() => {
+    loadUser();
+    //eslint-disable-next-line
+  }, []);
   return (
     <div>
       <Navbar />
@@ -12,11 +18,12 @@ const Order = () => {
           <Sidebar />
         </div>
         <div className='main-content'>
-          <h1>Order</h1>
+          <h1>Orders</h1>
+          <OrderFields />
         </div>
       </div>
     </div>
   );
 };
 
-export default Order;
+export default connect(null, { loadUser })(Order);
