@@ -4,10 +4,12 @@ import { loadUser } from './../redux/auth/authActions';
 import Navbar from './layout/Navbar';
 import './dashboard.css';
 import Sidebar from './layout/Sidebar';
+import { loadCatalogue } from './../redux/localCatalog/localCatalogActions';
 
-const Dashboard = ({ loadUser }) => {
+const Dashboard = ({ loadCatalogue, loadUser }) => {
   useEffect(() => {
     loadUser();
+    loadCatalogue();
     //eslint-disable-next-line
   }, []);
 
@@ -26,4 +28,4 @@ const Dashboard = ({ loadUser }) => {
   );
 };
 
-export default connect(null, { loadUser })(Dashboard);
+export default connect(null, { loadUser, loadCatalogue })(Dashboard);

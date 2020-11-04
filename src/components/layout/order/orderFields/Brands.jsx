@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
-import { getBrands } from './../../../../redux/order/orderActions';
+import React from 'react';
+
 import { connect } from 'react-redux';
 
-const Brands = ({ order: { brand }, getBrands, ...ownprops }) => {
-  useEffect(() => {
-    getBrands();
-  }, []);
-
-  const { onChange, value } = ownprops;
+const Brands = ({ brands, ...ownprops }) => {
+  const { onChange } = ownprops;
 
   return (
     <div>
-      {brand !== null && (
+      {brands !== undefined && (
         <div className='form-group'>
           <label htmlFor='brand'>Brand</label>
           <select onChange={onChange} className='form-control' name='Brand'>
             <option>Select Brand</option>
-            {brand.map((br) => (
+            {brands.map((br) => (
               <option key={br.id} value={br.name}>
                 {br.name}
               </option>
@@ -29,7 +25,7 @@ const Brands = ({ order: { brand }, getBrands, ...ownprops }) => {
 };
 
 const mapStateToProps = (state) => ({
-  order: state.order,
+  brands: state.catalogue.brands,
 });
 
-export default connect(mapStateToProps, { getBrands })(Brands);
+export default connect(mapStateToProps)(Brands);

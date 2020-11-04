@@ -21,7 +21,10 @@ const Sidebar = ({ auth }) => {
           <div className='card-body'>
             <ul>
               <li>
-                <Link to='/order'>New Order</Link>
+                <Link to='/new-order'>New Order</Link>
+              </li>
+              <li>
+                <Link to='/order'>Open Catalogue</Link>
               </li>
               <li>
                 <Link to='/cart'>Cart</Link>

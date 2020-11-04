@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
-import { getOrderType } from './../../../../redux/order/orderActions';
+import React from 'react';
 import { connect } from 'react-redux';
 
-const OrderTypes = ({ order: { orderType }, getOrderType, ...ownprops }) => {
-  useEffect(() => {
-    getOrderType();
-  }, []);
-
-  const { onChange, value } = ownprops;
+const OrderTypes = ({ orderTypes, ...ownprops }) => {
+  const { onChange } = ownprops;
+  console.log(orderTypes);
 
   return (
     <div>
-      {orderType !== null && (
+      {orderTypes !== undefined && (
         <div className='form-group'>
           <label htmlFor='orderType'>Order Type</label>
           <select onChange={onChange} className='form-control' name='OrderType'>
             <option>Select Order Type</option>
-            {orderType.map((order) => (
+            {orderTypes.map((order) => (
               <option key={order.id} value={order.typeDesc}>
                 {order.typeDesc}
               </option>
@@ -29,7 +25,7 @@ const OrderTypes = ({ order: { orderType }, getOrderType, ...ownprops }) => {
 };
 
 const mapStateToProps = (state) => ({
-  order: state.order,
+  orderTypes: state.catalogue.orderTypes,
 });
 
-export default connect(mapStateToProps, { getOrderType })(OrderTypes);
+export default connect(mapStateToProps)(OrderTypes);

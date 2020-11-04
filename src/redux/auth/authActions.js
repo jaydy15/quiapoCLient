@@ -54,4 +54,7 @@ export const login = (formData) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => dispatch({ type: LOGOUT });
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('persist:root');
+  dispatch({ type: LOGOUT });
+};

@@ -11,29 +11,29 @@ import Order from './components/layout/order/Order';
 import Cart from './components/layout/cart/Cart';
 import Status from './components/layout/Status/Status';
 import { loadUser } from './redux/auth/authActions';
+import NewOrder from './components/layout/order/NewOrder';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 function App() {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+  // useEffect(() => {
+  //   store.dispatch(loadUser());
+  // }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Route exact path='/' component={LoginPage} />
-        <div className=''>
-          <Switch>
-            <PrivateRoute exact path='/home' component={Dashboard} />
-            <PrivateRoute exact path='/order' component={Order} />
-            <PrivateRoute exact path='/cart' component={Cart} />
-            <PrivateRoute exact path='/status' component={Status} />
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+    <Router>
+      <Route exact path='/' component={LoginPage} />
+      <div className=''>
+        <Switch>
+          <PrivateRoute exact path='/home' component={Dashboard} />
+          <PrivateRoute exact path='/order' component={Order} />
+          <PrivateRoute exact path='/cart' component={Cart} />
+          <PrivateRoute exact path='/status' component={Status} />
+          <PrivateRoute exact path='/new-order' component={NewOrder} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

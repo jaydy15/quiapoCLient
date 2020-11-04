@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { clearList } from '../../redux/cart/cartActions';
 import { logout } from './../../redux/auth/authActions';
 
-const Navbar = ({ auth, title, icon, logout }) => {
+const Navbar = ({ auth, title, icon, logout, clearList }) => {
   let history = useHistory();
   const onLogout = () => {
     logout();
+    clearList();
     history.push('/');
   };
 
@@ -23,7 +25,7 @@ const Navbar = ({ auth, title, icon, logout }) => {
     </Fragment>
   );
   return (
-    <div className='navbar bg-primary container-fluid'>
+    <div className='navbar bg-primary'>
       <h1>
         <a href='/home'>
           <i className={icon} />
@@ -45,4 +47,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, clearList })(Navbar);

@@ -35,13 +35,9 @@ export default (state = INITIAL_STATE, action) => {
     case LOGOUT:
     case AUTH_ERROR:
       localStorage.removeItem('token');
+      localStorage.setItem('persist:root', {});
       return {
-        ...state,
-        token: null,
-        isAuthenticated: false,
-        loading: false,
-        user: null,
-        error: action.payload,
+        state: undefined,
       };
     default:
       return state;

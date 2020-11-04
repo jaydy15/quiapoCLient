@@ -5,7 +5,7 @@ import OrderFields from './OrderFields';
 import { loadUser } from './../../../redux/auth/authActions';
 import { connect } from 'react-redux';
 
-const Order = () => {
+const Order = ({ catalogue }) => {
   useEffect(() => {
     loadUser();
     //eslint-disable-next-line
@@ -13,17 +13,25 @@ const Order = () => {
   return (
     <div>
       <Navbar />
-      <div className='dcontainer'>
-        <div className='left-side'>
-          <Sidebar />
+      {catalogue !== null ? (
+        <div className='dcontainer'>
+          <div className='left-side'>
+            <Sidebar />
+          </div>
+          <div className='main-content'>
+            <h1>Catalogue</h1>
+            <OrderFields />
+          </div>
         </div>
-        <div className='main-content'>
-          <h1>Orders</h1>
-          <OrderFields />
-        </div>
-      </div>
+      ) : (
+        <h2>LOADING....</h2>
+      )}
     </div>
   );
 };
 
-export default connect(null, { loadUser })(Order);
+const mapStateToProps = (state) => ({
+  catalogue: state.catalogue,
+});
+
+export default connect(mapStateToProps, { loadUser })(Order);
