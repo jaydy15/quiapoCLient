@@ -8,7 +8,7 @@ import Models from './orderFields/Models';
 import OdGrades from './orderFields/OdGrades';
 import OsGrades from './orderFields/OsGrades';
 
-const OrderFields = ({ auth }) => {
+const OrderFields = ({ auth, lists }) => {
   const [formData, setFormData] = useState({
     RxNumber: '',
     OrderType: '',
@@ -67,8 +67,11 @@ const OrderFields = ({ auth }) => {
         <div className='col-md-6'>
           <div className='form-group'>
             <label htmlFor=''>Selected Active Transaction Number</label>
-            <select>
-              <option>1111</option>
+            <select name='RxNumber' value={RxNumber} onChange={onChange}>
+              <option>Select Transaction Number</option>
+              {lists.map((item) => (
+                <option key={item.OrderNumber}>{item.OrderNumber}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -93,10 +96,26 @@ const OrderFields = ({ auth }) => {
             value={RxNumber}
             onChange={onChange}
             label='RX Number'
+            bol='true'
           />
         </div>
         <div className='col-md-6'>
           <OrderTypes onChange={onChange} value={OrderType} />
+          {/* <div className='form-group'>
+            <label htmlFor=''>Order Type</label>
+            <select
+              onChange={onChange}
+              className='form-control'
+              name='OrderType'>
+              {lists
+                .filter((ot) => {
+                  return ot.OrderNumber === RxNumber;
+                })
+                .map((flot) => (
+                  <option key={flot.OrderType}>{flot.OrderType}</option>
+                ))}
+            </select>
+          </div> */}
         </div>
       </div>
       <div className='row'>
@@ -132,38 +151,108 @@ const OrderFields = ({ auth }) => {
               value={NonLensQty}
               onChange={onChange}
               label='Non Lens Qty'
+              bol='false'
             />
           </div>
         ) : null}
       </div>
-      {ItemCategories === 'LENS' || ItemCategories === 'CONTACT LENS' ? (
-        <Fragment>
-          <div className='row'>
-            <div className='col-md-12'>
-              <OdGrades />
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-md-12'>
-              <OsGrades onChange={onChange} />
-            </div>
-          </div>
-        </Fragment>
-      ) : null}
-      {OrderType !== 'BULK ORDER' ? (
-        <div className='row'>
-          <div className='col-md-6'>
-            <InputField
-              type='text'
-              placeholder="Patient's Name"
-              name='PatientsName'
-              value={PatientsName}
-              onChange={onChange}
-              label="Patient's Name"
-            />
-          </div>
+      <div className='row'>
+        <div className='col-md-12'>
+          {ItemCategories === 'LENS' || ItemCategories === 'CONTACT LENS' ? (
+            <Fragment>
+              <h3>Grade Info</h3>
+              <hr />
+              <div className='row'>
+                <div className='col-md-12'>
+                  <OdGrades />
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col-md-12'>
+                  <OsGrades onChange={onChange} />
+                </div>
+              </div>
+            </Fragment>
+          ) : null}
         </div>
-      ) : null}
+      </div>
+      <div className='row'>
+        <div
+          className='col-md-12'
+          style={{ marginTop: '20px', paddingTop: '20px' }}>
+          {OrderType === 'SPECIAL ORDER' && ItemCategories === 'LENS' && (
+            <Fragment>
+              <h3>Frame Info</h3>
+              <hr />
+              <div className='row'>
+                <div className='col-md-3'>
+                  <InputField
+                    type='text'
+                    placeholder='Non Lens Qty'
+                    name='nonLensQty'
+                    value={NonLensQty}
+                    onChange={onChange}
+                    label='Horizontal'
+                    bol='false'
+                  />
+                </div>
+                <div className='col-md-3'>
+                  <InputField
+                    type='text'
+                    placeholder='Non Lens Qty'
+                    name='nonLensQty'
+                    value={NonLensQty}
+                    onChange={onChange}
+                    label='Vertical'
+                    bol='false'
+                  />
+                </div>
+                <div className='col-md-3'>
+                  <InputField
+                    type='text'
+                    placeholder='Non Lens Qty'
+                    name='nonLensQty'
+                    value={NonLensQty}
+                    onChange={onChange}
+                    label='Bridge'
+                    bol='false'
+                  />
+                </div>
+                <div className='col-md-3'>
+                  <InputField
+                    type='text'
+                    placeholder='Non Lens Qty'
+                    name='nonLensQty'
+                    value={NonLensQty}
+                    onChange={onChange}
+                    label='Frame Type'
+                    bol='false'
+                  />
+                </div>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-md-12'>
+          {OrderType !== 'BULK ORDER' ? (
+            <div className='row'>
+              <div className='col-md-6'>
+                <InputField
+                  type='text'
+                  placeholder="Patient's Name"
+                  name='PatientsName'
+                  value={PatientsName}
+                  onChange={onChange}
+                  label="Patient's Name"
+                  bol='false'
+                />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </div>
       <button type='submit' className='btn btn-block btn-success'>
         Add To Cart
       </button>
@@ -173,7 +262,7 @@ const OrderFields = ({ auth }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  order: state.order,
+  lists: state.cart.lists,
 });
 
 export default connect(mapStateToProps)(OrderFields);

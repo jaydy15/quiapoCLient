@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import OrderTypes from './orderFields/OrderTypes';
 import Sidebar from './../Sidebar';
 import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
@@ -8,14 +7,17 @@ import { newNumber } from './../../../redux/cart/cartActions';
 const NewOrder = ({ newNumber }) => {
   const [formData, setFormData] = useState({
     OrderType: '',
-    OrderNumber: '',
+    prefix: '',
+    number: '',
   });
 
-  const { OrderType, OrderNumber } = formData;
+  const { OrderType, prefix, number } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const OrderNumber = prefix + number;
 
   const onSubmit = (e) => {
     newNumber({
@@ -50,10 +52,22 @@ const NewOrder = ({ newNumber }) => {
               <label htmlFor=''>BO NUMBER</label>
               <div className='row'>
                 <div className='col-md-4' style={{ paddingRight: 0 }}>
-                  <input type='text' className='form-control' />
+                  <input
+                    type='text'
+                    className='form-control'
+                    value={prefix}
+                    name='prefix'
+                    onChange={onChange}
+                  />
                 </div>
                 <div className='col-md-8' style={{ paddingLeft: 0 }}>
-                  <input type='text' className='form-control' />
+                  <input
+                    type='text'
+                    className='form-control'
+                    value={number}
+                    name='number'
+                    onChange={onChange}
+                  />
                 </div>
               </div>
             </div>
@@ -63,8 +77,8 @@ const NewOrder = ({ newNumber }) => {
               <input
                 type='text'
                 className='form-control'
-                name='OrderNumber'
-                value={OrderNumber}
+                name='number'
+                value={number}
                 onChange={onChange}
               />
             </div>

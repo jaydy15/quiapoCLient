@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
-import store from './redux/store';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Dashboard from './components/Dashboard';
@@ -10,7 +8,6 @@ import LoginPage from './components/layout/login/LoginPage';
 import Order from './components/layout/order/Order';
 import Cart from './components/layout/cart/Cart';
 import Status from './components/layout/Status/Status';
-import { loadUser } from './redux/auth/authActions';
 import NewOrder from './components/layout/order/NewOrder';
 
 if (localStorage.token) {
