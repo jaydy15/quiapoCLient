@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 const OrderTypes = ({ orderTypes, ...ownprops }) => {
   const { onChange } = ownprops;
-  console.log(orderTypes);
 
   return (
     <div>

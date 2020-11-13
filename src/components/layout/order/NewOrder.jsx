@@ -24,6 +24,11 @@ const NewOrder = ({ newNumber }) => {
       OrderType,
       OrderNumber,
     });
+    setFormData({
+      OrderType: '',
+      prefix: '',
+      number: '',
+    });
   };
 
   return (

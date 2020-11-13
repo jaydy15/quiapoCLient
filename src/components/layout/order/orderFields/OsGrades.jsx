@@ -43,7 +43,7 @@ const OsGrades = ({ onChange }) => {
     <div className='row'>
       <div className='col-md-2'>
         <label htmlFor=''>OS SPH</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OsSph'>
           {sphGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -51,7 +51,7 @@ const OsGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OS CYL</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OsCyl'>
           {cylGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -59,7 +59,7 @@ const OsGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OS AXIS</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OsAxis'>
           {axisGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -67,7 +67,7 @@ const OsGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OS ADD</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OsAdd'>
           {addGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -80,6 +80,7 @@ const OsGrades = ({ onChange }) => {
           className='form-control'
           onChange={onChange}
           style={{ margin: '0' }}
+          name='OsPd'
         />
       </div>
       <div className='col-md-2'>
@@ -89,6 +90,7 @@ const OsGrades = ({ onChange }) => {
           className='form-control'
           onChange={onChange}
           style={{ margin: '0' }}
+          name='OsQty'
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OdGrades = ({ onChange }) => {
+const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const sphLoad = () => {
     let grades = [];
     for (let i = -25.0; i <= 25.0; i = i + 0.25) {
@@ -41,7 +41,7 @@ const OdGrades = ({ onChange }) => {
     <div className='row'>
       <div className='col-md-2'>
         <label htmlFor=''>OD SPH</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OdSph'>
           {sphGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -49,7 +49,7 @@ const OdGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD CYL</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OdCyl'>
           {cylGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -57,7 +57,7 @@ const OdGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD AXIS</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OdAxis'>
           {axisGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -65,7 +65,7 @@ const OdGrades = ({ onChange }) => {
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD ADD</label>
-        <select className='form-control'>
+        <select className='form-control' onChange={onChange} name='OdAdd'>
           {addGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -78,6 +78,7 @@ const OdGrades = ({ onChange }) => {
           className='form-control'
           onChange={onChange}
           style={{ margin: '0' }}
+          name='OdPd'
         />
       </div>
       <div className='col-md-2'>
@@ -87,6 +88,7 @@ const OdGrades = ({ onChange }) => {
           className='form-control'
           onChange={onChange}
           style={{ margin: '0' }}
+          name='OdQty'
         />
       </div>
     </div>

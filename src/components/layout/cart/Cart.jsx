@@ -4,7 +4,7 @@ import Sidebar from './../Sidebar';
 import CartList from './CartList';
 import { connect } from 'react-redux';
 
-const Cart = ({ lists }) => {
+const Cart = ({ lists, orders }) => {
   console.log(lists);
   return (
     <div>
@@ -17,7 +17,7 @@ const Cart = ({ lists }) => {
           <h1>Cart</h1>
           {lists.length > 0 &&
             lists.map((item) => (
-              <p key={item.OrderNumber}>{item.OrderNumber}</p>
+              <CartList key={item.OrderNumber} item={item.orders} />
             ))}
         </div>
       </div>
@@ -27,5 +27,6 @@ const Cart = ({ lists }) => {
 
 const mapStateToProps = (state) => ({
   lists: state.cart.lists,
+  orders: state.cart.orders,
 });
 export default connect(mapStateToProps)(Cart);

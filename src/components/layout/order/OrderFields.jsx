@@ -7,8 +7,9 @@ import ItemCategory from './orderFields/ItemCategory';
 import Models from './orderFields/Models';
 import OdGrades from './orderFields/OdGrades';
 import OsGrades from './orderFields/OsGrades';
+import { addToCart } from './../../../redux/cart/cartActions';
 
-const OrderFields = ({ auth, lists }) => {
+const OrderFields = ({ auth, lists, addToCart }) => {
   const [formData, setFormData] = useState({
     RxNumber: '',
     OrderType: '',
@@ -31,6 +32,11 @@ const OrderFields = ({ auth, lists }) => {
     OsPd: '',
     OsQty: '',
     PatientsName: '',
+    Horizontal: '',
+    Vertical: '',
+    Bridge: '',
+    FrameType: '',
+    AdditionalInstructions: '',
   });
 
   const {
@@ -55,10 +61,89 @@ const OrderFields = ({ auth, lists }) => {
     OsPd,
     OsQty,
     PatientsName,
+    Horizontal,
+    Vertical,
+    Bridge,
+    FrameType,
+    AdditionalInstructions,
   } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const clearform = () => {
+    setFormData({
+      RxNumber: '',
+      OrderType: '',
+      ItemCategories: '',
+      Brand: '',
+      Model: '',
+      Color: '',
+      Size: '',
+      NonLensQty: '',
+      OdSph: '',
+      OdCyl: '',
+      OdAxis: '',
+      OdAdd: '',
+      OdPd: '',
+      OdQty: '',
+      OsSph: '',
+      OsCyl: '',
+      OsAxis: '',
+      OsAdd: '',
+      OsPd: '',
+      OsQty: '',
+      PatientsName: '',
+      Horizontal: '',
+      Vertical: '',
+      Bridge: '',
+      FrameType: '',
+      AdditionalInstructions: '',
+    });
+  };
+
+  const OdDetails =
+    OdSph + '|' + OdCyl + '|' + OdAxis + '|' + OdAdd + '|' + OdPd + '|' + OdQty;
+  const OsDetails =
+    OsSph + '|' + OsCyl + '|' + OsAxis + '|' + OsAdd + '|' + OsPd + '|' + OsQty;
+  const SoDetails =
+    Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    addToCart({
+      RxNumber,
+      OrderType,
+      ItemCategories,
+      Brand,
+      Model,
+      Color,
+      Size,
+      NonLensQty,
+      PatientsName,
+      Horizontal,
+      Vertical,
+      Bridge,
+      FrameType,
+      AdditionalInstructions,
+      OdDetails,
+      OsDetails,
+      SoDetails,
+      OdSph,
+      OdCyl,
+      OdAxis,
+      OdAdd,
+      OdPd,
+      OdQty,
+      OsSph,
+      OsCyl,
+      OsAxis,
+      OsAdd,
+      OsPd,
+      OsQty,
+    });
+    clearform();
   };
 
   return (
@@ -147,7 +232,7 @@ const OrderFields = ({ auth, lists }) => {
             <InputField
               type='text'
               placeholder='Non Lens Qty'
-              name='nonLensQty'
+              name='NonLensQty'
               value={NonLensQty}
               onChange={onChange}
               label='Non Lens Qty'
@@ -164,12 +249,28 @@ const OrderFields = ({ auth, lists }) => {
               <hr />
               <div className='row'>
                 <div className='col-md-12'>
-                  <OdGrades />
+                  <OdGrades
+                    OdSph={OdSph}
+                    OdCyl={OdCyl}
+                    OdAxis={OdAxis}
+                    OdAdd={OdAdd}
+                    OdPd={OdPd}
+                    OdQty={OdQty}
+                    onChange={onChange}
+                  />
                 </div>
               </div>
               <div className='row'>
                 <div className='col-md-12'>
-                  <OsGrades onChange={onChange} />
+                  <OsGrades
+                    OsSph={OsSph}
+                    OsCyl={OsCyl}
+                    OsAxis={OsAxis}
+                    OsAdd={OsAdd}
+                    OsPd={OsPd}
+                    OsQty={OsQty}
+                    onChange={onChange}
+                  />
                 </div>
               </div>
             </Fragment>
@@ -177,20 +278,18 @@ const OrderFields = ({ auth, lists }) => {
         </div>
       </div>
       <div className='row'>
-        <div
-          className='col-md-12'
-          style={{ marginTop: '20px', paddingTop: '20px' }}>
+        <div className='col-md-12'>
           {OrderType === 'SPECIAL ORDER' && ItemCategories === 'LENS' && (
             <Fragment>
-              <h3>Frame Info</h3>
+              <h3 style={{ paddingTop: '20px' }}>Frame Info</h3>
               <hr />
               <div className='row'>
                 <div className='col-md-3'>
                   <InputField
                     type='text'
                     placeholder='Non Lens Qty'
-                    name='nonLensQty'
-                    value={NonLensQty}
+                    name='Horizontal'
+                    value={Horizontal}
                     onChange={onChange}
                     label='Horizontal'
                     bol='false'
@@ -200,8 +299,8 @@ const OrderFields = ({ auth, lists }) => {
                   <InputField
                     type='text'
                     placeholder='Non Lens Qty'
-                    name='nonLensQty'
-                    value={NonLensQty}
+                    name='Vertical'
+                    value={Vertical}
                     onChange={onChange}
                     label='Vertical'
                     bol='false'
@@ -211,8 +310,8 @@ const OrderFields = ({ auth, lists }) => {
                   <InputField
                     type='text'
                     placeholder='Non Lens Qty'
-                    name='nonLensQty'
-                    value={NonLensQty}
+                    name='Bridge'
+                    value={Bridge}
                     onChange={onChange}
                     label='Bridge'
                     bol='false'
@@ -222,8 +321,8 @@ const OrderFields = ({ auth, lists }) => {
                   <InputField
                     type='text'
                     placeholder='Non Lens Qty'
-                    name='nonLensQty'
-                    value={NonLensQty}
+                    name='FrameType'
+                    value={FrameType}
                     onChange={onChange}
                     label='Frame Type'
                     bol='false'
@@ -232,6 +331,19 @@ const OrderFields = ({ auth, lists }) => {
               </div>
             </Fragment>
           )}
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-md-12'>
+          <InputField
+            type='text'
+            placeholder="Patient's Name"
+            name='AdditionalInstructions'
+            value={AdditionalInstructions}
+            onChange={onChange}
+            label='Additional Instructions'
+            bol='false'
+          />
         </div>
       </div>
       <div className='row'>
@@ -253,7 +365,10 @@ const OrderFields = ({ auth, lists }) => {
           ) : null}
         </div>
       </div>
-      <button type='submit' className='btn btn-block btn-success'>
+      <button
+        onClick={onSubmit}
+        type='submit'
+        className='btn btn-block btn-success'>
         Add To Cart
       </button>
     </form>
@@ -265,4 +380,4 @@ const mapStateToProps = (state) => ({
   lists: state.cart.lists,
 });
 
-export default connect(mapStateToProps)(OrderFields);
+export default connect(mapStateToProps, { addToCart })(OrderFields);
