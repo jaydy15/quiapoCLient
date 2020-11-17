@@ -1,12 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import CartDetails from './CartDetails';
 
-const CartList = ({ item }) => {
+const CartList = ({ item, orders }) => {
+  console.log(item);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const filtredOrder = orders.filter(
+    (order) => order.RxNumber === item.RxNumber
+  );
   return (
     <Fragment>
       <div
@@ -34,90 +41,9 @@ const CartList = ({ item }) => {
         <Modal.Body className='show-grid'>
           <div>
             <p>Rx Number : {item.RxNumber}</p>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Order Type : {item.OrderType}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdSph : {item.OdSph}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsSph : {item.OsSph}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Horizontal : {item.Horizontal}</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Item Category : {item.ItemCategories}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdCyl : {item.OdCyl}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsCyl : {item.OsCyl}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Vertical : {item.Vertical}</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Brand : {item.Brand}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdAxis : {item.OdAxis}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsAxis : {item.OsAxis}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Bridge : {item.Bridge}</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Model : {item.Model}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdAxis : {item.OdAxis}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsAxis : {item.OsAxis}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Frame Type : {item.FrameType}</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Color : {item.Color}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdPd : {item.OdPd}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsPd : {item.OsPd}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Patient's Name : {item.PatientsName}</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-md-4'>
-                <p>Size : {item.Size}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OdQty : {item.OdQty}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>OsQty : {item.OsQty}</p>
-              </div>
-              <div className='col-md-2'>
-                <p>Additional Instruction : {item.AdditionalInstructions}</p>
-              </div>
-            </div>
+            {filtredOrder.map((bulk) => (
+              <CartDetails bulk={bulk} />
+            ))}
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -133,4 +59,8 @@ const CartList = ({ item }) => {
   );
 };
 
-export default CartList;
+const mapStateToProps = (state) => ({
+  orders: state.cart.orders,
+});
+
+export default connect(mapStateToProps)(CartList);

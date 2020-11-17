@@ -8,8 +8,10 @@ import Models from './orderFields/Models';
 import OdGrades from './orderFields/OdGrades';
 import OsGrades from './orderFields/OsGrades';
 import { addToCart } from './../../../redux/cart/cartActions';
+import { useAlert } from 'react-alert';
 
 const OrderFields = ({ auth, lists, addToCart }) => {
+  const alert = useAlert();
   const [formData, setFormData] = useState({
     RxNumber: '',
     OrderType: '',
@@ -143,7 +145,10 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       OsPd,
       OsQty,
     });
-    clearform();
+    alert.show('Order have been added to the cart successfully');
+    setTimeout(() => {
+      clearform();
+    }, 1000);
   };
 
   return (

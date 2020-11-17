@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import Sidebar from './../Sidebar';
 import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
+import { useAlert } from 'react-alert';
+import { useHistory } from 'react-router-dom';
 
 const NewOrder = ({ newNumber }) => {
+  let history = useHistory();
+  const alert = useAlert();
+
   const [formData, setFormData] = useState({
     OrderType: '',
     prefix: '',
@@ -29,6 +34,10 @@ const NewOrder = ({ newNumber }) => {
       prefix: '',
       number: '',
     });
+    alert.show('Order Number Successfully Created');
+    setTimeout(() => {
+      history.push('/order');
+    }, 1000);
   };
 
   return (

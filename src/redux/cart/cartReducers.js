@@ -23,6 +23,7 @@ export default (state = INITIAL_STATE, action) => {
             ? { ...item, orders: action.payload }
             : item
         ),
+        orders: [...state.orders, action.payload],
       };
     default:
       return state;
