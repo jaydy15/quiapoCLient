@@ -19,7 +19,7 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
                 return ic.id <= 2;
               })
               .map((flic) => (
-                <option key={flic.id} value={JSON.stringify(flic)}>
+                <option key={flic.id} value={flic.id}>
                   {flic.desc}
                 </option>
               ))}
@@ -36,7 +36,7 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
             name='ItemCategories'>
             <option>Select Item Category</option>
             {itemCategory.map((ic) => (
-              <option key={ic.id} value={JSON.stringify(ic)}>
+              <option key={ic.id} value={ic.id}>
                 {ic.desc}
               </option>
             ))}

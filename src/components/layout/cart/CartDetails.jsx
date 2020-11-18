@@ -1,13 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const CartDetails = ({ bulk }) => {
+const CartDetails = ({ bulk, ordertype, itemcategory }) => {
+  const formatITCY = itemcategory.find(
+    (itm) => itm.id.toString() === bulk.ItemCategories
+  );
+  const formatODTY = ordertype.find(
+    (itm) => itm.id.toString() === bulk.OrderType
+  );
+
   const formatBrand = JSON.parse(bulk.Brand);
-  const formatITCY = JSON.parse(bulk.ItemCategories);
   const formatMDL = JSON.parse(bulk.Model);
-  const formatODTY = JSON.parse(bulk.OrderType);
   return (
     <div>
-      <p>Rx Number : {bulk.RxNumber}</p>
       <div className='row'>
         <div className='col-md-4'>
           <p>Order Type : {formatODTY.typeDesc}</p>
@@ -96,4 +101,9 @@ const CartDetails = ({ bulk }) => {
   );
 };
 
-export default CartDetails;
+const mapStateToProps = (state) => ({
+  ordertype: state.catalogue.orderTypes,
+  itemcategory: state.catalogue.supplyCategories,
+});
+
+export default connect(mapStateToProps)(CartDetails);

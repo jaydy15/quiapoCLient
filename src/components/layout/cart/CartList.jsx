@@ -3,8 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
+import ItemCategory from './../order/orderFields/ItemCategory';
 
-const CartList = ({ item, orders }) => {
+const CartList = ({ item, orders, itemcategory }) => {
   console.log(item);
   const [show, setShow] = useState(false);
 
@@ -15,7 +16,9 @@ const CartList = ({ item, orders }) => {
     (order) => order.RxNumber === item.RxNumber
   );
   const formatBrand = JSON.parse(item.Brand);
-  const formatITCY = JSON.parse(item.ItemCategories);
+  const formatITCY = itemcategory.find(
+    (itm) => itm.id.toString() === item.ItemCategories
+  );
   const formatMDL = JSON.parse(item.Model);
   return (
     <Fragment>
@@ -64,6 +67,7 @@ const CartList = ({ item, orders }) => {
 
 const mapStateToProps = (state) => ({
   orders: state.cart.orders,
+  itemcategory: state.catalogue.supplyCategories,
 });
 
 export default connect(mapStateToProps)(CartList);

@@ -16,7 +16,7 @@ const NewOrder = ({ newNumber }) => {
     number: '',
   });
 
-  const { OrderType, prefix, number } = formData;
+  const { OrderTypes, prefix, number } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,7 +26,7 @@ const NewOrder = ({ newNumber }) => {
 
   const onSubmit = (e) => {
     newNumber({
-      OrderType,
+      OrderTypes,
       OrderNumber,
     });
     setFormData({
@@ -52,7 +52,7 @@ const NewOrder = ({ newNumber }) => {
           <div className='form-group'>
             <label htmlFor=''>Order Type</label>
             <select
-              name='OrderType'
+              name='OrderTypes'
               className='form-control'
               onChange={onChange}>
               <option value=''> Select Order Type</option>
@@ -61,7 +61,7 @@ const NewOrder = ({ newNumber }) => {
             </select>
           </div>
 
-          {OrderType === 'Bulk Order' ? (
+          {OrderTypes === 'Bulk Order' ? (
             <div className='form-group'>
               <label htmlFor=''>BO NUMBER</label>
               <div className='row'>
