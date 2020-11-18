@@ -12,7 +12,7 @@ const Models = ({ model, ...ownprops }) => {
           <select onChange={onChange} className='form-control' name='Model'>
             <option>Select Model</option>
             {model.map((md) => (
-              <option key={md.id} value={md.modelName}>
+              <option key={md.id} value={JSON.stringify(md)}>
                 {md.modelName}
               </option>
             ))}

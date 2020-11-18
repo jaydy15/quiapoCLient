@@ -12,7 +12,7 @@ const OrderTypes = ({ orderTypes, ...ownprops }) => {
           <select onChange={onChange} className='form-control' name='OrderType'>
             <option>Select Order Type</option>
             {orderTypes.map((order) => (
-              <option key={order.id} value={order.typeDesc}>
+              <option key={order.id} value={JSON.stringify(order)}>
                 {order.typeDesc}
               </option>
             ))}

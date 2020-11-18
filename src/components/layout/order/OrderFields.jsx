@@ -9,6 +9,7 @@ import OdGrades from './orderFields/OdGrades';
 import OsGrades from './orderFields/OsGrades';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
+import { v4 as uuidv4 } from 'uuid';
 
 const OrderFields = ({ auth, lists, addToCart }) => {
   const alert = useAlert();
@@ -113,8 +114,11 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
 
   const onSubmit = (e) => {
+    const tempID = uuidv4();
+    console.log(tempID);
     e.preventDefault();
     addToCart({
+      tempID,
       RxNumber,
       OrderType,
       ItemCategories,
@@ -232,7 +236,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           {/* SIZE */}
           <Brands onChange={onChange} value={Brand} />
         </div>
-        {ItemCategories !== 'LENS' && ItemCategories !== 'CONTACT LENS' ? (
+        {ItemCategories !== '1' && ItemCategories !== '2' ? (
           <div className='col-md-4'>
             <InputField
               type='text'
@@ -248,7 +252,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-12'>
-          {ItemCategories === 'LENS' || ItemCategories === 'CONTACT LENS' ? (
+          {ItemCategories === '1' || ItemCategories === '2' ? (
             <Fragment>
               <h3>Grade Info</h3>
               <hr />
@@ -284,7 +288,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-12'>
-          {OrderType === 'SPECIAL ORDER' && ItemCategories === 'LENS' && (
+          {OrderType === '3' && ItemCategories === '2' && (
             <Fragment>
               <h3 style={{ paddingTop: '20px' }}>Frame Info</h3>
               <hr />
@@ -353,7 +357,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-12'>
-          {OrderType !== 'BULK ORDER' ? (
+          {OrderType !== '2' ? (
             <div className='row'>
               <div className='col-md-6'>
                 <InputField

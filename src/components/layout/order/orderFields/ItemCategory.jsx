@@ -6,7 +6,7 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
   return (
     <div>
       {/* ITEM CATEGORY FOR JOB ORDER AND SPECIAL ORDER */}
-      {OrderType !== 'BULK ORDER' && itemCategory !== undefined && (
+      {OrderType !== '2' && itemCategory !== undefined && (
         <div className='form-group'>
           <label htmlFor='brand'>Item Category</label>
           <select
@@ -19,13 +19,15 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
                 return ic.id <= 2;
               })
               .map((flic) => (
-                <option key={flic.id}>{flic.desc}</option>
+                <option key={flic.id} value={JSON.stringify(flic)}>
+                  {flic.desc}
+                </option>
               ))}
           </select>
         </div>
       )}
       {/* BULK ORDER ITEM CATEGORY */}
-      {OrderType === 'BULK ORDER' && itemCategory !== undefined && (
+      {OrderType === '2' && itemCategory !== undefined && (
         <div className='form-group'>
           <label htmlFor='brand'>Item Category</label>
           <select
@@ -34,7 +36,7 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
             name='ItemCategories'>
             <option>Select Item Category</option>
             {itemCategory.map((ic) => (
-              <option key={ic.id} value={ic.desc}>
+              <option key={ic.id} value={JSON.stringify(ic)}>
                 {ic.desc}
               </option>
             ))}

@@ -1,12 +1,16 @@
 import React from 'react';
 
 const CartDetails = ({ bulk }) => {
+  const formatBrand = JSON.parse(bulk.Brand);
+  const formatITCY = JSON.parse(bulk.ItemCategories);
+  const formatMDL = JSON.parse(bulk.Model);
+  const formatODTY = JSON.parse(bulk.OrderType);
   return (
     <div>
       <p>Rx Number : {bulk.RxNumber}</p>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Order Type : {bulk.OrderType}</p>
+          <p>Order Type : {formatODTY.typeDesc}</p>
         </div>
         <div className='col-md-2'>
           <p>OdSph : {bulk.OdSph}</p>
@@ -20,7 +24,7 @@ const CartDetails = ({ bulk }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>bulk Category : {bulk.bulkCategories}</p>
+          <p>Item Category : {formatITCY.desc}</p>
         </div>
         <div className='col-md-2'>
           <p>OdCyl : {bulk.OdCyl}</p>
@@ -34,7 +38,7 @@ const CartDetails = ({ bulk }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Brand : {bulk.Brand}</p>
+          <p>Brand : {formatBrand.name}</p>
         </div>
         <div className='col-md-2'>
           <p>OdAxis : {bulk.OdAxis}</p>
@@ -48,7 +52,7 @@ const CartDetails = ({ bulk }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Model : {bulk.Model}</p>
+          <p>Model : {formatMDL.modelName}</p>
         </div>
         <div className='col-md-2'>
           <p>OdAxis : {bulk.OdAxis}</p>

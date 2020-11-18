@@ -14,6 +14,9 @@ const CartList = ({ item, orders }) => {
   const filtredOrder = orders.filter(
     (order) => order.RxNumber === item.RxNumber
   );
+  const formatBrand = JSON.parse(item.Brand);
+  const formatITCY = JSON.parse(item.ItemCategories);
+  const formatMDL = JSON.parse(item.Model);
   return (
     <Fragment>
       <div
@@ -23,13 +26,13 @@ const CartList = ({ item, orders }) => {
           <h3 onClick={handleShow}>Rx Number : {item.RxNumber}</h3>
           <div className='row'>
             <div className='col-md-3'>
-              <p>Item Category: {item.ItemCategories}</p>
+              <p>Item Category: {formatITCY.desc}</p>
             </div>
             <div className='col-md-3'>
-              <p>Brand: {item.Brand}</p>
+              <p>Brand: {formatBrand.name}</p>
             </div>
             <div className='col-md-3'>
-              <p>Model: {item.Model}</p>
+              <p>Model: {formatMDL.modelName}</p>
             </div>
           </div>
         </div>
@@ -42,7 +45,7 @@ const CartList = ({ item, orders }) => {
           <div>
             <p>Rx Number : {item.RxNumber}</p>
             {filtredOrder.map((bulk) => (
-              <CartDetails bulk={bulk} />
+              <CartDetails key={bulk.tempID} bulk={bulk} />
             ))}
           </div>
         </Modal.Body>
@@ -51,7 +54,7 @@ const CartList = ({ item, orders }) => {
             Close
           </Button>
           <Button variant='primary' onClick={handleClose}>
-            Save Changes
+            Submit for Approval
           </Button>
         </Modal.Footer>
       </Modal>
