@@ -221,10 +221,18 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           />
         </div>
         <div className='col-md-4'>
-          <Brands onChange={onChange} value={Brand} />
+          <Brands
+            onChange={onChange}
+            value={Brand}
+            ItemCategories={ItemCategories}
+          />
         </div>
         <div className='col-md-4'>
-          <Models onChange={onChange} value={Model} />
+          <Models
+            onChange={onChange}
+            value={Model}
+            ItemCategories={ItemCategories}
+          />
         </div>
       </div>
       <div className='row'>

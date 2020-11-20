@@ -22,9 +22,7 @@ const CartList = ({ item, orders, itemcategory }) => {
   const formatMDL = JSON.parse(item.Model);
   return (
     <Fragment>
-      <div
-        className='row'
-        style={{ border: '1px black solid', margin: '20px' }}>
+      <div className='row' style={{ border: '1px solid #eee', margin: '20px' }}>
         <div className='col-md-12'>
           <h3 onClick={handleShow}>Rx Number : {item.RxNumber}</h3>
           <div className='row'>

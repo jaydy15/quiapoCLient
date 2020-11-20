@@ -2,9 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-const Brands = ({ brands, ...ownprops }) => {
+const Brands = ({ brands, ItemCategories, ...ownprops }) => {
   const { onChange } = ownprops;
-
   return (
     <div>
       {brands !== undefined && (
