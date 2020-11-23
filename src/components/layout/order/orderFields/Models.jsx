@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 const Models = ({ model, ItemCategories, lens, ...ownprops }) => {
   const { onChange } = ownprops;
 
-  console.log(lens);
-
   return (
     <div>
       {model !== undefined && ItemCategories !== '2' && (
