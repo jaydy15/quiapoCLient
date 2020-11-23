@@ -194,7 +194,11 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           />
         </div>
         <div className='col-md-6'>
-          <OrderTypes onChange={onChange} value={OrderType} />
+          <OrderTypes
+            onChange={onChange}
+            value={OrderType}
+            RxNumber={RxNumber}
+          />
           {/* <div className='form-group'>
             <label htmlFor=''>Order Type</label>
             <select
@@ -232,6 +236,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           <Models
             onChange={onChange}
             value={Model}
+            Brand={Brand}
             ItemCategories={ItemCategories}
           />
         </div>

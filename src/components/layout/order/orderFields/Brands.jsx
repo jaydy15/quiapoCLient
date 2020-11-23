@@ -28,6 +28,15 @@ const Brands = ({
                     {brands.find((elm) => elm.id === br.brandKey).name}
                   </option>
                 ))}
+            {ItemCategories === '2' &&
+              OrderType === '2' &&
+              lens
+                .filter((lens) => lens.orderTypeKey.toString() === '1')
+                .map((br) => (
+                  <option key={br.id} value={br.brandKey}>
+                    {brands.find((elm) => elm.id === br.brandKey).name}
+                  </option>
+                ))}
             {/* LENS BRANDS */}
             {/* FS BRANDS */}
             {(ItemCategories === '3' || ItemCategories === '4') &&
@@ -53,6 +62,17 @@ const Brands = ({
                     {brands.find((elm) => elm.id === br.brandKey).name}
                   </option>
                 ))}
+            {ItemCategories === '1' &&
+              OrderType === '2' &&
+              csa
+                .filter((csa) => csa.scKey.toString() === ItemCategories)
+                .filter((csa) => csa.orderTypeKey.toString() === '1')
+                .map((br) => (
+                  <option key={br.id} value={br.brandKey}>
+                    {brands.find((elm) => elm.id === br.brandKey).name}
+                  </option>
+                ))}
+
             {/* CSA BRANDS */}
           </select>
         </div>
