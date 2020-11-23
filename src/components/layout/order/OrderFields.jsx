@@ -225,6 +225,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             onChange={onChange}
             value={Brand}
             ItemCategories={ItemCategories}
+            OrderType={OrderType}
           />
         </div>
         <div className='col-md-4'>

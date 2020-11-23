@@ -1,9 +1,16 @@
-import { before } from 'lodash';
 import React from 'react';
 
 import { connect } from 'react-redux';
 
-const Brands = ({ brands, ItemCategories, lens, fs, csa, ...ownprops }) => {
+const Brands = ({
+  brands,
+  ItemCategories,
+  lens,
+  fs,
+  csa,
+  OrderType,
+  ...ownprops
+}) => {
   const { onChange } = ownprops;
   return (
     <div>
@@ -12,12 +19,17 @@ const Brands = ({ brands, ItemCategories, lens, fs, csa, ...ownprops }) => {
           <label htmlFor='brand'>Brand</label>
           <select onChange={onChange} className='form-control' name='Brand'>
             <option>Select Brand</option>
+            {/* LENS BRANDS */}
             {ItemCategories === '2' &&
-              lens.map((br) => (
-                <option key={br.id} value={br.brandKey}>
-                  {brands.find((elm) => elm.id === br.brandKey).name}
-                </option>
-              ))}
+              lens
+                .filter((lens) => lens.orderTypeKey.toString() === OrderType)
+                .map((br) => (
+                  <option key={br.id} value={br.brandKey}>
+                    {brands.find((elm) => elm.id === br.brandKey).name}
+                  </option>
+                ))}
+            {/* LENS BRANDS */}
+            {/* FS BRANDS */}
             {(ItemCategories === '3' || ItemCategories === '4') &&
               fs
                 .filter(
@@ -28,16 +40,20 @@ const Brands = ({ brands, ItemCategories, lens, fs, csa, ...ownprops }) => {
                     {brands.find((elm) => elm.id === br.brandKey).name}
                   </option>
                 ))}
+            {/* FS BRANDS */}
+            {/* CSA BRANDS */}
             {(ItemCategories === '1' ||
               ItemCategories === '5' ||
               ItemCategories === '6') &&
               csa
                 .filter((csa) => csa.scKey.toString() === ItemCategories)
+                .filter((csa) => csa.orderTypeKey.toString() === OrderType)
                 .map((br) => (
                   <option key={br.id} value={br.brandKey}>
                     {brands.find((elm) => elm.id === br.brandKey).name}
                   </option>
                 ))}
+            {/* CSA BRANDS */}
           </select>
         </div>
       )}
