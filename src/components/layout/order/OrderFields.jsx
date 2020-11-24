@@ -238,6 +238,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             value={Model}
             Brand={Brand}
             ItemCategories={ItemCategories}
+            OrderType={OrderType}
           />
         </div>
       </div>

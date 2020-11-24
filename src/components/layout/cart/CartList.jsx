@@ -3,23 +3,24 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
-import ItemCategory from './../order/orderFields/ItemCategory';
 
-const CartList = ({ item, orders, itemcategory }) => {
-  console.log(item);
+const CartList = ({ item, orders, itemcategory, brands, lens, fscaModel }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const filtredOrder = orders.filter(
     (order) => order.RxNumber === item.RxNumber
   );
-  const formatBrand = JSON.parse(item.Brand);
+  const formatBrand = brands.find((br) => br.id.toString() === item.Brand).name;
   const formatITCY = itemcategory.find(
     (itm) => itm.id.toString() === item.ItemCategories
-  );
-  const formatMDL = JSON.parse(item.Model);
+  ).desc;
+  const formatMDL =
+    formatITCY === 'LENS'
+      ? lens.find((mdl) => mdl.id.toString() === item.Model).name
+      : fscaModel.find((mdl) => mdl.id.toString() === item.Model).modelName;
+
   return (
     <Fragment>
       <div className='row' style={{ border: '1px solid #eee', margin: '20px' }}>
@@ -27,13 +28,13 @@ const CartList = ({ item, orders, itemcategory }) => {
           <h3 onClick={handleShow}>Rx Number : {item.RxNumber}</h3>
           <div className='row'>
             <div className='col-md-3'>
-              <p>Item Category: {formatITCY.desc}</p>
+              <p>Item Category: {formatITCY}</p>
             </div>
             <div className='col-md-3'>
-              <p>Brand: {formatBrand.name}</p>
+              <p>Brand: {formatBrand}</p>
             </div>
             <div className='col-md-3'>
-              <p>Model: {formatMDL.modelName}</p>
+              <p>Model: {formatMDL}</p>
             </div>
           </div>
         </div>
@@ -66,6 +67,9 @@ const CartList = ({ item, orders, itemcategory }) => {
 const mapStateToProps = (state) => ({
   orders: state.cart.orders,
   itemcategory: state.catalogue.supplyCategories,
+  brands: state.catalogue.brands,
+  lens: state.catalogue.lensItems,
+  fscaModel: state.catalogue.fscaModel,
 });
 
 export default connect(mapStateToProps)(CartList);

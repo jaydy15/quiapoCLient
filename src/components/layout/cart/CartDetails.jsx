@@ -1,21 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const CartDetails = ({ bulk, ordertype, itemcategory }) => {
+const CartDetails = ({
+  bulk,
+  ordertype,
+  itemcategory,
+  brands,
+  lens,
+  fscaModel,
+}) => {
   const formatITCY = itemcategory.find(
     (itm) => itm.id.toString() === bulk.ItemCategories
-  );
+  ).desc;
   const formatODTY = ordertype.find(
     (itm) => itm.id.toString() === bulk.OrderType
-  );
+  ).typeDesc;
 
-  const formatBrand = JSON.parse(bulk.Brand);
-  const formatMDL = JSON.parse(bulk.Model);
+  const formatBrand = brands.find((br) => br.id.toString() === bulk.Brand).name;
+  const formatMDL =
+    formatITCY === 'LENS'
+      ? lens.find((mdl) => mdl.id.toString() === bulk.Model).name
+      : fscaModel.find((mdl) => mdl.id.toString() === bulk.Model).modelName;
   return (
     <div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Order Type : {formatODTY.typeDesc}</p>
+          <p>Order Type : {formatODTY}</p>
         </div>
         <div className='col-md-2'>
           <p>OdSph : {bulk.OdSph}</p>
@@ -29,7 +39,7 @@ const CartDetails = ({ bulk, ordertype, itemcategory }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Item Category : {formatITCY.desc}</p>
+          <p>Item Category : {formatITCY}</p>
         </div>
         <div className='col-md-2'>
           <p>OdCyl : {bulk.OdCyl}</p>
@@ -43,7 +53,7 @@ const CartDetails = ({ bulk, ordertype, itemcategory }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Brand : {formatBrand.name}</p>
+          <p>Brand : {formatBrand}</p>
         </div>
         <div className='col-md-2'>
           <p>OdAxis : {bulk.OdAxis}</p>
@@ -57,7 +67,7 @@ const CartDetails = ({ bulk, ordertype, itemcategory }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <p>Model : {formatMDL.modelName}</p>
+          <p>Model : {formatMDL}</p>
         </div>
         <div className='col-md-2'>
           <p>OdAxis : {bulk.OdAxis}</p>
@@ -104,6 +114,9 @@ const CartDetails = ({ bulk, ordertype, itemcategory }) => {
 const mapStateToProps = (state) => ({
   ordertype: state.catalogue.orderTypes,
   itemcategory: state.catalogue.supplyCategories,
+  brands: state.catalogue.brands,
+  lens: state.catalogue.lensItems,
+  fscaModel: state.catalogue.fscaModel,
 });
 
 export default connect(mapStateToProps)(CartDetails);
