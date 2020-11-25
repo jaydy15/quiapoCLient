@@ -1,4 +1,5 @@
-import { CLEAR_LIST, NEW_NUMBER, ADD_TO_CART } from './cartType';
+import { CLEAR_LIST, NEW_NUMBER, ADD_TO_CART, FOR_APPROVAL } from './cartType';
+import axios from 'axios';
 
 export const newNumber = (formData) => (dispatch) => {
   dispatch({
@@ -18,5 +19,20 @@ export const addToCart = (formData) => (dispatch) => {
   dispatch({
     type: ADD_TO_CART,
     payload: formData,
+  });
+};
+
+export const forApproval = (formData) => async (dispatch) => {
+  console.log(formData);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = await axios.post('/api/transactions', formData, config);
+
+  dispatch({
+    type: FOR_APPROVAL,
+    payload: res.data,
   });
 };

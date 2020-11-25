@@ -8,7 +8,6 @@ const OrderTypes = ({ orderTypes, lists, RxNumber, ...ownprops }) => {
     .filter((num) => num.OrderNumber.toString() === RxNumber)
     .map((elm) => elm.OrderTypes)
     .toString();
-  console.log(selected);
   return (
     <div>
       {orderTypes !== undefined && (

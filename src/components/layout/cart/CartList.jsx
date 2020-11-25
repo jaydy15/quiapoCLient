@@ -3,8 +3,20 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
+import { forApproval } from '../../../redux/cart/cartActions';
+import { v4 as uuidv4 } from 'uuid';
 
-const CartList = ({ item, orders, itemcategory, brands, lens, fscaModel }) => {
+const CartList = ({
+  item,
+  orders,
+  itemcategory,
+  brands,
+  lens,
+  fscaModel,
+  forApproval,
+  branch,
+  user,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -20,6 +32,29 @@ const CartList = ({ item, orders, itemcategory, brands, lens, fscaModel }) => {
     formatITCY === 'LENS'
       ? lens.find((mdl) => mdl.id.toString() === item.Model).name
       : fscaModel.find((mdl) => mdl.id.toString() === item.Model).modelName;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    forApproval({
+      id: '4',
+      typeName: 'PO',
+      fromBranchKey: branch,
+      toBranchKey: branch,
+      userIdKey: user,
+      orderTypeKey: parseInt(item.OrderType),
+      rxNumber: parseInt(item.RxNumber),
+      supplyCategoryKey: parseInt(item.ItemCategories),
+      itemKey: '1',
+      cdKey: '1',
+      size: '11.00',
+      additionalInstruction: item.AdditionalInstructions,
+      odDetails: item.OdDetails,
+      osDetails: item.OsDetails,
+      pxName: item.PatientsName,
+      soDetails: item.SoDetails,
+      status: '',
+    });
+  };
 
   return (
     <Fragment>
@@ -55,7 +90,7 @@ const CartList = ({ item, orders, itemcategory, brands, lens, fscaModel }) => {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleClose}>
+          <Button variant='primary' onClick={onSubmit}>
             Submit for Approval
           </Button>
         </Modal.Footer>
@@ -70,6 +105,8 @@ const mapStateToProps = (state) => ({
   brands: state.catalogue.brands,
   lens: state.catalogue.lensItems,
   fscaModel: state.catalogue.fscaModel,
+  branch: state.auth.user.BranchDetail.id,
+  user: state.auth.user.id,
 });
 
-export default connect(mapStateToProps)(CartList);
+export default connect(mapStateToProps, { forApproval })(CartList);

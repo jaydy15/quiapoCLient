@@ -1,5 +1,4 @@
 import React from 'react';
-import InputField from '../../../reusable/InputField';
 
 const OsGrades = ({ onChange }) => {
   const sphLoad = () => {
