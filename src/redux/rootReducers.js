@@ -5,12 +5,14 @@ import cartReducers from './cart/cartReducers';
 import localCatalogReducers from './localCatalog/localCatalogReducers';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import orderReducers from './order/orderReducers';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   alert: alertReducers,
   cart: cartReducers,
   catalogue: localCatalogReducers,
+  orders: orderReducers,
 });
 
 const persistConfig = {

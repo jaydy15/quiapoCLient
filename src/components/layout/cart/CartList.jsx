@@ -12,7 +12,7 @@ const CartList = ({
   itemcategory,
   brands,
   lens,
-  fscaModel,
+  fscaModels,
   forApproval,
   branch,
   user,
@@ -29,9 +29,9 @@ const CartList = ({
     (itm) => itm.id.toString() === item.ItemCategories
   ).desc;
   const formatMDL =
-    formatITCY === 'LENS'
-      ? lens.find((mdl) => mdl.id.toString() === item.Model).name
-      : fscaModel.find((mdl) => mdl.id.toString() === item.Model).modelName;
+    formatITCY !== 'LENS'
+      ? fscaModels.find((mdl) => mdl.id.toString() === item.Model).modelName
+      : lens.find((mdl) => mdl.id.toString() === item.Model).name;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const mapStateToProps = (state) => ({
   itemcategory: state.catalogue.supplyCategories,
   brands: state.catalogue.brands,
   lens: state.catalogue.lensItems,
-  fscaModel: state.catalogue.fscaModel,
+  fscaModels: state.catalogue.fscsaModels,
   branch: state.auth.user.BranchDetail.id,
   user: state.auth.user.id,
 });

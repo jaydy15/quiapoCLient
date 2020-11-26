@@ -7,7 +7,7 @@ const CartDetails = ({
   itemcategory,
   brands,
   lens,
-  fscaModel,
+  fscsaModels,
 }) => {
   const formatITCY = itemcategory.find(
     (itm) => itm.id.toString() === bulk.ItemCategories
@@ -17,10 +17,11 @@ const CartDetails = ({
   ).typeDesc;
 
   const formatBrand = brands.find((br) => br.id.toString() === bulk.Brand).name;
+  console.log(fscsaModels);
   const formatMDL =
-    formatITCY === 'LENS'
-      ? lens.find((mdl) => mdl.id.toString() === bulk.Model).name
-      : fscaModel.find((mdl) => mdl.id.toString() === bulk.Model).modelName;
+    formatITCY !== 'LENS'
+      ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.Model).modelName
+      : lens.find((mdl) => mdl.id.toString() === bulk.Model).name;
   return (
     <div>
       <div className='row'>
@@ -116,7 +117,7 @@ const mapStateToProps = (state) => ({
   itemcategory: state.catalogue.supplyCategories,
   brands: state.catalogue.brands,
   lens: state.catalogue.lensItems,
-  fscaModel: state.catalogue.fscaModel,
+  fscsaModels: state.catalogue.fscsaModels,
 });
 
 export default connect(mapStateToProps)(CartDetails);
