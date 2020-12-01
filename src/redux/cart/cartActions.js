@@ -1,10 +1,23 @@
-import { CLEAR_LIST, NEW_NUMBER, ADD_TO_CART, FOR_APPROVAL } from './cartType';
+import {
+  CLEAR_LIST,
+  NEW_NUMBER,
+  ADD_TO_CART,
+  FOR_APPROVAL,
+  REMOVE_FROM_LIST,
+} from './cartType';
 import axios from 'axios';
 
 export const newNumber = (formData) => (dispatch) => {
   dispatch({
     type: NEW_NUMBER,
     payload: formData,
+  });
+};
+
+export const removeNumber = (OrderNumber) => (dispatch) => {
+  dispatch({
+    type: REMOVE_FROM_LIST,
+    payload: OrderNumber,
   });
 };
 

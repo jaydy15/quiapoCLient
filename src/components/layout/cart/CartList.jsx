@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
-import { forApproval } from '../../../redux/cart/cartActions';
+import { forApproval, removeNumber } from '../../../redux/cart/cartActions';
 import { v4 as uuidv4 } from 'uuid';
 
 const CartList = ({
@@ -16,6 +16,7 @@ const CartList = ({
   forApproval,
   branch,
   user,
+  removeNumber,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -33,27 +34,30 @@ const CartList = ({
       ? fscaModels.find((mdl) => mdl.id.toString() === item.Model).modelName
       : lens.find((mdl) => mdl.id.toString() === item.Model).name;
 
+  console.log(item.RxNumber);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    forApproval({
-      id: '4',
-      typeName: 'PO',
-      fromBranchKey: branch,
-      toBranchKey: branch,
-      userIdKey: user,
-      orderTypeKey: parseInt(item.OrderType),
-      rxNumber: parseInt(item.RxNumber),
-      supplyCategoryKey: parseInt(item.ItemCategories),
-      itemKey: '1',
-      cdKey: '1',
-      size: '11.00',
-      additionalInstruction: item.AdditionalInstructions,
-      odDetails: item.OdDetails,
-      osDetails: item.OsDetails,
-      pxName: item.PatientsName,
-      soDetails: item.SoDetails,
-      status: '',
-    });
+    // forApproval({
+    //   id: '7',
+    //   typeName: 'PO',
+    //   fromBranchKey: branch,
+    //   toBranchKey: branch,
+    //   userIdKey: user,
+    //   orderTypeKey: parseInt(item.OrderType),
+    //   rxNumber: item.RxNumber,
+    //   supplyCategoryKey: parseInt(item.ItemCategories),
+    //   itemKey: '1',
+    //   cdKey: '1',
+    //   size: '11.00',
+    //   additionalInstruction: item.AdditionalInstructions,
+    //   odDetails: item.OdDetails,
+    //   osDetails: item.OsDetails,
+    //   pxName: item.PatientsName,
+    //   soDetails: item.SoDetails,
+    //   status: '',
+    // });
+    removeNumber(item.RxNumber);
   };
 
   return (
@@ -109,4 +113,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user.id,
 });
 
-export default connect(mapStateToProps, { forApproval })(CartList);
+export default connect(mapStateToProps, { forApproval, removeNumber })(
+  CartList
+);

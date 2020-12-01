@@ -5,6 +5,7 @@ import CartList from './CartList';
 import { connect } from 'react-redux';
 
 const Cart = ({ lists, orders }) => {
+  console.log(orders);
   return (
     <div>
       <Navbar />
@@ -14,7 +15,7 @@ const Cart = ({ lists, orders }) => {
         </div>
         <div className='main-content'>
           <h1>Cart</h1>
-          {orders.length > 0 &&
+          {orders.length > 1 &&
             orders.map((item) => <CartList key={item.tempID} item={item} />)}
         </div>
       </div>
