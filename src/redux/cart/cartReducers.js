@@ -20,10 +20,8 @@ export default (state = INITIAL_STATE, action) => {
     case REMOVE_FROM_LIST:
       return {
         ...state,
-        lists: [
-          state.lists.filter((elm) => elm.OrderNumber !== action.payload),
-        ],
-        orders: [state.orders.filter((elm) => elm.RxNumber !== action.payload)],
+        lists: state.lists.filter((elm) => elm.OrderNumber !== action.payload),
+        orders: state.orders.filter((elm) => elm.RxNumber !== action.payload),
       };
     case CLEAR_LIST: {
       return INITIAL_STATE;

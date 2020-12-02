@@ -41,7 +41,7 @@ const Models = ({
               csa
                 .filter((csa) => csa.brandKey.toString() === Brand)
                 .map((md) => (
-                  <option key={md.id} value={md.id}>
+                  <option key={md.id} value={md.csaModelKey}>
                     {model.find((elm) => elm.id === md.csaModelKey).modelName}
                   </option>
                 ))}

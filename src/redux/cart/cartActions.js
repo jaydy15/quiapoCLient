@@ -57,11 +57,7 @@ export const approveOrder = (id) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  const res = await axios.put(
-    `/api/transactions/${id}`,
-    { status: 'APPROVE' },
-    config
-  );
+  await axios.put(`/api/transactions/${id}`, { status: 'APPROVE' }, config);
 };
 
 export const rejectOrder = (id) => async (dispatch) => {
@@ -71,9 +67,5 @@ export const rejectOrder = (id) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  const res = await axios.put(
-    `/api/transactions/${id}`,
-    { status: 'REJECT' },
-    config
-  );
+  await axios.put(`/api/transactions/${id}`, { status: 'REJECT' }, config);
 };
