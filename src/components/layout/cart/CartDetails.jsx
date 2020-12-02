@@ -17,7 +17,6 @@ const CartDetails = ({
   ).typeDesc;
 
   const formatBrand = brands.find((br) => br.id.toString() === bulk.Brand).name;
-  console.log(fscsaModels);
   const formatMDL =
     formatITCY !== 'LENS'
       ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.Model).modelName

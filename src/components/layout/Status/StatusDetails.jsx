@@ -1,7 +1,6 @@
 import React from 'react';
 
 const StatusDetails = ({ od }) => {
-  console.log(od);
   return (
     <div>
       <table className='table'>

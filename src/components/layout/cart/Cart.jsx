@@ -5,7 +5,6 @@ import CartList from './CartList';
 import { connect } from 'react-redux';
 
 const Cart = ({ lists, orders }) => {
-  console.log(orders);
   return (
     <div>
       <Navbar />

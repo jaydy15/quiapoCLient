@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Navbar from './../Navbar';
 import Sidebar from './../Sidebar';
 import { connect } from 'react-redux';
@@ -6,14 +6,11 @@ import { getOrders } from './../../../redux/order/orderActions';
 import StatusRow from './StatusRow';
 
 const Status = ({ orders, getOrders, branch }) => {
-  console.log(orders);
-
   useEffect(() => {
     getOrders();
     //eslint-disable-next-line
   }, []);
 
-  console.log(branch);
   return (
     <Fragment>
       <div>

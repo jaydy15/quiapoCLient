@@ -49,3 +49,31 @@ export const forApproval = (formData) => async (dispatch) => {
     payload: res.data,
   });
 };
+
+export const approveOrder = (id) => async (dispatch) => {
+  console.log('Order Approve', id);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = await axios.put(
+    `/api/transactions/${id}`,
+    { status: 'APPROVE' },
+    config
+  );
+};
+
+export const rejectOrder = (id) => async (dispatch) => {
+  console.log('Order Approve', id);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = await axios.put(
+    `/api/transactions/${id}`,
+    { status: 'REJECT' },
+    config
+  );
+};

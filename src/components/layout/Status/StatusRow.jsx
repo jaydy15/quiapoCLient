@@ -6,13 +6,25 @@ import eyeIcon from '@iconify-icons/mdi/eye';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import StatusDetails from './StatusDetails';
+import { approveOrder, rejectOrder } from '../../../redux/cart/cartActions';
+import { connect } from 'react-redux';
 
-const StatusRow = ({ orders, branch }) => {
+const StatusRow = ({ orders, branch, approveOrder, rejectOrder }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(orders);
+
+  const orderApproved = () => {
+    approveOrder(orders.id);
+    window.location.reload(false);
+  };
+
+  const orderRejected = () => {
+    rejectOrder(orders.id);
+    window.location.reload(false);
+  };
+
   return (
     <Fragment>
       <tr key={orders.id}>
@@ -23,6 +35,7 @@ const StatusRow = ({ orders, branch }) => {
           <Icon
             className='icon'
             icon={checkCircle}
+            onClick={orderApproved}
             style={{
               color: 'green',
               fontSize: '2rem',
@@ -31,6 +44,7 @@ const StatusRow = ({ orders, branch }) => {
           />
           <Icon
             className='icon'
+            onClick={orderRejected}
             icon={alphaXCircle}
             style={{
               color: 'red',
@@ -70,4 +84,4 @@ const StatusRow = ({ orders, branch }) => {
   );
 };
 
-export default StatusRow;
+export default connect(null, { approveOrder, rejectOrder })(StatusRow);
