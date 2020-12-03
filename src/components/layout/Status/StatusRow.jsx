@@ -31,7 +31,7 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
         <th scope='row'>{orders.id}</th>
         <td>{orders.rxNumber}</td>
         <td>{orders.status}</td>
-        {user.access === '0' && (
+        {user.access === '0' ? (
           <td>
             <Icon
               className='icon'
@@ -53,20 +53,31 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
                 margin: '5px',
               }}
             />
+            <Icon
+              className='icon'
+              icon={eyeIcon}
+              style={{
+                color: 'orange',
+                fontSize: '2rem',
+                margin: '5px',
+              }}
+              onClick={handleShow}
+            />
+          </td>
+        ) : (
+          <td>
+            <Icon
+              className='icon'
+              icon={eyeIcon}
+              style={{
+                color: 'orange',
+                fontSize: '2rem',
+                margin: '5px',
+              }}
+              onClick={handleShow}
+            />
           </td>
         )}
-        <td>
-          <Icon
-            className='icon'
-            icon={eyeIcon}
-            style={{
-              color: 'orange',
-              fontSize: '2rem',
-              margin: '5px',
-            }}
-            onClick={handleShow}
-          />
-        </td>
       </tr>
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton>

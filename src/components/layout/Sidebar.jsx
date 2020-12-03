@@ -32,11 +32,11 @@ const Sidebar = ({ auth }) => {
               <li>
                 <Link to='/status'>Status</Link>
               </li>
-              {user && user.access === '0' && (
+              {/* {user && user.access === '0' && (
                 <li>
                   <Link to='/status'>APPROVE OR REJECT</Link>
                 </li>
-              )}
+              )} */}
             </ul>
           </div>
         </div>
