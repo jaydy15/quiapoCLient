@@ -9,7 +9,7 @@ import StatusDetails from './StatusDetails';
 import { approveOrder, rejectOrder } from '../../../redux/cart/cartActions';
 import { connect } from 'react-redux';
 
-const StatusRow = ({ orders, branch, approveOrder, rejectOrder }) => {
+const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -31,27 +31,31 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder }) => {
         <th scope='row'>{orders.id}</th>
         <td>{orders.rxNumber}</td>
         <td>{orders.status}</td>
+        {user.access === '0' && (
+          <td>
+            <Icon
+              className='icon'
+              icon={checkCircle}
+              onClick={orderApproved}
+              style={{
+                color: 'green',
+                fontSize: '2rem',
+                margin: '5px',
+              }}
+            />
+            <Icon
+              className='icon'
+              onClick={orderRejected}
+              icon={alphaXCircle}
+              style={{
+                color: 'red',
+                fontSize: '2rem',
+                margin: '5px',
+              }}
+            />
+          </td>
+        )}
         <td>
-          <Icon
-            className='icon'
-            icon={checkCircle}
-            onClick={orderApproved}
-            style={{
-              color: 'green',
-              fontSize: '2rem',
-              margin: '5px',
-            }}
-          />
-          <Icon
-            className='icon'
-            onClick={orderRejected}
-            icon={alphaXCircle}
-            style={{
-              color: 'red',
-              fontSize: '2rem',
-              margin: '5px',
-            }}
-          />
           <Icon
             className='icon'
             icon={eyeIcon}
@@ -74,14 +78,24 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='danger' onClick={handleClose}>
-            REJECT
-          </Button>
-          <Button variant='success'>APPROVE</Button>
+          {user.access === '0' && (
+            <Fragment>
+              <Button variant='danger' onClick={handleClose}>
+                REJECT
+              </Button>
+              <Button variant='success'>APPROVE</Button>
+            </Fragment>
+          )}
         </Modal.Footer>
       </Modal>
     </Fragment>
   );
 };
 
-export default connect(null, { approveOrder, rejectOrder })(StatusRow);
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, { approveOrder, rejectOrder })(
+  StatusRow
+);

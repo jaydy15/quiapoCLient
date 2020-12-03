@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getOrders } from './../../../redux/order/orderActions';
 import StatusRow from './StatusRow';
 
-const Status = ({ orders, getOrders, branch }) => {
+const Status = ({ orders, getOrders, branch, user }) => {
   useEffect(() => {
     getOrders();
     //eslint-disable-next-line
@@ -48,6 +48,7 @@ const Status = ({ orders, getOrders, branch }) => {
 const mapStateToProps = (state) => ({
   orders: state.orders.orders,
   branch: state.auth.user.BranchDetail.id,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { getOrders })(Status);
