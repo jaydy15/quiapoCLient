@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import Navbar from './../Navbar';
 import Sidebar from './../Sidebar';
 import { connect } from 'react-redux';
@@ -10,7 +10,6 @@ const Status = ({ orders, getOrders, branch, user }) => {
     getOrders();
     //eslint-disable-next-line
   }, []);
-
   return (
     <Fragment>
       <div>
@@ -34,7 +33,7 @@ const Status = ({ orders, getOrders, branch, user }) => {
                 {orders
                   .filter((od) => od.toBranchKey === branch)
                   .map((od) => (
-                    <StatusRow key={od.id} orders={od} branch={branch} />
+                    <StatusRow key={od.id} od={od} branch={branch} />
                   ))}
               </tbody>
             </table>

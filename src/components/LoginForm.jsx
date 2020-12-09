@@ -13,9 +13,6 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
     if (isAuthenticated) {
       history.push('/home');
     }
-    if (error === 'Invalid Credentials') {
-      setAlert(error, 'danger');
-    }
   });
 
   const [loginform, setLoginForm] = useState({
@@ -31,6 +28,9 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'danger');
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import checkCircle from '@iconify-icons/mdi/check-circle';
 import alphaXCircle from '@iconify-icons/mdi/alpha-x-circle';
@@ -8,29 +8,39 @@ import Button from 'react-bootstrap/Button';
 import StatusDetails from './StatusDetails';
 import { approveOrder, rejectOrder } from '../../../redux/cart/cartActions';
 import { connect } from 'react-redux';
+import { getOrders } from './../../../redux/order/orderActions';
 
-const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
+const StatusRow = ({
+  orders,
+  od,
+  branch,
+  approveOrder,
+  rejectOrder,
+  user,
+  getOrders,
+}) => {
   const [show, setShow] = useState(false);
+  const [propsOrder, changePropsOrder] = useState(orders);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const orderApproved = () => {
-    approveOrder(orders.id);
-    window.location.reload(false);
+    approveOrder(od.id);
+    window.location.reload();
   };
 
   const orderRejected = () => {
-    rejectOrder(orders.id);
-    window.location.reload(false);
+    rejectOrder(od.id);
+    window.location.reload();
   };
 
   return (
     <Fragment>
-      <tr key={orders.id}>
-        <th scope='row'>{orders.id}</th>
-        <td>{orders.rxNumber}</td>
-        <td>{orders.status}</td>
+      <tr key={od.id}>
+        <th scope='row'>{od.id}</th>
+        <td>{od.rxNumber}</td>
+        <td>{od.status}</td>
         {user.access === '0' ? (
           <td>
             <Icon
@@ -85,16 +95,18 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <StatusDetails key={orders.id} od={orders} />
+            <StatusDetails key={od.id} od={od} />
           </div>
         </Modal.Body>
         <Modal.Footer>
           {user.access === '0' && (
             <Fragment>
-              <Button variant='danger' onClick={handleClose}>
+              <Button variant='danger' onClick={orderRejected}>
                 REJECT
               </Button>
-              <Button variant='success'>APPROVE</Button>
+              <Button variant='success' onClick={orderApproved}>
+                APPROVE
+              </Button>
             </Fragment>
           )}
         </Modal.Footer>
@@ -105,8 +117,11 @@ const StatusRow = ({ orders, branch, approveOrder, rejectOrder, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  orders: state.orders.orders,
 });
 
-export default connect(mapStateToProps, { approveOrder, rejectOrder })(
-  StatusRow
-);
+export default connect(mapStateToProps, {
+  approveOrder,
+  rejectOrder,
+  getOrders,
+})(StatusRow);

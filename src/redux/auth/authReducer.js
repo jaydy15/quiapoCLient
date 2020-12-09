@@ -37,7 +37,12 @@ export default (state = INITIAL_STATE, action) => {
       localStorage.removeItem('token');
       localStorage.setItem('persist:root', {});
       return {
-        state: undefined,
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        error: action.payload,
       };
     default:
       return state;
