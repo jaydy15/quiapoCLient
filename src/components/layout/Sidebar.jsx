@@ -32,6 +32,9 @@ const Sidebar = ({ auth }) => {
               <li>
                 <Link to='/status'>Status</Link>
               </li>
+              <li>
+                <Link to='/table'>Table</Link>
+              </li>
               {/* {user && user.access === '0' && (
                 <li>
                   <Link to='/status'>APPROVE OR REJECT</Link>

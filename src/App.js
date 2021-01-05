@@ -9,6 +9,7 @@ import Order from './components/layout/order/Order';
 import Cart from './components/layout/cart/Cart';
 import Status from './components/layout/Status/Status';
 import NewOrder from './components/layout/order/NewOrder';
+import Table from './components/Table';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -28,6 +29,7 @@ function App() {
           <PrivateRoute exact path='/cart' component={Cart} />
           <PrivateRoute exact path='/status' component={Status} />
           <PrivateRoute exact path='/new-order' component={NewOrder} />
+          <PrivateRoute exact path='/table' component={Table} />
         </Switch>
       </div>
     </Router>

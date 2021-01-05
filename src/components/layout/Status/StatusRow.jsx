@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Icon } from '@iconify/react';
 import checkCircle from '@iconify-icons/mdi/check-circle';
 import alphaXCircle from '@iconify-icons/mdi/alpha-x-circle';
@@ -20,7 +20,6 @@ const StatusRow = ({
   getOrders,
 }) => {
   const [show, setShow] = useState(false);
-  const [propsOrder, changePropsOrder] = useState(orders);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

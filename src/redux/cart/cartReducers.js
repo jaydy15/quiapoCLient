@@ -27,6 +27,25 @@ export default (state = INITIAL_STATE, action) => {
       return INITIAL_STATE;
     }
     case ADD_TO_CART:
+      const listRx = state.orders.map((order) => order.RxNumber);
+      const existed = listRx.includes(action.payload.RxNumber);
+      if (existed) {
+        const index = listRx.indexOf(action.payload.RxNumber);
+        const newArray = [...state.orders];
+        newArray[index] = {
+          ...newArray[index],
+          items: [...newArray[index].items, action.payload],
+        };
+        return {
+          ...state,
+          lists: state.lists.map((item) =>
+            item.OrderNumber === action.payload.RxNumber
+              ? { ...item, orders: action.payload }
+              : item
+          ),
+          orders: newArray,
+        };
+      }
       return {
         ...state,
         lists: state.lists.map((item) =>
@@ -34,7 +53,10 @@ export default (state = INITIAL_STATE, action) => {
             ? { ...item, orders: action.payload }
             : item
         ),
-        orders: [...state.orders, action.payload],
+        orders: [
+          ...state.orders,
+          { RxNumber: action.payload.RxNumber, items: [action.payload] },
+        ],
       };
     default:
       return state;
