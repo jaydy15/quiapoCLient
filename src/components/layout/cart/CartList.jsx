@@ -16,6 +16,7 @@ const CartList = ({
   branch,
   user,
   removeNumber,
+  RxNumber,
 }) => {
   // MODAL PROPERTIES
   const [show, setShow] = useState(false);
@@ -26,14 +27,16 @@ const CartList = ({
   const filtredOrder = orders.filter(
     (order) => order.RxNumber === item.RxNumber
   );
-  const formatBrand = brands.find((br) => br.id.toString() === item.Brand).name;
+  const formatBrand = brands.find((br) => br.id.toString() === item[0].Brand)
+    .name;
   const formatITCY = itemcategory.find(
-    (itm) => itm.id.toString() === item.ItemCategories
+    (itm) => itm.id.toString() === item[0].ItemCategories
   ).desc;
+  console.log(item);
   const formatMDL =
     formatITCY !== 'LENS'
-      ? fscaModels.find((mdl) => mdl.id.toString() === item.Model).modelName
-      : lens.find((mdl) => mdl.id.toString() === item.Model).name;
+      ? fscaModels.find((mdl) => mdl.id.toString() === item[0].Model).modelName
+      : lens.find((mdl) => mdl.id.toString() === item[0].Model).name;
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
     e.preventDefault();
@@ -63,13 +66,13 @@ const CartList = ({
     <Fragment>
       <div className='row' style={{ border: '1px solid #eee', margin: '20px' }}>
         <div className='col-md-12'>
-          <h3 onClick={handleShow}>Rx Number : {item.RxNumber}</h3>
+          <h3 onClick={handleShow}>Rx Number : {RxNumber}</h3>
           <div className='row'>
             <div className='col-md-3'>
               <p>Item Category: {formatITCY}</p>
             </div>
             <div className='col-md-3'>
-              <p>Brand: {formatBrand}</p>
+              <p>Brand: {formatBrand}</p>{' '}
             </div>
             <div className='col-md-3'>
               <p>Model: {formatMDL}</p>
@@ -83,8 +86,8 @@ const CartList = ({
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <p>Rx Number : {item.RxNumber}</p>
-            {filtredOrder.map((bulk) => (
+            <p>Rx Number : {RxNumber}</p>
+            {item.map((bulk) => (
               <CartDetails key={bulk.tempID} bulk={bulk} />
             ))}
           </div>
