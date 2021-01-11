@@ -17,6 +17,7 @@ const CartList = ({
   user,
   removeNumber,
   RxNumber,
+  ordertype,
 }) => {
   // MODAL PROPERTIES
   const [show, setShow] = useState(false);
@@ -27,6 +28,9 @@ const CartList = ({
   const filtredOrder = orders.filter(
     (order) => order.RxNumber === item.RxNumber
   );
+  const formatODTY = ordertype.find(
+    (itm) => itm.id.toString() === item[0].OrderType
+  ).typeDesc;
   const formatBrand = brands.find((br) => br.id.toString() === item[0].Brand)
     .name;
   const formatITCY = itemcategory.find(
@@ -68,6 +72,9 @@ const CartList = ({
         <div className='col-md-12'>
           <h3 onClick={handleShow}>Rx Number : {RxNumber}</h3>
           <div className='row'>
+            <div className='col-md-3'>
+              <p>Order Type: {formatODTY}</p>
+            </div>
             <div className='col-md-3'>
               <p>Item Category: {formatITCY}</p>
             </div>
@@ -113,6 +120,7 @@ const mapStateToProps = (state) => ({
   fscaModels: state.catalogue.fscsaModels,
   branch: state.auth.user.BranchDetail.id,
   user: state.auth.user.id,
+  ordertype: state.catalogue.orderTypes,
 });
 
 export default connect(mapStateToProps, { forApproval, removeNumber })(

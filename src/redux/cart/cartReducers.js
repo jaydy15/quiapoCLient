@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   CLEAR_LIST,
   NEW_NUMBER,
+  REMOVE_CART_ITEM,
   REMOVE_FROM_LIST,
 } from './cartType';
 
@@ -27,11 +28,11 @@ export default (state = INITIAL_STATE, action) => {
       return INITIAL_STATE;
     }
     case ADD_TO_CART:
-      const listRx = state.orders.map((order) => order.RxNumber);
-      const existed = listRx.includes(action.payload.RxNumber);
+      let listRx = state.orders.map((order) => order.RxNumber);
+      let existed = listRx.includes(action.payload.RxNumber);
       if (existed) {
-        const index = listRx.indexOf(action.payload.RxNumber);
-        const newArray = [...state.orders];
+        let index = listRx.indexOf(action.payload.RxNumber);
+        let newArray = [...state.orders];
         newArray[index] = {
           ...newArray[index],
           items: [...newArray[index].items, action.payload],
@@ -57,6 +58,23 @@ export default (state = INITIAL_STATE, action) => {
           ...state.orders,
           { RxNumber: action.payload.RxNumber, items: [action.payload] },
         ],
+      };
+
+    case REMOVE_CART_ITEM:
+      let listRx1 = state.orders.map((order) => order.RxNumber);
+      let index = listRx1.indexOf(action.payload.RxNumber);
+      const updatedArray = [...state.orders];
+      updatedArray[index] = {
+        ...updatedArray[index],
+        items: [
+          updatedArray[index].items.filter(
+            (item) => item.tempID !== action.payload.itemNumber
+          ),
+        ],
+      };
+      return {
+        ...state,
+        orders: updatedArray,
       };
     default:
       return state;

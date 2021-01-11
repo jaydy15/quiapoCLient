@@ -4,6 +4,7 @@ import {
   ADD_TO_CART,
   FOR_APPROVAL,
   REMOVE_FROM_LIST,
+  REMOVE_CART_ITEM,
 } from './cartType';
 import axios from 'axios';
 
@@ -18,6 +19,13 @@ export const removeNumber = (OrderNumber) => (dispatch) => {
   dispatch({
     type: REMOVE_FROM_LIST,
     payload: OrderNumber,
+  });
+};
+
+export const removeItem = (RxNumber, itemNumber) => (dispatch) => {
+  dispatch({
+    type: REMOVE_CART_ITEM,
+    payload: { RxNumber, itemNumber },
   });
 };
 
