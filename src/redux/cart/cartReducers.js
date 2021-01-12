@@ -64,13 +64,12 @@ export default (state = INITIAL_STATE, action) => {
       let listRx1 = state.orders.map((order) => order.RxNumber);
       let index = listRx1.indexOf(action.payload.RxNumber);
       const updatedArray = [...state.orders];
+      const filtered = updatedArray[index].items.filter(
+        (item) => item.tempID !== action.payload.itemNumber
+      );
       updatedArray[index] = {
         ...updatedArray[index],
-        items: [
-          updatedArray[index].items.filter(
-            (item) => item.tempID !== action.payload.itemNumber
-          ),
-        ],
+        items: filtered,
       };
       return {
         ...state,

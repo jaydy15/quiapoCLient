@@ -24,23 +24,23 @@ const CartList = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  console.log(item.length);
+  let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
-  const filtredOrder = orders.filter(
-    (order) => order.RxNumber === item.RxNumber
-  );
-  const formatODTY = ordertype.find(
-    (itm) => itm.id.toString() === item[0].OrderType
-  ).typeDesc;
-  const formatBrand = brands.find((br) => br.id.toString() === item[0].Brand)
-    .name;
-  const formatITCY = itemcategory.find(
-    (itm) => itm.id.toString() === item[0].ItemCategories
-  ).desc;
-  console.log(item);
-  const formatMDL =
-    formatITCY !== 'LENS'
-      ? fscaModels.find((mdl) => mdl.id.toString() === item[0].Model).modelName
-      : lens.find((mdl) => mdl.id.toString() === item[0].Model).name;
+  if (item.length >= 1) {
+    formatODTY = ordertype.find(
+      (itm) => itm.id.toString() === item[0].OrderType
+    ).typeDesc;
+    formatBrand = brands.find((br) => br.id.toString() === item[0].Brand).name;
+    formatITCY = itemcategory.find(
+      (itm) => itm.id.toString() === item[0].ItemCategories
+    ).desc;
+    formatMDL =
+      formatITCY !== 'LENS'
+        ? fscaModels.find((mdl) => mdl.id.toString() === item[0].Model)
+            .modelName
+        : lens.find((mdl) => mdl.id.toString() === item[0].Model).name;
+  }
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
     e.preventDefault();
@@ -68,46 +68,52 @@ const CartList = ({
 
   return (
     <Fragment>
-      <div className='row' style={{ border: '1px solid #eee', margin: '20px' }}>
-        <div className='col-md-12'>
-          <h3 onClick={handleShow}>Rx Number : {RxNumber}</h3>
-          <div className='row'>
-            <div className='col-md-3'>
-              <p>Order Type: {formatODTY}</p>
-            </div>
-            <div className='col-md-3'>
-              <p>Item Category: {formatITCY}</p>
-            </div>
-            <div className='col-md-3'>
-              <p>Brand: {formatBrand}</p>{' '}
-            </div>
-            <div className='col-md-3'>
-              <p>Model: {formatMDL}</p>
+      {item.length >= 1 && (
+        <Fragment>
+          <div
+            className='row'
+            style={{ border: '1px solid #eee', margin: '20px' }}>
+            <div className='col-md-12'>
+              <h3 onClick={handleShow}>Rx Number : {RxNumber}</h3>
+              <div className='row'>
+                <div className='col-md-3'>
+                  <p>Order Type: {formatODTY}</p>
+                </div>
+                <div className='col-md-3'>
+                  <p>Item Category: {formatITCY}</p>
+                </div>
+                <div className='col-md-3'>
+                  <p>Brand: {formatBrand}</p>{' '}
+                </div>
+                <div className='col-md-3'>
+                  <p>Model: {formatMDL}</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <Modal show={show} onHide={handleClose} size='lg'>
-        <Modal.Header closeButton>
-          <Modal.Title>Order Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className='show-grid'>
-          <div>
-            <p>Rx Number : {RxNumber}</p>
-            {item.map((bulk) => (
-              <CartDetails key={bulk.tempID} bulk={bulk} />
-            ))}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={onSubmit}>
-            Submit for Approval
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal show={show} onHide={handleClose} size='lg'>
+            <Modal.Header closeButton>
+              <Modal.Title>Order Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className='show-grid'>
+              <div>
+                <p>Rx Number : {RxNumber}</p>
+                {item.map((bulk) => (
+                  <CartDetails key={bulk.tempID} bulk={bulk} />
+                ))}
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant='primary' onClick={onSubmit}>
+                Submit for Approval
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

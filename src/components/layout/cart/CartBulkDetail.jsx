@@ -14,15 +14,16 @@ const CartBulkDetail = ({
   const formatITCY = itemcategory.find(
     (itm) => itm.id.toString() === bulk.ItemCategories
   ).desc;
-  const formatODTY = ordertype.find(
-    (itm) => itm.id.toString() === bulk.OrderType
-  ).typeDesc;
 
   const formatBrand = brands.find((br) => br.id.toString() === bulk.Brand).name;
   const formatMDL =
     formatITCY !== 'LENS'
       ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.Model).modelName
       : lens.find((mdl) => mdl.id.toString() === bulk.Model).name;
+
+  const removeItemFromCart = () => {
+    removeItem(bulk.RxNumber, bulk.tempID);
+  };
   return (
     <div>
       <table className='table'>
@@ -51,11 +52,15 @@ const CartBulkDetail = ({
                 <p>OD Details</p>
                 <p>{bulk.OdDetails}</p>
                 <p>OS Details</p>
-                <p>{bulk.SoDetails}</p>
+                <p>{bulk.OsDetails}</p>
               </div>
             </td>
             <td>
-              <div className='btn btn-danger btn-block'>REMOVE</div>
+              <div
+                className='btn btn-danger btn-block'
+                onClick={removeItemFromCart}>
+                REMOVE
+              </div>
             </td>
           </tr>
         </tbody>

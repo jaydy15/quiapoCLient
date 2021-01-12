@@ -23,6 +23,7 @@ export const removeNumber = (OrderNumber) => (dispatch) => {
 };
 
 export const removeItem = (RxNumber, itemNumber) => (dispatch) => {
+  console.log(RxNumber, itemNumber);
   dispatch({
     type: REMOVE_CART_ITEM,
     payload: { RxNumber, itemNumber },
