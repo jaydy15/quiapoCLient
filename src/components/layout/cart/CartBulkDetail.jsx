@@ -12,17 +12,18 @@ const CartBulkDetail = ({
   removeItem,
 }) => {
   const formatITCY = itemcategory.find(
-    (itm) => itm.id.toString() === bulk.ItemCategories
+    (itm) => itm.id.toString() === bulk.itemCategories
   ).desc;
 
-  const formatBrand = brands.find((br) => br.id.toString() === bulk.Brand).name;
+  const formatBrand = brands.find((br) => br.id.toString() === bulk.brand).name;
   const formatMDL =
     formatITCY !== 'LENS'
-      ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.Model).modelName
-      : lens.find((mdl) => mdl.id.toString() === bulk.Model).name;
+      ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.model).modelName
+      : lens.find((mdl) => mdl.id.toString() === bulk.model).name;
 
   const removeItemFromCart = () => {
-    removeItem(bulk.RxNumber, bulk.tempID);
+    console.log(bulk.rxNumber);
+    removeItem(bulk.rxNumber, bulk.tempID);
   };
   return (
     <div>

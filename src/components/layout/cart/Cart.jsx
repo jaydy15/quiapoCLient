@@ -15,11 +15,11 @@ const Cart = ({ lists, orders }) => {
         <div className='main-content'>
           <h1>Cart</h1>
           {orders.length > 0 &&
-            orders.map((item) => (
+            orders.map((order) => (
               <CartList
-                key={item.RxNumber}
-                item={item.items}
-                RxNumber={item.RxNumber}
+                key={order.rxNumber}
+                item={order.items}
+                rxNumber={order.rxNumber}
               />
             ))}
         </div>

@@ -16,8 +16,9 @@ const CartList = ({
   branch,
   user,
   removeNumber,
-  RxNumber,
+  rxNumber,
   ordertype,
+  list,
 }) => {
   // MODAL PROPERTIES
   const [show, setShow] = useState(false);
@@ -29,41 +30,57 @@ const CartList = ({
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
     formatODTY = ordertype.find(
-      (itm) => itm.id.toString() === item[0].OrderType
+      (itm) => itm.id.toString() === item[0].orderType
     ).typeDesc;
-    formatBrand = brands.find((br) => br.id.toString() === item[0].Brand).name;
+    formatBrand = brands.find((br) => br.id.toString() === item[0].brand).name;
     formatITCY = itemcategory.find(
-      (itm) => itm.id.toString() === item[0].ItemCategories
+      (itm) => itm.id.toString() === item[0].itemCategories
     ).desc;
     formatMDL =
       formatITCY !== 'LENS'
-        ? fscaModels.find((mdl) => mdl.id.toString() === item[0].Model)
+        ? fscaModels.find((mdl) => mdl.id.toString() === item[0].model)
             .modelName
-        : lens.find((mdl) => mdl.id.toString() === item[0].Model).name;
+        : lens.find((mdl) => mdl.id.toString() === item[0].model).name;
   }
+  const ot = list.find((x) => x.OrderNumber === item[0].rxNumber).OrderTypes;
+  let isBulk;
+  if (ot === 'Bulk Order') {
+    isBulk = true;
+  } else {
+    isBulk = false;
+  }
+
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
     e.preventDefault();
-    forApproval({
-      id: '7',
-      typeName: 'PO',
-      fromBranchKey: branch,
-      toBranchKey: branch,
-      userIdKey: user,
-      orderTypeKey: parseInt(item.OrderType),
-      rxNumber: item.RxNumber,
-      supplyCategoryKey: parseInt(item.ItemCategories),
-      itemKey: '1',
-      cdKey: '1',
-      size: '11.00',
-      additionalInstruction: item.AdditionalInstructions,
-      odDetails: item.OdDetails,
-      osDetails: item.OsDetails,
-      pxName: item.PatientsName,
-      soDetails: item.SoDetails,
-      status: '',
-    });
-    removeNumber(item.RxNumber);
+    const toGenerate = {
+      rxNumber: item[0].RxNumber,
+      branchId: branch,
+      items: item,
+      isBulk,
+    };
+    console.log(toGenerate);
+
+    // forApproval({
+    //   id: '7',
+    //   typeName: 'PO',
+    //   fromBranchKey: branch,
+    //   toBranchKey: branch,
+    //   userIdKey: user,
+    //   orderTypeKey: parseInt(item.OrderType),
+    //   rxNumber: item.RxNumber,
+    //   supplyCategoryKey: parseInt(item.ItemCategories),
+    //   itemKey: '1',
+    //   cdKey: '1',
+    //   size: '11.00',
+    //   additionalInstruction: item.AdditionalInstructions,
+    //   odDetails: item.OdDetails,
+    //   osDetails: item.OsDetails,
+    //   pxName: item.PatientsName,
+    //   soDetails: item.SoDetails,
+    //   status: '',
+    // });
+    // removeNumber(item.RxNumber);
   };
 
   return (
@@ -74,7 +91,7 @@ const CartList = ({
             className='row'
             style={{ border: '1px solid #eee', margin: '20px' }}>
             <div className='col-md-12'>
-              <h3 onClick={handleShow}>Rx Number : {RxNumber}</h3>
+              <h3 onClick={handleShow}>Rx Number : {rxNumber}</h3>
               <div className='row'>
                 <div className='col-md-3'>
                   <p>Order Type: {formatODTY}</p>
@@ -97,7 +114,7 @@ const CartList = ({
             </Modal.Header>
             <Modal.Body className='show-grid'>
               <div>
-                <p>Rx Number : {RxNumber}</p>
+                <p>Rx Number : {rxNumber}</p>
                 {item.map((bulk) => (
                   <CartDetails key={bulk.tempID} bulk={bulk} />
                 ))}
@@ -127,6 +144,7 @@ const mapStateToProps = (state) => ({
   branch: state.auth.user.BranchDetail.id,
   user: state.auth.user.id,
   ordertype: state.catalogue.orderTypes,
+  list: state.cart.lists,
 });
 
 export default connect(mapStateToProps, { forApproval, removeNumber })(
