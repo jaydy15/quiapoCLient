@@ -51,7 +51,7 @@ export const forApproval = (formData) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  const res = await axios.post('/api/transactions', formData, config);
+  const res = await axios.post('/api/orders', formData, config);
 
   dispatch({
     type: FOR_APPROVAL,

@@ -25,7 +25,7 @@ const CartList = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(item.length);
+  console.log(item);
   let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
@@ -53,13 +53,37 @@ const CartList = ({
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
     e.preventDefault();
+    const formattedItems = [];
+    for (let i = 0; i < item.length; i++) {
+      const formatItem = {
+        typeName: 'PO',
+        fromBranchKey: branch,
+        toBranchKey: branch,
+        userIdKey: user,
+        orderTypeKey: parseInt(item[i].orderType),
+        rxNumber: rxNumber,
+        supplyCategoryKey: parseInt(item[i].itemCategories),
+        itemKey: '1',
+        cdKey: '1',
+        size: '11.00',
+        additionalInstruction: item[i].additionalInstructions,
+        odDetails: item[i].odDetails,
+        osDetails: item[i].osDetails,
+        pxName: item[i].pxName,
+        soDetails: item[i].soDetails,
+        status: 'FOR APPROVAL',
+      };
+      formattedItems.push(formatItem);
+    }
+
     const toGenerate = {
-      rxNumber: item[0].RxNumber,
+      rxNumber: rxNumber,
       branchId: branch,
-      items: item,
+      items: formattedItems,
       isBulk,
     };
-    console.log(toGenerate);
+    //console.log(toGenerate);
+    forApproval(toGenerate);
 
     // forApproval({
     //   id: '7',
@@ -80,7 +104,7 @@ const CartList = ({
     //   soDetails: item.SoDetails,
     //   status: '',
     // });
-    // removeNumber(item.RxNumber);
+    // removeNumber(rxNumber);
   };
 
   return (

@@ -5,18 +5,36 @@ import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
+import Joi, { schema } from 'joi-browser';
 
 const NewOrder = ({ newNumber }) => {
   let history = useHistory();
   const alert = useAlert();
 
+  const [errors, setError] = useState({});
+
   const [formData, setFormData] = useState({
-    OrderType: '',
+    OrderTypes: '',
     prefix: '',
     number: '',
   });
 
   const { OrderTypes, prefix, number } = formData;
+
+  const schema = {
+    OrderTypes: Joi.string().required(),
+    prefix: Joi.string().required(),
+    number: Joi.number().required(),
+  };
+
+  const validate = () => {
+    const result = Joi.validate(formData, schema, { abortEarly: false });
+    if (!result.error) return null;
+
+    const errors = {};
+    for (let item of result.error.details) errors[item.path[0]] = item.message;
+    return errors;
+  };
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,19 +43,22 @@ const NewOrder = ({ newNumber }) => {
   const OrderNumber = prefix + number;
 
   const onSubmit = (e) => {
-    newNumber({
-      OrderTypes,
-      OrderNumber,
-    });
-    setFormData({
-      OrderType: '',
-      prefix: '',
-      number: '',
-    });
-    alert.show('Order Number Successfully Created');
-    setTimeout(() => {
-      history.push('/order');
-    }, 1000);
+    const error = validate();
+    setError(error);
+    console.log(error);
+    // newNumber({
+    //   OrderTypes,
+    //   OrderNumber,
+    // });
+    // setFormData({
+    //   OrderType: '',
+    //   prefix: '',
+    //   number: '',
+    // });
+    // alert.show('Order Number Successfully Created');
+    // setTimeout(() => {
+    //   history.push('/order');
+    // }, 1000);
   };
 
   return (
@@ -49,12 +70,14 @@ const NewOrder = ({ newNumber }) => {
         </div>
         <div className='main-content'>
           <h1>New Order</h1>
+
           <div className='form-group'>
             <label htmlFor=''>Order Type</label>
             <select
               name='OrderTypes'
               className='form-control'
-              onChange={onChange}>
+              onChange={onChange}
+              required>
               <option value=''> Select Order Type</option>
               <option value='Bulk Order'>Bulk Order</option>
               <option value='Non Bulk Order'>Non Bulk Order</option>
@@ -72,6 +95,7 @@ const NewOrder = ({ newNumber }) => {
                     value={prefix}
                     name='prefix'
                     onChange={onChange}
+                    required
                   />
                 </div>
                 <div className='col-md-8' style={{ paddingLeft: 0 }}>
@@ -81,6 +105,7 @@ const NewOrder = ({ newNumber }) => {
                     value={number}
                     name='number'
                     onChange={onChange}
+                    required
                   />
                 </div>
               </div>
@@ -94,6 +119,7 @@ const NewOrder = ({ newNumber }) => {
                 name='number'
                 value={number}
                 onChange={onChange}
+                required
               />
             </div>
           )}

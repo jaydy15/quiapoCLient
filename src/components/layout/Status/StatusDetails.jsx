@@ -1,6 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const StatusDetails = ({ od }) => {
+const StatusDetails = ({ od, orderType, supplyCategories, branch, users }) => {
+  const formatOrderType = orderType.find((ot) => ot.id === od.orderTypeKey)
+    .typeDesc;
+  const formatSupplyCategories = supplyCategories.find(
+    (sc) => sc.id === od.supplyCategoryKey
+  ).desc;
+  const formatBranch = branch.find((bh) => bh.id === od.toBranchKey).name;
+  const user = users.find((us) => us.id === od.userIdKey).name;
+  console.log(user);
+
   return (
     <div>
       <table className='table'>
@@ -12,10 +22,10 @@ const StatusDetails = ({ od }) => {
             <th scope='col'>ENCODE BY</th>
           </tr>
           <tr>
-            <th>{od.rxNumber}</th>
+            <td>{od.rxNumber}</td>
             <td>{od.transactionDetailDate}</td>
-            <td>{od.toBranchKey}</td>
-            <td>{od.userIdKey}</td>
+            <td>{formatBranch}</td>
+            <td>{user}</td>
           </tr>
           <tr>
             <th scope='col'>ORDER TYPE</th>
@@ -24,8 +34,8 @@ const StatusDetails = ({ od }) => {
             <th scope='col'>SIZE</th>
           </tr>
           <tr>
-            <th>{od.orderTypeKey}</th>
-            <td>{od.supplyCategoryKey}</td>
+            <td>{formatOrderType}</td>
+            <td>{formatSupplyCategories}</td>
             <td>{od.toBranchKey}</td>
             <td>{od.itemKey}</td>
           </tr>
@@ -36,7 +46,7 @@ const StatusDetails = ({ od }) => {
             <th scope='col'>SO DETAILS</th>
           </tr>
           <tr>
-            <th>{od.odDetails}</th>
+            <td>{od.odDetails}</td>
             <td>{od.pxName}</td>
             <td>{od.osDetails}</td>
             <td>{od.soDetails}</td>
@@ -47,4 +57,11 @@ const StatusDetails = ({ od }) => {
   );
 };
 
-export default StatusDetails;
+const mapStateToProps = (state) => ({
+  orderType: state.catalogue.orderTypes,
+  supplyCategories: state.catalogue.supplyCategories,
+  branch: state.catalogue.branchDetails,
+  users: state.catalogue.users,
+});
+
+export default connect(mapStateToProps)(StatusDetails);
