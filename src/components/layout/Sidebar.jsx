@@ -10,7 +10,7 @@ const Sidebar = ({ auth }) => {
         {user && (
           <div className='card' style={{ width: '18rem' }}>
             <div className='card-body'>
-              <p className='card-text'>User: {user.name}</p>
+              <p className='card-text'>User: {user.username}</p>
               <p className='card-text'>Branch: {user.BranchDetail.name}</p>
             </div>
           </div>

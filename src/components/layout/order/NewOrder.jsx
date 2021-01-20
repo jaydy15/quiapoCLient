@@ -12,20 +12,20 @@ const NewOrder = ({ newNumber }) => {
   const alert = useAlert();
 
   const [formData, setFormData] = useState({
-    orderTypes: '',
+    OrderTypes: '',
     prefix: '',
     number: '',
   });
-  const { orderTypes, prefix, number } = formData;
+  const { OrderTypes, prefix, number } = formData;
 
   const [error, setError] = useState({});
 
   const schema = {
-    orderTypes: Joi.string().required(),
+    OrderTypes: Joi.string().required(),
     number: Joi.number().required(),
   };
 
-  if (orderTypes === 'Bulk Order') {
+  if (OrderTypes === 'Bulk Order') {
     schema.prefix = Joi.string().required();
   }
 
@@ -45,7 +45,7 @@ const NewOrder = ({ newNumber }) => {
 
   const numberfunction = () => {
     newNumber({
-      orderTypes,
+      OrderTypes,
       OrderNumber,
     });
     console.log(OrderNumber);
@@ -56,7 +56,6 @@ const NewOrder = ({ newNumber }) => {
   };
 
   const onSubmit = (e) => {
-    setError(validate());
     numberfunction();
   };
 
@@ -69,11 +68,11 @@ const NewOrder = ({ newNumber }) => {
         </div>
         <div className='main-content'>
           <h1>New Order</h1>
-          {orderTypes !== null && (
+          {OrderTypes !== null && (
             <div className='form-group'>
               <label htmlFor=''>Order Type</label>
               <select
-                name='orderTypes'
+                name='OrderTypes'
                 className='form-control'
                 onChange={onChange}
                 required>
@@ -87,7 +86,7 @@ const NewOrder = ({ newNumber }) => {
             </div>
           )}
 
-          {orderTypes === 'Bulk Order' ? (
+          {OrderTypes === 'Bulk Order' ? (
             <div className='form-group'>
               <label htmlFor=''>BO NUMBER</label>
               <div className='row'>

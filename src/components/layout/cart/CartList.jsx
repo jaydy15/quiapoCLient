@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
 import { forApproval, removeNumber } from '../../../redux/cart/cartActions';
+import { snakeCase } from 'lodash';
 
 const CartList = ({
   item,
@@ -19,6 +20,8 @@ const CartList = ({
   rxNumber,
   ordertype,
   list,
+  csaItems,
+  fsItems,
 }) => {
   // MODAL PROPERTIES
   const [show, setShow] = useState(false);
@@ -26,7 +29,7 @@ const CartList = ({
   const handleShow = () => setShow(true);
 
   console.log(item);
-  let formatODTY, formatBrand, formatITCY, formatMDL;
+  let formatODTY, formatBrand, formatITCY, formatMDL, itemKey;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
     formatODTY = ordertype.find(
@@ -41,7 +44,24 @@ const CartList = ({
         ? fscaModels.find((mdl) => mdl.id.toString() === item[0].model)
             .modelName
         : lens.find((mdl) => mdl.id.toString() === item[0].model).name;
+    if (formatITCY === 'LENS') {
+      itemKey = lens.find((mdl) => mdl.id.toString() === item[0].model).id;
+    } else if (
+      item[0].itemCategories === '1' ||
+      item[0].itemCategories === '5' ||
+      item[0].itemCategories === '6'
+    ) {
+      itemKey = csaItems.find(
+        (csa) => csa.csaModelKey === parseInt(item[0].model)
+      ).id;
+    } else {
+      itemKey = fsItems.find((fs) => fs.fsModelKey === parseInt(item[0].model))
+        .id;
+    }
+    console.log(itemKey);
   }
+
+  //BULK OR NON BULK
   const ot = list.find((x) => x.OrderNumber === item[0].rxNumber).OrderTypes;
   let isBulk;
   if (ot === 'Bulk Order') {
@@ -63,7 +83,7 @@ const CartList = ({
         orderTypeKey: parseInt(item[i].orderType),
         rxNumber: rxNumber,
         supplyCategoryKey: parseInt(item[i].itemCategories),
-        itemKey: '1',
+        itemKey: itemKey,
         cdKey: '1',
         size: '11.00',
         additionalInstruction: item[i].additionalInstructions,
@@ -169,6 +189,8 @@ const mapStateToProps = (state) => ({
   user: state.auth.user.id,
   ordertype: state.catalogue.orderTypes,
   list: state.cart.lists,
+  csaItems: state.catalogue.csaItems,
+  fsItems: state.catalogue.fsItems,
 });
 
 export default connect(mapStateToProps, { forApproval, removeNumber })(

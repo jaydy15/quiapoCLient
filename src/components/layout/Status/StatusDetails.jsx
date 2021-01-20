@@ -1,14 +1,27 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
-const StatusDetails = ({ od, orderType, supplyCategories, branch, users }) => {
+const StatusDetails = ({
+  od,
+  orderType,
+  supplyCategories,
+  branch,
+  users,
+  lens,
+}) => {
   const formatOrderType = orderType.find((ot) => ot.id === od.orderTypeKey)
     .typeDesc;
   const formatSupplyCategories = supplyCategories.find(
     (sc) => sc.id === od.supplyCategoryKey
   ).desc;
   const formatBranch = branch.find((bh) => bh.id === od.toBranchKey).name;
-  const user = users.find((us) => us.id === od.userIdKey).name;
+  const user = users.find((us) => us.id === od.userIdKey).username;
+
+  let formatItem;
+  if (od.supplyCategoryKey === 2) {
+    formatItem = lens.find((len) => len.id === od.itemKey).name;
+  }
   console.log(user);
 
   return (
@@ -23,7 +36,11 @@ const StatusDetails = ({ od, orderType, supplyCategories, branch, users }) => {
           </tr>
           <tr>
             <td>{od.rxNumber}</td>
-            <td>{od.transactionDetailDate}</td>
+            <td>
+              <Moment format='ddd, MMMM D YYYY, h:mm a'>
+                {od.transactionDetailDate}
+              </Moment>
+            </td>
             <td>{formatBranch}</td>
             <td>{user}</td>
           </tr>
@@ -62,6 +79,7 @@ const mapStateToProps = (state) => ({
   supplyCategories: state.catalogue.supplyCategories,
   branch: state.catalogue.branchDetails,
   users: state.catalogue.users,
+  lens: state.catalogue.lensItems,
 });
 
 export default connect(mapStateToProps)(StatusDetails);
