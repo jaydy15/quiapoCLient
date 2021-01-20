@@ -10,12 +10,15 @@ const CartBulkDetail = ({
   lens,
   fscsaModels,
   removeItem,
+  colors,
 }) => {
   const formatITCY = itemcategory.find(
     (itm) => itm.id.toString() === bulk.itemCategories
   ).desc;
 
   const formatBrand = brands.find((br) => br.id.toString() === bulk.brand).name;
+  const formatColor = colors.find((cl) => cl.id.toString() === bulk.color)
+    .colorName;
   const formatMDL =
     formatITCY !== 'LENS'
       ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.model).modelName
@@ -44,16 +47,16 @@ const CartBulkDetail = ({
                 <p>Item Category : {formatITCY}</p>
                 <p>Brand : {formatBrand}</p>
                 <p>Model : {formatMDL}</p>
-                <p>Color : {bulk.Color}</p>
-                <p>Size : {bulk.Size}</p>
+                <p>Color : {formatColor}</p>
+                <p>Size : {bulk.size}</p>
               </div>
             </td>
             <td>
               <div>
                 <p>OD Details</p>
-                <p>{bulk.OdDetails}</p>
+                <p>{bulk.odDetails}</p>
                 <p>OS Details</p>
-                <p>{bulk.OsDetails}</p>
+                <p>{bulk.osDetails}</p>
               </div>
             </td>
             <td>
@@ -76,6 +79,7 @@ const mapStateToProps = (state) => ({
   brands: state.catalogue.brands,
   lens: state.catalogue.lensItems,
   fscsaModels: state.catalogue.fscsaModels,
+  colors: state.catalogue.colors,
 });
 
 export default connect(mapStateToProps, { removeItem })(CartBulkDetail);

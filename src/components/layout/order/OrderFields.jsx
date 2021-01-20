@@ -7,6 +7,7 @@ import ItemCategory from './orderFields/ItemCategory';
 import Models from './orderFields/Models';
 import OdGrades from './orderFields/OdGrades';
 import OsGrades from './orderFields/OsGrades';
+import Colors from './orderFields/Colors';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
@@ -244,17 +245,22 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          {/* COLOR */}
-          <Models onChange={onChange} value={Model} />
+          <Colors onChange={onChange} value={Color} />
+          <p>color</p>
         </div>
         <div className='col-md-4'>
-          {/* SIZE */}
-          <Brands onChange={onChange} value={Brand} />
+          <InputField
+            type='number'
+            name='Size'
+            value={Size}
+            onChange={onChange}
+            label='Size'
+          />
         </div>
         {ItemCategories !== '1' && ItemCategories !== '2' ? (
           <div className='col-md-4'>
             <InputField
-              type='text'
+              type='number'
               placeholder='Non Lens Qty'
               name='NonLensQty'
               value={NonLensQty}

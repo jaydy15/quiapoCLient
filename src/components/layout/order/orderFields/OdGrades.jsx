@@ -42,6 +42,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
       <div className='col-md-2'>
         <label htmlFor=''>OD SPH</label>
         <select className='form-control' onChange={onChange} name='OdSph'>
+          <option>N/A</option>
           {sphGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -50,6 +51,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
       <div className='col-md-2'>
         <label htmlFor=''>OD CYL</label>
         <select className='form-control' onChange={onChange} name='OdCyl'>
+          <option>N/A</option>
           {cylGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -58,6 +60,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
       <div className='col-md-2'>
         <label htmlFor=''>OD AXIS</label>
         <select className='form-control' onChange={onChange} name='OdAxis'>
+          <option>N/A</option>
           {axisGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}
@@ -66,6 +69,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
       <div className='col-md-2'>
         <label htmlFor=''>OD ADD</label>
         <select className='form-control' onChange={onChange} name='OdAdd'>
+          <option>N/A</option>
           {addGrades.map((gr) => (
             <option key={gr}>{gr}</option>
           ))}

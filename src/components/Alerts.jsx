@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Alerts = ({ alerts }) => {
+const Alerts = ({ alerts, errors }) => {
   return (
     alerts.length > 0 &&
     alerts.map((alert) => (
