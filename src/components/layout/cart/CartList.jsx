@@ -29,7 +29,7 @@ const CartList = ({
   const handleShow = () => setShow(true);
 
   console.log(item);
-  let formatODTY, formatBrand, formatITCY, formatMDL, itemKey;
+  let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
     formatODTY = ordertype.find(
@@ -44,21 +44,6 @@ const CartList = ({
         ? fscaModels.find((mdl) => mdl.id.toString() === item[0].model)
             .modelName
         : lens.find((mdl) => mdl.id.toString() === item[0].model).name;
-    if (formatITCY === 'LENS') {
-      itemKey = lens.find((mdl) => mdl.id.toString() === item[0].model).id;
-    } else if (
-      item[0].itemCategories === '1' ||
-      item[0].itemCategories === '5' ||
-      item[0].itemCategories === '6'
-    ) {
-      itemKey = csaItems.find(
-        (csa) => csa.csaModelKey === parseInt(item[0].model)
-      ).id;
-    } else {
-      itemKey = fsItems.find((fs) => fs.fsModelKey === parseInt(item[0].model))
-        .id;
-    }
-    console.log(itemKey);
   }
 
   //BULK OR NON BULK
@@ -74,7 +59,24 @@ const CartList = ({
   const onSubmit = (e) => {
     e.preventDefault();
     const formattedItems = [];
+    const itemKey = [];
     for (let i = 0; i < item.length; i++) {
+      if (item[i].itemCategories === '2') {
+        itemKey.push(item[i].model);
+      } else if (
+        item[i].itemCategories === '1' ||
+        item[i].itemCategories === '5' ||
+        item[i].itemCategories === '6'
+      ) {
+        itemKey.push(
+          csaItems.find((csa) => csa.csaModelKey === parseInt(item[i].model)).id
+        );
+      } else {
+        itemKey.push(
+          fsItems.find((fs) => fs.fsModelKey === parseInt(item[i].model)).id
+        );
+      }
+      console.log(itemKey);
       const formatItem = {
         typeName: 'PO',
         fromBranchKey: branch,
@@ -83,7 +85,7 @@ const CartList = ({
         orderTypeKey: parseInt(item[i].orderType),
         rxNumber: rxNumber,
         supplyCategoryKey: parseInt(item[i].itemCategories),
-        itemKey: itemKey,
+        itemKey: itemKey[i],
         cdKey: '1',
         size: '11.00',
         additionalInstruction: item[i].additionalInstructions,
