@@ -92,9 +92,9 @@ const StatusRow = ({
           <Modal.Title>Order Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className='show-grid'>
-          {/* <div>
-            <StatusDetails key={od.id} od={od} />
-          </div> */}
+          <div>
+            <StatusDetails key={order.items[0].status} items={order.items} />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           {user.access === '0' && (

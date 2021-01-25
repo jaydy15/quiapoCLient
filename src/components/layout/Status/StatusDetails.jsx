@@ -3,73 +3,98 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
 const StatusDetails = ({
-  od,
+  items,
   orderType,
   supplyCategories,
   branch,
   users,
   lens,
 }) => {
-  const formatOrderType = orderType.find((ot) => ot.id === od.orderTypeKey)
-    .typeDesc;
+  if (items.length > 1) {
+    for (let i = 0; i < items.length; i++) {
+      let formatOrderType = orderType.find(
+        (ot) => ot.id === items[i].orderTypeKey
+      ).typeDesc;
+      let formatSupplyCategories = supplyCategories.find(
+        (sc) => sc.id === items[i].supplyCategoryKey
+      ).desc;
+      let formatBranch = branch.find((bh) => bh.id === items[i].toBranchKey)
+        .name;
+      let user = users.find((us) => us.id === items[i].userIdKey).username;
+
+      let formatItem;
+      if (items[0].supplyCategoryKey === 2) {
+        formatItem = lens.find((len) => len.id === items[i].itemKey).name;
+      }
+      console.log(user);
+    }
+  }
+
+  const formatOrderType = orderType.find(
+    (ot) => ot.id === items[0].orderTypeKey
+  ).typeDesc;
   const formatSupplyCategories = supplyCategories.find(
-    (sc) => sc.id === od.supplyCategoryKey
+    (sc) => sc.id === items[0].supplyCategoryKey
   ).desc;
-  const formatBranch = branch.find((bh) => bh.id === od.toBranchKey).name;
-  const user = users.find((us) => us.id === od.userIdKey).username;
+  const formatBranch = branch.find((bh) => bh.id === items[0].toBranchKey).name;
+  const user = users.find((us) => us.id === items[0].userIdKey).username;
 
   let formatItem;
-  if (od.supplyCategoryKey === 2) {
-    formatItem = lens.find((len) => len.id === od.itemKey).name;
+  if (items[0].supplyCategoryKey === 2) {
+    formatItem = lens.find((len) => len.id === items[0].itemKey).name;
   }
   console.log(user);
 
   return (
     <div>
-      <table className='table'>
-        <tbody>
-          <tr>
-            <th scope='col'>RX NUMBER</th>
-            <th scope='col'>DATE</th>
-            <th scope='col'>BRANCH</th>
-            <th scope='col'>ENCODE BY</th>
-          </tr>
-          <tr>
-            <td>{od.rxNumber}</td>
-            <td>
-              <Moment format='ddd, MMMM D YYYY, h:mm a'>
-                {od.transactionDetailDate}
-              </Moment>
-            </td>
-            <td>{formatBranch}</td>
-            <td>{user}</td>
-          </tr>
-          <tr>
-            <th scope='col'>ORDER TYPE</th>
-            <th scope='col'>SUPPLY CATEGORY</th>
-            <th scope='col'>ITEM</th>
-            <th scope='col'>SIZE</th>
-          </tr>
-          <tr>
-            <td>{formatOrderType}</td>
-            <td>{formatSupplyCategories}</td>
-            <td>{od.itemKey}</td>
-            <td>{od.size}</td>
-          </tr>
-          <tr>
-            <th scope='col'>OD DETAILS</th>
-            <th scope='col'>PATIENTS NAME</th>
-            <th scope='col'>OS DETAILS</th>
-            <th scope='col'>SO DETAILS</th>
-          </tr>
-          <tr>
-            <td>{od.odDetails}</td>
-            <td>{od.pxName}</td>
-            <td>{od.osDetails}</td>
-            <td>{od.soDetails}</td>
-          </tr>
-        </tbody>
-      </table>
+      {items.map((item) => (
+        <div>
+          <table className='table'>
+            <tbitemy>
+              <tr>
+                <th scope='col'>RX NUMBER</th>
+                <th scope='col'>DATE</th>
+                <th scope='col'>BRANCH</th>
+                <th scope='col'>ENCODED BY</th>
+              </tr>
+              <tr>
+                <td>{item.rxNumber}</td>
+                <td>
+                  <Moment format='ddd, MMMM D YYYY, h:mm a'>
+                    {item.transactionDetailDate}
+                  </Moment>
+                </td>
+                <td>{formatBranch}</td>
+                <td>{user}</td>
+              </tr>
+              <tr>
+                <th scope='col'>ORDER TYPE</th>
+                <th scope='col'>SUPPLY CATEGORY</th>
+                <th scope='col'>ITEM</th>
+                <th scope='col'>SIZE</th>
+              </tr>
+              <tr>
+                <td>{formatOrderType}</td>
+                <td>{formatSupplyCategories}</td>
+                <td>{item.itemKey}</td>
+                <td>{item.size}</td>
+              </tr>
+              <tr>
+                <th scope='col'>OD DETAILS</th>
+                <th scope='col'>PATIENTS NAME</th>
+                <th scope='col'>OS DETAILS</th>
+                <th scope='col'>SO DETAILS</th>
+              </tr>
+              <tr>
+                <td>{item.odDetails}</td>
+                <td>{item.pxName}</td>
+                <td>{item.osDetails}</td>
+                <td>{item.soDetails}</td>
+              </tr>
+            </tbitemy>
+          </table>
+        </div>
+      ))}
     </div>
   );
 };
