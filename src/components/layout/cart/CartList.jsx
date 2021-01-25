@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import CartDetails from './CartDetails';
 import { forApproval, removeNumber } from '../../../redux/cart/cartActions';
-import { snakeCase } from 'lodash';
 
 const CartList = ({
   item,

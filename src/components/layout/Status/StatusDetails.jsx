@@ -53,8 +53,8 @@ const StatusDetails = ({
           <tr>
             <td>{formatOrderType}</td>
             <td>{formatSupplyCategories}</td>
-            <td>{od.toBranchKey}</td>
             <td>{od.itemKey}</td>
+            <td>{od.size}</td>
           </tr>
           <tr>
             <th scope='col'>OD DETAILS</th>

@@ -59,22 +59,33 @@ export const forApproval = (formData) => async (dispatch) => {
   });
 };
 
-export const approveOrder = (id) => async (dispatch) => {
+export const approveOrder = (id, branch) => async (dispatch) => {
   console.log('Order Approve', id);
   const config = {
     headers: {
       'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token'),
     },
   };
-  await axios.put(`/api/transactions/${id}`, { status: 'APPROVE' }, config);
+  const obj = {
+    branchId: branch.toString(),
+    updateBody: { status: 'APPROVED' },
+  };
+  await axios.put(`/api/orders/${id}`, obj, config);
+  console.log('update successful');
 };
 
-export const rejectOrder = (id) => async (dispatch) => {
+export const rejectOrder = (id, branch) => async (dispatch) => {
   console.log('Order Approve', id);
   const config = {
     headers: {
       'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token'),
     },
   };
-  await axios.put(`/api/transactions/${id}`, { status: 'REJECT' }, config);
+  const obj = {
+    branchId: branch.toString(),
+    updateBody: { status: 'REJECTED' },
+  };
+  await axios.put(`/api/orders/${id}`, obj, config);
 };

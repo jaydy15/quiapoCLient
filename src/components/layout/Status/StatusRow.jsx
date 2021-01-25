@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { getOrders } from './../../../redux/order/orderActions';
 
 const StatusRow = ({
-  orders,
+  order,
   od,
   branch,
   approveOrder,
@@ -25,21 +25,20 @@ const StatusRow = ({
   const handleShow = () => setShow(true);
 
   const orderApproved = () => {
-    approveOrder(od.id);
+    approveOrder(order.items[0].txNumber, branch);
     window.location.reload();
   };
 
   const orderRejected = () => {
-    rejectOrder(od.id);
+    rejectOrder(order.items[0].txNumber, branch);
     window.location.reload();
   };
 
   return (
     <Fragment>
-      <tr key={od.id}>
-        <th scope='row'>{od.id}</th>
-        <td>{od.rxNumber}</td>
-        <td>{od.status}</td>
+      <tr key={order.items[0].txNumber}>
+        <td>{order.items[0].rxNumber}</td>
+        <td>{order.items[0].status}</td>
         {user.access === '0' ? (
           <td>
             <Icon
@@ -93,9 +92,9 @@ const StatusRow = ({
           <Modal.Title>Order Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className='show-grid'>
-          <div>
+          {/* <div>
             <StatusDetails key={od.id} od={od} />
-          </div>
+          </div> */}
         </Modal.Body>
         <Modal.Footer>
           {user.access === '0' && (
@@ -116,7 +115,7 @@ const StatusRow = ({
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  orders: state.orders.orders,
+  branch: state.auth.user.BranchDetail.id,
 });
 
 export default connect(mapStateToProps, {
