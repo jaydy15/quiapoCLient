@@ -9,27 +9,10 @@ const StatusDetails = ({
   branch,
   users,
   lens,
+  fsItems,
+  csaItems,
+  fscsaModels,
 }) => {
-  if (items.length > 1) {
-    for (let i = 0; i < items.length; i++) {
-      let formatOrderType = orderType.find(
-        (ot) => ot.id === items[i].orderTypeKey
-      ).typeDesc;
-      let formatSupplyCategories = supplyCategories.find(
-        (sc) => sc.id === items[i].supplyCategoryKey
-      ).desc;
-      let formatBranch = branch.find((bh) => bh.id === items[i].toBranchKey)
-        .name;
-      let user = users.find((us) => us.id === items[i].userIdKey).username;
-
-      let formatItem;
-      if (items[0].supplyCategoryKey === 2) {
-        formatItem = lens.find((len) => len.id === items[i].itemKey).name;
-      }
-      console.log(user);
-    }
-  }
-
   const formatOrderType = orderType.find(
     (ot) => ot.id === items[0].orderTypeKey
   ).typeDesc;
@@ -39,18 +22,39 @@ const StatusDetails = ({
   const formatBranch = branch.find((bh) => bh.id === items[0].toBranchKey).name;
   const user = users.find((us) => us.id === items[0].userIdKey).username;
 
-  let formatItem;
-  if (items[0].supplyCategoryKey === 2) {
-    formatItem = lens.find((len) => len.id === items[0].itemKey).name;
+  let formatItem = [],
+    modelKey = [];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].supplyCategoryKey === 2) {
+      console.log(items[i].itemKey);
+      formatItem.push(lens.find((len) => len.id === items[i].itemKey).name);
+    } else if (
+      items[i].supplyCategoryKey === 1 ||
+      items[i].supplyCategoryKey === 5 ||
+      items[i].supplyCategoryKey === 6
+    ) {
+      formatItem.push(
+        csaItems.find((csa) => csa.id === items[i].itemKey).description
+      );
+    } else {
+      console.log(items[i].itemKey);
+      modelKey.push(
+        fsItems.find((fs) => fs.id === items[i].itemKey).fsModelKey
+      );
+      console.log(modelKey);
+      formatItem = fscsaModels.find((fsca) => fsca.id === modelKey[i])
+        .modelName;
+      console.log(formatItem);
+    }
   }
-  console.log(user);
-
+  console.log(formatItem);
   return (
     <div>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div>
+          <p>{index + 1}</p>
           <table className='table'>
-            <tbitemy>
+            <tbody>
               <tr>
                 <th scope='col'>RX NUMBER</th>
                 <th scope='col'>DATE</th>
@@ -75,8 +79,14 @@ const StatusDetails = ({
               </tr>
               <tr>
                 <td>{formatOrderType}</td>
-                <td>{formatSupplyCategories}</td>
-                <td>{item.itemKey}</td>
+                <td>
+                  {
+                    supplyCategories.find(
+                      (sc) => sc.id === item.supplyCategoryKey
+                    ).desc
+                  }
+                </td>
+                <td>{formatItem}</td>
                 <td>{item.size}</td>
               </tr>
               <tr>
@@ -91,7 +101,7 @@ const StatusDetails = ({
                 <td>{item.osDetails}</td>
                 <td>{item.soDetails}</td>
               </tr>
-            </tbitemy>
+            </tbody>
           </table>
         </div>
       ))}
@@ -105,6 +115,9 @@ const mapStateToProps = (state) => ({
   branch: state.catalogue.branchDetails,
   users: state.catalogue.users,
   lens: state.catalogue.lensItems,
+  fsItems: state.catalogue.fsItems,
+  csaItems: state.catalogue.csaItems,
+  fscsaModels: state.catalogue.fscsaModels,
 });
 
 export default connect(mapStateToProps)(StatusDetails);
