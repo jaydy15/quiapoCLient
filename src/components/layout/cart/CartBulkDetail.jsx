@@ -17,8 +17,11 @@ const CartBulkDetail = ({
   ).desc;
 
   const formatBrand = brands.find((br) => br.id.toString() === bulk.brand).name;
-  // const formatColor = colors.find((cl) => cl.id.toString() === bulk.color)
-  //   .colorName;
+  if (bulk.color !== '') {
+    const formatColor = colors.find((cl) => cl.id.toString() === bulk.color)
+      .colorName;
+    console.log(formatColor);
+  }
   const formatMDL =
     formatITCY !== 'LENS'
       ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.model).modelName
@@ -47,7 +50,13 @@ const CartBulkDetail = ({
                 <p>Item Category : {formatITCY}</p>
                 <p>Brand : {formatBrand}</p>
                 <p>Model : {formatMDL}</p>
-                <p>Color : </p>
+                <p>
+                  Color :{' '}
+                  {bulk.color !== ''
+                    ? colors.find((cl) => cl.id.toString() === bulk.color)
+                        .colorName
+                    : null}
+                </p>
                 <p>Size : {bulk.size}</p>
               </div>
             </td>

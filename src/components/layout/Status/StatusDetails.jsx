@@ -25,8 +25,8 @@ const StatusDetails = ({
   let formatItem = [],
     modelKey = [];
   for (let i = 0; i < items.length; i++) {
+    console.log(items[i].supplyCategoryKey);
     if (items[i].supplyCategoryKey === 2) {
-      console.log(items[i].itemKey);
       formatItem.push(lens.find((len) => len.id === items[i].itemKey).name);
     } else if (
       items[i].supplyCategoryKey === 1 ||
@@ -42,8 +42,9 @@ const StatusDetails = ({
         fsItems.find((fs) => fs.id === items[i].itemKey).fsModelKey
       );
       console.log(modelKey);
-      formatItem = fscsaModels.find((fsca) => fsca.id === modelKey[i])
-        .modelName;
+      formatItem.push(
+        fscsaModels.find((fsca) => fsca.id === modelKey[0]).modelName
+      );
       console.log(formatItem);
     }
   }
@@ -86,7 +87,7 @@ const StatusDetails = ({
                     ).desc
                   }
                 </td>
-                <td>{formatItem}</td>
+                <td>{formatItem[index]}</td>
                 <td>{item.size}</td>
               </tr>
               <tr>

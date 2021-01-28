@@ -125,7 +125,7 @@ const CartList = ({
     //   soDetails: item.SoDetails,
     //   status: '',
     // });
-    // removeNumber(rxNumber);
+    removeNumber(rxNumber);
   };
 
   return (
