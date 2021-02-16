@@ -271,7 +271,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           </div>
         ) : null}
       </div>
-      <div className='row'>
+      <div className='row overflow-auto'>
         <div className='col-md-12'>
           {ItemCategories === '1' || ItemCategories === '2' ? (
             <Fragment>

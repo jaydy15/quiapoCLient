@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { connect } from 'react-redux';
 
@@ -12,6 +13,26 @@ const Brands = ({
   ...ownprops
 }) => {
   const { onChange } = ownprops;
+  const unique = (value, index, self) => {
+    return self.indexOf(value) === index;
+  };
+
+  const lensBrand = _.filter(lens, ['orderTypeKey', parseInt(OrderType)]).map(
+    (br) => br.brandKey
+  );
+  const bulkLensBrand = _.filter(lens, ['orderTypeKey', 1]).map(
+    (br) => br.brandKey
+  );
+
+  const fsBrand = _.filter(fs, ['supplyCategoryKey', ItemCategories]).map(
+    (br) => br.brandKey
+  );
+
+  const csaBrand = _.filter(csa, ['scKey', parseInt(ItemCategories)]).map(
+    (br) => br.brandKey
+  );
+
+  console.log(csaBrand.filter(unique));
   return (
     <div>
       {brands !== undefined && (
@@ -19,25 +40,23 @@ const Brands = ({
           <label htmlFor='brand'>Brand</label>
           <select onChange={onChange} className='form-control' name='Brand'>
             <option>Select Brand</option>
+
             {/* LENS BRANDS */}
             {ItemCategories === '2' &&
-              lens
-                .filter((lens) => lens.orderTypeKey.toString() === OrderType)
-                .map((br) => (
-                  <option key={br.id} value={br.brandKey}>
-                    {brands.find((elm) => elm.id === br.brandKey).name}
-                  </option>
-                ))}
+              lensBrand.filter(unique).map((br) => (
+                <option key={br} value={br}>
+                  {brands.find((elm) => elm.id === br).name}
+                </option>
+              ))}
             {ItemCategories === '2' &&
               OrderType === '2' &&
-              lens
-                .filter((lens) => lens.orderTypeKey.toString() === '1')
-                .map((br) => (
-                  <option key={br.id} value={br.brandKey}>
-                    {brands.find((elm) => elm.id === br.brandKey).name}
-                  </option>
-                ))}
+              bulkLensBrand.filter(unique).map((br) => (
+                <option key={br} value={br}>
+                  {brands.find((elm) => elm.id === br).name}
+                </option>
+              ))}
             {/* LENS BRANDS */}
+
             {/* FS BRANDS */}
             {(ItemCategories === '3' || ItemCategories === '4') &&
               fs
@@ -50,29 +69,16 @@ const Brands = ({
                   </option>
                 ))}
             {/* FS BRANDS */}
+
             {/* CSA BRANDS */}
             {(ItemCategories === '1' ||
               ItemCategories === '5' ||
               ItemCategories === '6') &&
-              csa
-                .filter((csa) => csa.scKey.toString() === ItemCategories)
-                .filter((csa) => csa.orderTypeKey.toString() === OrderType)
-                .map((br) => (
-                  <option key={br.id} value={br.brandKey}>
-                    {brands.find((elm) => elm.id === br.brandKey).name}
-                  </option>
-                ))}
-            {ItemCategories === '1' &&
-              OrderType === '2' &&
-              csa
-                .filter((csa) => csa.scKey.toString() === ItemCategories)
-                .filter((csa) => csa.orderTypeKey.toString() === '1')
-                .map((br) => (
-                  <option key={br.id} value={br.brandKey}>
-                    {brands.find((elm) => elm.id === br.brandKey).name}
-                  </option>
-                ))}
-
+              csaBrand.filter(unique).map((br) => (
+                <option key={br} value={br}>
+                  {brands.find((elm) => elm.id === br).name}
+                </option>
+              ))}
             {/* CSA BRANDS */}
           </select>
         </div>

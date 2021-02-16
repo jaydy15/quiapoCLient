@@ -1,0 +1,5 @@
+{
+  "ipAddress": "192.168.0.88",
+  "frontEndPort": "8088",
+  "backEndPort": "8087"
+}

@@ -85,13 +85,14 @@ const CartList = ({
         rxNumber: rxNumber,
         supplyCategoryKey: parseInt(item[i].itemCategories),
         itemKey: itemKey[i],
-        cdKey: '1',
-        size: '11.00',
+        cdKey: parseInt(item[i].color),
+        size: item[i].size,
         additionalInstruction: item[i].additionalInstructions,
         odDetails: item[i].odDetails,
         osDetails: item[i].osDetails,
         pxName: item[i].pxName,
         soDetails: item[i].soDetails,
+        nonLensQty: item[i].nonLensQty,
         status: 'FOR APPROVAL',
       };
       formattedItems.push(formatItem);

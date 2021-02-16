@@ -97,10 +97,10 @@ const StatusDetails = ({
                 <th scope='col'>SO DETAILS</th>
               </tr>
               <tr>
-                <td>{item.odDetails}</td>
+                <td>{item.odDetails === '|||||' ? null : item.odDetails}</td>
                 <td>{item.pxName}</td>
-                <td>{item.osDetails}</td>
-                <td>{item.soDetails}</td>
+                <td>{item.osDetails === '|||||' ? null : item.osDetails}</td>
+                <td>{item.soDetails === '|||' ? null : item.soDetails}</td>
               </tr>
             </tbody>
           </table>

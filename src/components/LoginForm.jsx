@@ -16,18 +16,18 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   });
 
   const [loginform, setLoginForm] = useState({
-    name: '',
+    username: '',
     password: '',
   });
 
-  const { name, password } = loginform;
+  const { username, password } = loginform;
 
   const onChange = (e) =>
     setLoginForm({ ...loginform, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    login({ name, password });
+    login({ username, password });
     if (error === 'Invalid Credentials') {
       setAlert(error, 'danger');
     }
@@ -42,8 +42,8 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
           <label htmlFor='name'>Username</label>
           <input
             type='text'
-            name='name'
-            value={name}
+            name='username'
+            value={username}
             onChange={onChange}
             className='form-control'
           />
