@@ -199,6 +199,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             onChange={onChange}
             value={OrderType}
             RxNumber={RxNumber}
+            required
           />
           {/* <div className='form-group'>
             <label htmlFor=''>Order Type</label>

@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-
+import SelectSearch from 'react-select-search';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 
 const Brands = ({
@@ -32,7 +33,6 @@ const Brands = ({
     (br) => br.brandKey
   );
 
-  console.log(csaBrand.filter(unique));
   return (
     <div>
       {brands !== undefined && (
