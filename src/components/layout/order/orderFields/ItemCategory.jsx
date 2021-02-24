@@ -8,7 +8,9 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
       {/* ITEM CATEGORY FOR JOB ORDER AND SPECIAL ORDER */}
       {OrderType !== '2' && itemCategory !== undefined && (
         <div className='form-group'>
-          <label htmlFor='brand'>Item Category</label>
+          <label htmlFor='brand'>
+            Item Category<span style={{ color: 'red' }}>*</span>
+          </label>
           <select
             onChange={onChange}
             className='form-control'

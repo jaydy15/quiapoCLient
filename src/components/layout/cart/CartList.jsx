@@ -56,6 +56,7 @@ const CartList = ({
 
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
+    console.log('button clicked');
     e.preventDefault();
     const formattedItems = [];
     const itemKey = [];
@@ -76,6 +77,9 @@ const CartList = ({
         );
       }
       console.log(itemKey);
+      if (item[i].nonLensQty === '') {
+        item[i].nonLensQty = 0;
+      }
       const formatItem = {
         typeName: 'PO',
         fromBranchKey: branch,
@@ -106,26 +110,6 @@ const CartList = ({
     };
     //console.log(toGenerate);
     forApproval(toGenerate);
-
-    // forApproval({
-    //   id: '7',
-    //   typeName: 'PO',
-    //   fromBranchKey: branch,
-    //   toBranchKey: branch,
-    //   userIdKey: user,
-    //   orderTypeKey: parseInt(item.OrderType),
-    //   rxNumber: item.RxNumber,
-    //   supplyCategoryKey: parseInt(item.ItemCategories),
-    //   itemKey: '1',
-    //   cdKey: '1',
-    //   size: '11.00',
-    //   additionalInstruction: item.AdditionalInstructions,
-    //   odDetails: item.OdDetails,
-    //   osDetails: item.OsDetails,
-    //   pxName: item.PatientsName,
-    //   soDetails: item.SoDetails,
-    //   status: '',
-    // });
     removeNumber(rxNumber);
   };
 

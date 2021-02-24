@@ -11,11 +11,12 @@ import Colors from './orderFields/Colors';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
+import Select from 'react-select';
 
 const OrderFields = ({ auth, lists, addToCart }) => {
   const alert = useAlert();
   const [formData, setFormData] = useState({
-    RxNumber: '',
+    RxNumber: {},
     OrderType: '',
     ItemCategories: '',
     Brand: '',
@@ -156,18 +157,39 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     }, 1000);
   };
 
+  const listRxNumber = lists.map((item) => item.OrderNumber);
+
+  const optRxNumber = [];
+
+  for (let i = 0; i < listRxNumber.length; i++) {
+    let formattObj = {
+      label: listRxNumber[i],
+      value: listRxNumber[i],
+    };
+    optRxNumber.push(formattObj);
+  }
+
+  const handleChange = (selectedOption) => {
+    setFormData({ ...formData, RxNumber: selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  };
+
   return (
     <form>
       <div className='row'>
         <div className='col-md-6'>
           <div className='form-group'>
-            <label htmlFor=''>Selected Active Transaction Number</label>
-            <select name='RxNumber' value={RxNumber} onChange={onChange}>
+            <label htmlFor=''>
+              Selected Active Transaction Number{' '}
+              <span style={{ color: 'red' }}>*</span>
+            </label>
+            <Select options={optRxNumber} onChange={handleChange} />
+            {/* <select name='RxNumber' value={RxNumber} onChange={onChange}>
               <option>Select Transaction Number</option>
               {lists.map((item) => (
                 <option key={item.OrderNumber}>{item.OrderNumber}</option>
               ))}
-            </select>
+            </select> */}
           </div>
         </div>
         <div className='col-md-6'>
@@ -188,7 +210,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             type='text'
             placeholder='RX Number'
             name='RxNumber'
-            value={RxNumber}
+            value={RxNumber.value}
             onChange={onChange}
             label='RX Number'
             bol='true'
@@ -196,9 +218,11 @@ const OrderFields = ({ auth, lists, addToCart }) => {
         </div>
         <div className='col-md-6'>
           <OrderTypes
-            onChange={onChange}
-            value={OrderType}
-            RxNumber={RxNumber}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, OrderType: selectedOption });
+            }}
+            value={OrderType.value}
+            RxNumber={RxNumber.value}
             required
           />
           {/* <div className='form-group'>

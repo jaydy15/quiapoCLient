@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 const Colors = ({ onChange, colors }) => {
   return (
     <div className='form-group'>
-      <label htmlFor='brand'>Color</label>
+      <label htmlFor='brand'>
+        Color<span style={{ color: 'red' }}>*</span>
+      </label>
       <select onChange={onChange} className='form-control' name='Color'>
         <option>Select Color</option>
         {colors.map((color) => (

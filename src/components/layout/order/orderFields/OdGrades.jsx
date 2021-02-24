@@ -1,10 +1,22 @@
 import React from 'react';
 
 const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
+  const gradify = (item) => {
+    let number = item.toFixed(2);
+    if (item > 0) {
+      return '+' + number;
+    } else {
+      if (item < 0) {
+        return number;
+      } else {
+        return 'PLANO';
+      }
+    }
+  };
   const sphLoad = () => {
     let grades = [];
     for (let i = -25.0; i <= 25.0; i = i + 0.25) {
-      grades.push(i);
+      grades.push(gradify(i));
     }
     return grades;
   };
@@ -12,7 +24,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const cylLoad = () => {
     let grades = [];
     for (let i = -8.0; i <= -0.25; i = i + 0.25) {
-      grades.push(i);
+      grades.push(gradify(i));
     }
     return grades;
   };
@@ -20,7 +32,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const axisLoad = () => {
     let grades = [];
     for (let i = 0; i <= 180; i++) {
-      grades.push(i);
+      grades.push(gradify(i));
     }
     return grades;
   };
@@ -28,7 +40,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const addLoad = () => {
     let grades = [];
     for (let i = 0.25; i <= 4.0; i = i + 0.25) {
-      grades.push(i);
+      grades.push(gradify(i));
     }
     return grades;
   };

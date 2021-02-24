@@ -44,6 +44,7 @@ const NewOrder = ({ newNumber }) => {
   };
 
   const numberfunction = () => {
+    validate();
     newNumber({
       OrderTypes,
       OrderNumber,
@@ -70,7 +71,9 @@ const NewOrder = ({ newNumber }) => {
           <h1>New Order</h1>
           {OrderTypes !== null && (
             <div className='form-group'>
-              <label htmlFor=''>Order Type</label>
+              <label htmlFor=''>
+                Order Type<span style={{ color: 'red' }}>*</span>
+              </label>
               <select
                 name='OrderTypes'
                 className='form-control'
@@ -88,7 +91,9 @@ const NewOrder = ({ newNumber }) => {
 
           {OrderTypes === 'Bulk Order' ? (
             <div className='form-group'>
-              <label htmlFor=''>BO NUMBER</label>
+              <label htmlFor=''>
+                BO NUMBER<span style={{ color: 'red' }}>*</span>
+              </label>
               <div className='row'>
                 <div className='col-md-4' style={{ paddingRight: 0 }}>
                   <input
@@ -120,7 +125,9 @@ const NewOrder = ({ newNumber }) => {
             </div>
           ) : (
             <div className='form-group'>
-              <label htmlFor=''>RX Number</label>
+              <label htmlFor=''>
+                RX Number<span style={{ color: 'red' }}>*</span>
+              </label>
               <input
                 type='text'
                 className='form-control'

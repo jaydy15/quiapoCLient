@@ -17,7 +17,9 @@ const Models = ({
     <div>
       {model !== undefined && (
         <div className='form-group'>
-          <label htmlFor='brand'>Model</label>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
           <select onChange={onChange} className='form-control' name='Model'>
             <option>Select Model</option>
             {ItemCategories === '2' &&

@@ -37,7 +37,9 @@ const Brands = ({
     <div>
       {brands !== undefined && (
         <div className='form-group'>
-          <label htmlFor='brand'>Brand</label>
+          <label htmlFor='brand'>
+            Brand<span style={{ color: 'red' }}>*</span>
+          </label>
           <select onChange={onChange} className='form-control' name='Brand'>
             <option>Select Brand</option>
 
