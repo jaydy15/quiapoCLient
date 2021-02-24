@@ -245,9 +245,11 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       <div className='row'>
         <div className='col-md-4'>
           <ItemCategory
-            onChange={onChange}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, ItemCategories: selectedOption });
+            }}
             value={ItemCategories}
-            OrderType={OrderType}
+            OrderType={OrderType.value}
           />
         </div>
         <div className='col-md-4'>
