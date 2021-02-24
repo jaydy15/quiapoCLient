@@ -36,8 +36,6 @@ const Brands = ({
     (br) => br.brandKey
   );
 
-  let finalOpt;
-
   let optBrandLens,
     optBrandCSA = [];
   // LENS ITEM BRANDS
@@ -55,18 +53,16 @@ const Brands = ({
     for (let x = 0; x < listLensId.length; x++) {
       let findLensBrand = brands.find((brand) => brand.id === listLensId[x])
         .name;
-      console.log(findLensBrand);
       listBrandLens.push(findLensBrand);
     }
-
+    console.log(listBrandLens);
     for (let i = 0; i < listLensId.length; i++) {
       let formattObj = {
         label: listBrandLens[i],
         value: listLensId[i],
       };
-      optBrandLens.push(formattObj);
+      optBrandCSA.push(formattObj);
     }
-    console.log(optBrandLens);
   }
   // ENDING OF LENS ITEM BRANDS
 
