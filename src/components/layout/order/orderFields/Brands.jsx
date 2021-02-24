@@ -22,9 +22,11 @@ const Brands = ({
     .filter((len) => len.orderTypeKey === OrderType)
     .map((br) => br.brandKey);
 
-  const bulkLensBrand = _.filter(lens, ['orderTypeKey', 1]).map(
-    (br) => br.brandKey
-  );
+  const bulkLensBrand = lens
+    .filter((len) => len.orderTypeKey === 1)
+    .map((br) => br.brandKey);
+
+  console.log(bulkLensBrand);
 
   const fsBrand = _.filter(fs, ['supplyCategoryKey', ItemCategories]).map(
     (br) => br.brandKey
@@ -34,11 +36,21 @@ const Brands = ({
     (br) => br.brandKey
   );
 
-  let optBrandLens = [];
+  let finalOpt;
 
+  let optBrandLens,
+    optBrandCSA = [];
+  // LENS ITEM BRANDS
   if (ItemCategories === 2) {
-    let listLensId = lensBrand.filter(unique);
+    let listLensId;
+    if (OrderType === 2) {
+      listLensId = bulkLensBrand.filter(unique);
+    } else {
+      listLensId = lensBrand.filter(unique);
+    }
     let listBrandLens = [];
+
+    console.log(listLensId);
 
     for (let x = 0; x < listLensId.length; x++) {
       let findLensBrand = brands.find((brand) => brand.id === listLensId[x])
@@ -56,7 +68,26 @@ const Brands = ({
     }
     console.log(optBrandLens);
   }
+  // ENDING OF LENS ITEM BRANDS
 
+  if (ItemCategories === 1 || ItemCategories === 5 || ItemCategories === 6) {
+    let listCSAId = csaBrand.filter(unique);
+    let listBrandCSA = [];
+    for (let x = 0; x < listCSAId.length; x++) {
+      let findCSABrand = brands.find((brand) => brand.id === listCSAId[x]).name;
+      console.log(findCSABrand);
+      listBrandCSA.push(findCSABrand);
+    }
+
+    for (let i = 0; i < listCSAId.length; i++) {
+      let formattObj = {
+        label: listBrandCSA[i],
+        value: listCSAId[i],
+      };
+      optBrandCSA.push(formattObj);
+    }
+    console.log(optBrandCSA);
+  }
   return (
     <div>
       {brands !== undefined && (
@@ -64,7 +95,7 @@ const Brands = ({
           <label htmlFor='brand'>
             Brand<span style={{ color: 'red' }}>*</span>
           </label>
-          <Select options={optBrandLens} onChange={onChange} />
+          <Select options={optBrandCSA} />
         </div>
       )}
     </div>
