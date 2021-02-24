@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import SelectSearch from 'react-select-search';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 
@@ -14,13 +13,15 @@ const Brands = ({
   ...ownprops
 }) => {
   const { onChange } = ownprops;
+  console.log(ItemCategories);
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
   };
 
-  const lensBrand = _.filter(lens, ['orderTypeKey', parseInt(OrderType)]).map(
-    (br) => br.brandKey
-  );
+  const lensBrand = lens
+    .filter((len) => len.orderTypeKey === OrderType)
+    .map((br) => br.brandKey);
+
   const bulkLensBrand = _.filter(lens, ['orderTypeKey', 1]).map(
     (br) => br.brandKey
   );
@@ -33,6 +34,29 @@ const Brands = ({
     (br) => br.brandKey
   );
 
+  let optBrandLens = [];
+
+  if (ItemCategories === 2) {
+    let listLensId = lensBrand.filter(unique);
+    let listBrandLens = [];
+
+    for (let x = 0; x < listLensId.length; x++) {
+      let findLensBrand = brands.find((brand) => brand.id === listLensId[x])
+        .name;
+      console.log(findLensBrand);
+      listBrandLens.push(findLensBrand);
+    }
+
+    for (let i = 0; i < listLensId.length; i++) {
+      let formattObj = {
+        label: listBrandLens[i],
+        value: listLensId[i],
+      };
+      optBrandLens.push(formattObj);
+    }
+    console.log(optBrandLens);
+  }
+
   return (
     <div>
       {brands !== undefined && (
@@ -40,49 +64,7 @@ const Brands = ({
           <label htmlFor='brand'>
             Brand<span style={{ color: 'red' }}>*</span>
           </label>
-          <select onChange={onChange} className='form-control' name='Brand'>
-            <option>Select Brand</option>
-
-            {/* LENS BRANDS */}
-            {ItemCategories === '2' &&
-              lensBrand.filter(unique).map((br) => (
-                <option key={br} value={br}>
-                  {brands.find((elm) => elm.id === br).name}
-                </option>
-              ))}
-            {ItemCategories === '2' &&
-              OrderType === '2' &&
-              bulkLensBrand.filter(unique).map((br) => (
-                <option key={br} value={br}>
-                  {brands.find((elm) => elm.id === br).name}
-                </option>
-              ))}
-            {/* LENS BRANDS */}
-
-            {/* FS BRANDS */}
-            {(ItemCategories === '3' || ItemCategories === '4') &&
-              fs
-                .filter(
-                  (fs) => fs.supplyCategoryKey.toString() === ItemCategories
-                )
-                .map((br) => (
-                  <option key={br.id} value={br.brandKey}>
-                    {brands.find((elm) => elm.id === br.brandKey).name}
-                  </option>
-                ))}
-            {/* FS BRANDS */}
-
-            {/* CSA BRANDS */}
-            {(ItemCategories === '1' ||
-              ItemCategories === '5' ||
-              ItemCategories === '6') &&
-              csaBrand.filter(unique).map((br) => (
-                <option key={br} value={br}>
-                  {brands.find((elm) => elm.id === br).name}
-                </option>
-              ))}
-            {/* CSA BRANDS */}
-          </select>
+          <Select options={optBrandLens} onChange={onChange} />
         </div>
       )}
     </div>
