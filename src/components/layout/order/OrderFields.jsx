@@ -109,9 +109,29 @@ const OrderFields = ({ auth, lists, addToCart }) => {
   };
 
   const OdDetails =
-    OdSph + '|' + OdCyl + '|' + OdAxis + '|' + OdAdd + '|' + OdPd + '|' + OdQty;
+    OdSph.value +
+    '|' +
+    OdCyl.value +
+    '|' +
+    OdAxis.value +
+    '|' +
+    OdAdd.value +
+    '|' +
+    OdPd +
+    '|' +
+    OdQty;
   const OsDetails =
-    OsSph + '|' + OsCyl + '|' + OsAxis + '|' + OsAdd + '|' + OsPd + '|' + OsQty;
+    OsSph.value +
+    '|' +
+    OsCyl.value +
+    '|' +
+    OsAxis.value +
+    '|' +
+    OsAdd.value +
+    '|' +
+    OsPd +
+    '|' +
+    OsQty;
   const SoDetails =
     Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
 
@@ -121,12 +141,12 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     e.preventDefault();
     addToCart({
       tempID,
-      rxNumber: RxNumber,
-      orderType: OrderType,
-      itemCategories: ItemCategories,
-      brand: Brand,
-      model: Model,
-      color: Color,
+      rxNumber: RxNumber.value,
+      orderType: OrderType.value,
+      itemCategories: ItemCategories.value,
+      brand: Brand.value,
+      model: Model.value,
+      color: Color.value,
       size: Size,
       nonLensQty: NonLensQty,
       pxName: PatientsName,
@@ -174,25 +194,88 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     console.log(`Option selected:`, selectedOption);
   };
 
+  // GRADES RELATED
+  const gradify = (item) => {
+    let number = item.toFixed(2);
+    if (item > 0) {
+      return '+' + number;
+    } else {
+      if (item < 0) {
+        return number;
+      } else {
+        return 'PLANO';
+      }
+    }
+  };
+  const sphLoad = () => {
+    let grades = [];
+    for (let i = -25.0; i <= 25.0; i = i + 0.25) {
+      grades.push(gradify(i));
+    }
+    return grades;
+  };
+
+  const cylLoad = () => {
+    let grades = [];
+    for (let i = -8.0; i <= -0.25; i = i + 0.25) {
+      grades.push(gradify(i));
+    }
+    return grades;
+  };
+
+  const axisLoad = () => {
+    let grades = [];
+    for (let i = 0; i <= 180; i++) {
+      grades.push(i);
+    }
+    return grades;
+  };
+
+  const addLoad = () => {
+    let grades = [];
+    for (let i = 0.25; i <= 4.0; i = i + 0.25) {
+      grades.push(gradify(i));
+    }
+    return grades;
+  };
+
+  const sphGrades = sphLoad();
+  const cylGrades = cylLoad();
+  const axisGrades = axisLoad();
+  const addGrades = addLoad();
+
+  const utils = (arrayMap) => {
+    let optGrades = [];
+    let listGrades = arrayMap.map((item) => item);
+    for (let i = 0; i < listGrades.length; i++) {
+      let formattObj = {
+        value: listGrades[i],
+        label: listGrades[i],
+      };
+      optGrades.push(formattObj);
+    }
+
+    return optGrades;
+  };
+
+  const optSph = utils(sphGrades);
+  const optCyl = utils(cylGrades);
+  const optAxis = utils(axisGrades);
+  const optAdd = utils(addGrades);
+
   return (
     <form>
       <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <div className='form-group'>
             <label htmlFor=''>
               Selected Active Transaction Number{' '}
               <span style={{ color: 'red' }}>*</span>
             </label>
             <Select options={optRxNumber} onChange={handleChange} />
-            {/* <select name='RxNumber' value={RxNumber} onChange={onChange}>
-              <option>Select Transaction Number</option>
-              {lists.map((item) => (
-                <option key={item.OrderNumber}>{item.OrderNumber}</option>
-              ))}
-            </select> */}
           </div>
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <div className='form-group'>
             <label htmlFor=''>Branch</label>
             <input
@@ -203,9 +286,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             />
           </div>
         </div>
-      </div>
-      <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <InputField
             type='text'
             placeholder='RX Number'
@@ -216,7 +297,9 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             bol='true'
           />
         </div>
-        <div className='col-md-6'>
+      </div>
+      <div className='row'>
+        <div className='col-md-4'>
           <OrderTypes
             onChange={(selectedOption) => {
               setFormData({ ...formData, OrderType: selectedOption });
@@ -225,25 +308,9 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             RxNumber={RxNumber.value}
             required
           />
-          {/* <div className='form-group'>
-            <label htmlFor=''>Order Type</label>
-            <select
-              onChange={onChange}
-              className='form-control'
-              name='OrderType'>
-              {lists
-                .filter((ot) => {
-                  return ot.OrderNumber === RxNumber;
-                })
-                .map((flot) => (
-                  <option key={flot.OrderType}>{flot.OrderType}</option>
-                ))}
-            </select>
-          </div> */}
         </div>
-      </div>
-      <div className='row'>
-        <div className='col-md-6'>
+
+        <div className='col-md-4'>
           <ItemCategory
             onChange={(selectedOption) => {
               setFormData({ ...formData, ItemCategories: selectedOption });
@@ -252,7 +319,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             OrderType={OrderType.value}
           />
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <Brands
             onChange={(selectedOption) => {
               setFormData({ ...formData, Brand: selectedOption });
@@ -278,8 +345,12 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <Colors onChange={onChange} value={Color} />
-          <p>color</p>
+          <Colors
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, Color: selectedOption });
+            }}
+            value={Color}
+          />
         </div>
         <div className='col-md-4'>
           <InputField
@@ -290,7 +361,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             label='Size'
           />
         </div>
-        {ItemCategories !== '1' && ItemCategories !== '2' ? (
+        {ItemCategories.value !== 1 && ItemCategories.value !== 2 ? (
           <div className='col-md-4'>
             <InputField
               type='number'
@@ -304,36 +375,134 @@ const OrderFields = ({ auth, lists, addToCart }) => {
           </div>
         ) : null}
       </div>
-      <div className='row overflow-auto'>
+      <div className='row'>
         <div className='col-md-12'>
-          {ItemCategories === '1' || ItemCategories === '2' ? (
+          {ItemCategories.value === 1 || ItemCategories.value === 2 ? (
             <Fragment>
               <h3>Grade Info</h3>
               <hr />
               <div className='row'>
                 <div className='col-md-12'>
-                  <OdGrades
-                    OdSph={OdSph}
-                    OdCyl={OdCyl}
-                    OdAxis={OdAxis}
-                    OdAdd={OdAdd}
-                    OdPd={OdPd}
-                    OdQty={OdQty}
-                    onChange={onChange}
-                  />
+                  <div className='row'>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD SPH</label>
+                      <Select
+                        options={optSph}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OdSph: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD CYL</label>
+                      <Select
+                        options={optCyl}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OdCyl: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD AXIS</label>
+                      <Select
+                        options={optAxis}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OdAxis: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD ADD</label>
+                      <Select
+                        options={optAdd}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OdAdd: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD PD</label>
+                      <input
+                        type='number'
+                        className='form-control'
+                        onChange={onChange}
+                        style={{ margin: '0' }}
+                        name='OdPd'
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OD QTY</label>
+                      <input
+                        type='number'
+                        className='form-control'
+                        onChange={onChange}
+                        style={{ margin: '0' }}
+                        name='OdQty'
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className='row'>
                 <div className='col-md-12'>
-                  <OsGrades
-                    OsSph={OsSph}
-                    OsCyl={OsCyl}
-                    OsAxis={OsAxis}
-                    OsAdd={OsAdd}
-                    OsPd={OsPd}
-                    OsQty={OsQty}
-                    onChange={onChange}
-                  />
+                  <div className='row'>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS SPH</label>
+                      <Select
+                        options={optSph}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OsSph: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS CYL</label>
+                      <Select
+                        options={optCyl}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OsCyl: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS AXIS</label>
+                      <Select
+                        options={optAxis}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OsAxis: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS ADD</label>
+                      <Select
+                        options={optAdd}
+                        onChange={(selectedOption) => {
+                          setFormData({ ...formData, OsSph: selectedOption });
+                        }}
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS PD</label>
+                      <input
+                        type='number'
+                        className='form-control'
+                        onChange={onChange}
+                        style={{ margin: '0' }}
+                        name='OsPd'
+                      />
+                    </div>
+                    <div className='col-md-2'>
+                      <label htmlFor=''>OS QTY</label>
+                      <input
+                        type='number'
+                        className='form-control'
+                        onChange={onChange}
+                        style={{ margin: '0' }}
+                        name='OsQty'
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </Fragment>

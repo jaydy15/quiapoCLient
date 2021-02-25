@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 
 const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const gradify = (item) => {
@@ -32,7 +33,7 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const axisLoad = () => {
     let grades = [];
     for (let i = 0; i <= 180; i++) {
-      grades.push(gradify(i));
+      grades.push(i);
     }
     return grades;
   };
@@ -49,43 +50,72 @@ const OdGrades = ({ onChange, OdSph, OdCyl, OdAxis, OdAdd, OdPd, OdQty }) => {
   const cylGrades = cylLoad();
   const axisGrades = axisLoad();
   const addGrades = addLoad();
+
+  const utils = (arrayMap) => {
+    let optGrades = [];
+    let listGrades = arrayMap.map((item) => item);
+    for (let i = 0; i < listGrades.length; i++) {
+      let formattObj = {
+        value: listGrades[i],
+        label: listGrades[i],
+      };
+      optGrades.push(formattObj);
+    }
+
+    return optGrades;
+  };
+
+  const optSph = utils(sphGrades);
+  const optCyl = utils(cylGrades);
+  const optAxis = utils(axisGrades);
+  const optAdd = utils(addGrades);
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      background: '#fff',
+      borderColor: '#9e9e9e',
+      minHeight: '30px',
+      height: '30px',
+      boxShadow: state.isFocused ? null : null,
+    }),
+
+    valueContainer: (provided, state) => ({
+      ...provided,
+      height: '30px',
+      padding: '0 6px',
+    }),
+
+    input: (provided, state) => ({
+      ...provided,
+      margin: '0px',
+    }),
+    indicatorSeparator: (state) => ({
+      display: 'none',
+    }),
+    indicatorsContainer: (provided, state) => ({
+      ...provided,
+      height: '30px',
+    }),
+  };
+
   return (
     <div className='row'>
       <div className='col-md-2'>
         <label htmlFor=''>OD SPH</label>
-        <select className='form-control' onChange={onChange} name='OdSph'>
-          <option>N/A</option>
-          {sphGrades.map((gr) => (
-            <option key={gr}>{gr}</option>
-          ))}
-        </select>
+        <Select options={optSph} styles={customStyles} />
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD CYL</label>
-        <select className='form-control' onChange={onChange} name='OdCyl'>
-          <option>N/A</option>
-          {cylGrades.map((gr) => (
-            <option key={gr}>{gr}</option>
-          ))}
-        </select>
+        <Select options={optCyl} styles={customStyles} onChange={onChange} />
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD AXIS</label>
-        <select className='form-control' onChange={onChange} name='OdAxis'>
-          <option>N/A</option>
-          {axisGrades.map((gr) => (
-            <option key={gr}>{gr}</option>
-          ))}
-        </select>
+        <Select options={optAxis} styles={customStyles} onChange={onChange} />
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD ADD</label>
-        <select className='form-control' onChange={onChange} name='OdAdd'>
-          <option>N/A</option>
-          {addGrades.map((gr) => (
-            <option key={gr}>{gr}</option>
-          ))}
-        </select>
+        <Select options={optAdd} styles={customStyles} onChange={onChange} />
       </div>
       <div className='col-md-2'>
         <label htmlFor=''>OD PD</label>
