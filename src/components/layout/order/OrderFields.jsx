@@ -243,7 +243,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
         </div>
       </div>
       <div className='row'>
-        <div className='col-md-4'>
+        <div className='col-md-6'>
           <ItemCategory
             onChange={(selectedOption) => {
               setFormData({ ...formData, ItemCategories: selectedOption });
@@ -252,21 +252,27 @@ const OrderFields = ({ auth, lists, addToCart }) => {
             OrderType={OrderType.value}
           />
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-6'>
           <Brands
-            onChange={onChange}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, Brand: selectedOption });
+            }}
             value={Brand}
             ItemCategories={ItemCategories.value}
             OrderType={OrderType.value}
           />
         </div>
-        <div className='col-md-4'>
+      </div>
+      <div className='row'>
+        <div className='col-md-12'>
           <Models
-            onChange={onChange}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, Model: selectedOption });
+            }}
             value={Model}
-            Brand={Brand}
-            ItemCategories={ItemCategories}
-            OrderType={OrderType}
+            Brand={Brand.value}
+            ItemCategories={ItemCategories.value}
+            OrderType={OrderType.value}
           />
         </div>
       </div>

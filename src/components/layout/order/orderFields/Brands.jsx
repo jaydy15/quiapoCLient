@@ -65,8 +65,11 @@ const Brands = ({
     }
   }
   // ENDING OF LENS ITEM BRANDS
-
-  if (ItemCategories === 1 || ItemCategories === 5 || ItemCategories === 6) {
+  else if (
+    ItemCategories === 1 ||
+    ItemCategories === 5 ||
+    ItemCategories === 6
+  ) {
     let listCSAId = csaBrand.filter(unique);
     let listBrandCSA = [];
     for (let x = 0; x < listCSAId.length; x++) {
@@ -91,7 +94,7 @@ const Brands = ({
           <label htmlFor='brand'>
             Brand<span style={{ color: 'red' }}>*</span>
           </label>
-          <Select options={optBrandCSA} />
+          <Select options={optBrandCSA} onChange={onChange} />
         </div>
       )}
     </div>
