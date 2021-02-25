@@ -27,22 +27,24 @@ const CartList = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(item);
+  console.log(item[0].itemCategories);
   let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
-    formatODTY = ordertype.find(
-      (itm) => itm.id.toString() === item[0].orderType
-    ).typeDesc;
-    formatBrand = brands.find((br) => br.id.toString() === item[0].brand).name;
-    formatITCY = itemcategory.find(
-      (itm) => itm.id.toString() === item[0].itemCategories
-    ).desc;
-    formatMDL =
-      formatITCY !== 'LENS'
-        ? fscaModels.find((mdl) => mdl.id.toString() === item[0].model)
-            .modelName
-        : lens.find((mdl) => mdl.id.toString() === item[0].model).name;
+    formatODTY = ordertype.find((itm) => itm.id === item[0].orderType).typeDesc;
+    formatBrand = brands.find((br) => br.id === item[0].brand).name;
+    formatITCY = itemcategory.find((itm) => itm.id === item[0].itemCategories)
+      .desc;
+    if (item[0].itemCategories === 2) {
+      formatMDL = lens.find((len) => len.id === item[0].model).name;
+    } else if (
+      item[0].itemCategories === 1 ||
+      item[0].itemCategories === 5 ||
+      item[0].itemCategories === 6
+    ) {
+      formatMDL = csaItems.find((csa) => csa.id.toString() === item[0].model)
+        .description;
+    }
   }
 
   //BULK OR NON BULK
@@ -61,21 +63,21 @@ const CartList = ({
     const formattedItems = [];
     const itemKey = [];
     for (let i = 0; i < item.length; i++) {
-      if (item[i].itemCategories === '2') {
-        itemKey.push(item[i].model);
-      } else if (
-        item[i].itemCategories === '1' ||
-        item[i].itemCategories === '5' ||
-        item[i].itemCategories === '6'
-      ) {
-        itemKey.push(
-          csaItems.find((csa) => csa.csaModelKey === parseInt(item[i].model)).id
-        );
-      } else {
-        itemKey.push(
-          fsItems.find((fs) => fs.fsModelKey === parseInt(item[i].model)).id
-        );
-      }
+      // if (item[i].itemCategories === 2) {
+      //   itemKey.push(item[i].model);
+      // } else if (
+      //   item[i].itemCategories === 1 ||
+      //   item[i].itemCategories === 5 ||
+      //   item[i].itemCategories === 6
+      // ) {
+      //   itemKey.push(
+      //     csaItems.find((csa) => csa.csaModelKey === parseInt(item[i].model)).id
+      //   );
+      // } else {
+      //   itemKey.push(
+      //     fsItems.find((fs) => fs.fsModelKey === parseInt(item[i].model)).id
+      //   );
+      // }
       console.log(itemKey);
       if (item[i].nonLensQty === '') {
         item[i].nonLensQty = 0;
@@ -88,8 +90,8 @@ const CartList = ({
         orderTypeKey: parseInt(item[i].orderType),
         rxNumber: rxNumber,
         supplyCategoryKey: parseInt(item[i].itemCategories),
-        itemKey: itemKey[i],
-        cdKey: parseInt(item[i].color),
+        itemKey: item[i].model,
+        cdKey: item[i].color,
         size: item[i].size,
         additionalInstruction: item[i].additionalInstructions,
         odDetails: item[i].odDetails,

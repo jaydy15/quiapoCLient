@@ -9,7 +9,7 @@ const Colors = ({ onChange, colors }) => {
   for (let i = 0; i < listColorId.length; i++) {
     let formattObj = {
       label: listColorName[i],
-      value: listColorName[i],
+      value: listColorId[i],
     };
     optColor.push(formattObj);
   }

@@ -478,7 +478,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
                       <Select
                         options={optAdd}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OsSph: selectedOption });
+                          setFormData({ ...formData, OsAdd: selectedOption });
                         }}
                       />
                     </div>

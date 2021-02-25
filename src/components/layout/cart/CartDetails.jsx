@@ -9,19 +9,25 @@ const CartDetails = ({
   brands,
   lens,
   fscsaModels,
+  csaItems,
 }) => {
-  const formatITCY = itemcategory.find(
-    (itm) => itm.id.toString() === bulk.itemCategories
-  ).desc;
-  const formatODTY = ordertype.find(
-    (itm) => itm.id.toString() === bulk.orderType
-  ).typeDesc;
+  const formatITCY = itemcategory.find((itm) => itm.id === bulk.itemCategories)
+    .desc;
+  const formatODTY = ordertype.find((itm) => itm.id === bulk.orderType)
+    .typeDesc;
 
-  const formatBrand = brands.find((br) => br.id.toString() === bulk.brand).name;
-  const formatMDL =
-    formatITCY !== 'LENS'
-      ? fscsaModels.find((mdl) => mdl.id.toString() === bulk.model).modelName
-      : lens.find((mdl) => mdl.id.toString() === bulk.model).name;
+  const formatBrand = brands.find((br) => br.id === bulk.brand).name;
+  let formatMDL;
+  if (bulk.itemCategories === 2) {
+    formatMDL = lens.find((len) => len.id === bulk.model).name;
+  } else if (
+    bulk.itemCategories === 1 ||
+    bulk.itemCategories === 5 ||
+    bulk.itemCategories === 6
+  ) {
+    formatMDL = csaItems.find((csa) => csa.id.toString() === bulk.model)
+      .description;
+  }
   return (
     <div>
       {formatODTY === 'BULK ORDER' && <CartBulkDetail bulk={bulk} />}
@@ -32,10 +38,10 @@ const CartDetails = ({
               <p>Order Type : {formatODTY}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdSph : {bulk.odSph}</p>
+              <p>OdSph : {bulk.odSph.value}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsSph : {bulk.osSph}</p>
+              <p>OsSph : {bulk.osSph.value}</p>
             </div>
             <div className='col-md-2'>
               <p>Horizontal : {bulk.horizontal}</p>
@@ -46,10 +52,10 @@ const CartDetails = ({
               <p>Item Category : {formatITCY}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdCyl : {bulk.odCyl}</p>
+              <p>OdCyl : {bulk.odCyl.value}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsCyl : {bulk.osCyl}</p>
+              <p>OsCyl : {bulk.osCyl.value}</p>
             </div>
             <div className='col-md-2'>
               <p>Vertical : {bulk.vertical}</p>
@@ -60,10 +66,10 @@ const CartDetails = ({
               <p>Brand : {formatBrand}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdAxis : {bulk.odAxis}</p>
+              <p>OdAxis : {bulk.odAxis.value}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsAxis : {bulk.osAxis}</p>
+              <p>OsAxis : {bulk.osAxis.value}</p>
             </div>
             <div className='col-md-2'>
               <p>Bridge : {bulk.bridge}</p>
@@ -74,10 +80,10 @@ const CartDetails = ({
               <p>Model : {formatMDL}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdAxis : {bulk.odAxis}</p>
+              <p>OdAxis : {bulk.odAxis.value}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsAxis : {bulk.osAxis}</p>
+              <p>OsAxis : {bulk.osAxis.value}</p>
             </div>
             <div className='col-md-2'>
               <p>Frame Type : {bulk.frameType}</p>
@@ -123,6 +129,7 @@ const mapStateToProps = (state) => ({
   brands: state.catalogue.brands,
   lens: state.catalogue.lensItems,
   fscsaModels: state.catalogue.fscsaModels,
+  csaItems: state.catalogue.csaItems,
 });
 
 export default connect(mapStateToProps)(CartDetails);
