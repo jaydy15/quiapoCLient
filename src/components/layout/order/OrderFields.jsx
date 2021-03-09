@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import InputField from './../../reusable/InputField';
 import OrderTypes from './orderFields/OrderTypes';
 import Brands from './orderFields/Brands';
 import ItemCategory from './orderFields/ItemCategory';
 import Models from './orderFields/Models';
-import OdGrades from './orderFields/OdGrades';
-import OsGrades from './orderFields/OsGrades';
 import Colors from './orderFields/Colors';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
@@ -15,6 +14,7 @@ import Select from 'react-select';
 
 const OrderFields = ({ auth, lists, addToCart }) => {
   const alert = useAlert();
+  let history = useHistory();
   const [formData, setFormData] = useState({
     RxNumber: {},
     OrderType: '',
@@ -22,20 +22,20 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     Brand: '',
     Model: '',
     Color: '',
-    Size: '',
+    Size: '0',
     NonLensQty: '',
-    OdSph: '',
-    OdCyl: '',
-    OdAxis: '',
-    OdAdd: '',
-    OdPd: '',
-    OdQty: '',
-    OsSph: '',
-    OsCyl: '',
-    OsAxis: '',
-    OsAdd: '',
-    OsPd: '',
-    OsQty: '',
+    OdSph: '0',
+    OdCyl: '0',
+    OdAxis: '0',
+    OdAdd: '0',
+    OdPd: '0',
+    OdQty: '0',
+    OsSph: '0',
+    OsCyl: '0',
+    OsAxis: '0',
+    OsAdd: '0',
+    OsPd: '0',
+    OsQty: '0',
     PatientsName: '',
     Horizontal: '',
     Vertical: '',
@@ -108,30 +108,6 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     });
   };
 
-  const OdDetails =
-    OdSph.value +
-    '|' +
-    OdCyl.value +
-    '|' +
-    OdAxis.value +
-    '|' +
-    OdAdd.value +
-    '|' +
-    OdPd +
-    '|' +
-    OdQty;
-  const OsDetails =
-    OsSph.value +
-    '|' +
-    OsCyl.value +
-    '|' +
-    OsAxis.value +
-    '|' +
-    OsAdd.value +
-    '|' +
-    OsPd +
-    '|' +
-    OsQty;
   const SoDetails =
     Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
 
@@ -139,6 +115,41 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     const tempID = uuidv4();
     console.log(tempID);
     e.preventDefault();
+    if (Size === ' ' || Size === undefined) {
+      setFormData({ ...formData, Size: 0.0 });
+    }
+    let OdDetails;
+    let OsDetails;
+    if (ItemCategories.value === 1 || ItemCategories.value === 2) {
+      OdDetails =
+        OdSph.value +
+        '|' +
+        OdCyl.value +
+        '|' +
+        OdAxis.value +
+        '|' +
+        OdAdd.value +
+        '|' +
+        OdPd +
+        '|' +
+        OdQty;
+      OsDetails =
+        OsSph.value +
+        '|' +
+        OsCyl.value +
+        '|' +
+        OsAxis.value +
+        '|' +
+        OsAdd.value +
+        '|' +
+        OsPd +
+        '|' +
+        OsQty;
+    } else {
+      OdDetails = '0|0|0|0|0|0';
+      OsDetails = '0|0|0|0|0|0';
+    }
+
     addToCart({
       tempID,
       rxNumber: RxNumber.value,
@@ -173,7 +184,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     });
     alert.show('Order have been added to the cart successfully');
     setTimeout(() => {
-      clearform();
+      history.push('/cart');
     }, 1000);
   };
 
@@ -247,6 +258,11 @@ const OrderFields = ({ auth, lists, addToCart }) => {
   const utils = (arrayMap) => {
     let optGrades = [];
     let listGrades = arrayMap.map((item) => item);
+    let zero = {
+      value: 0,
+      label: 'N/A',
+    };
+    optGrades.push(zero);
     for (let i = 0; i < listGrades.length; i++) {
       let formattObj = {
         value: listGrades[i],
@@ -580,7 +596,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       </div>
       <div className='row'>
         <div className='col-md-12'>
-          {OrderType !== '2' ? (
+          {OrderType.value !== 2 ? (
             <div className='row'>
               <div className='col-md-6'>
                 <InputField

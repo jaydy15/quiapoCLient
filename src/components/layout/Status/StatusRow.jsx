@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import checkCircle from '@iconify-icons/mdi/check-circle';
 import alphaXCircle from '@iconify-icons/mdi/alpha-x-circle';
@@ -24,22 +24,39 @@ const StatusRow = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [status, setStatus] = useState(order.items[0].status);
+
+  console.log(order.items[0]);
+
   const orderApproved = () => {
-    approveOrder(order.items[0].txNumber, branch);
-    window.location.reload();
+    try {
+      approveOrder(order.items[0].txNumber, branch);
+      setStatus('APPROVED');
+    } catch (err) {
+      setStatus(order.items[0].status);
+    }
   };
 
   const orderRejected = () => {
-    rejectOrder(order.items[0].txNumber, branch);
-    window.location.reload();
+    try {
+      rejectOrder(order.items[0].txNumber, branch);
+      setStatus('REJECTED');
+    } catch (err) {
+      setStatus(order.items[0].status);
+    }
   };
 
   return (
     <Fragment>
       <tr key={order.items[0].txNumber}>
+        <td>{order.items[0].txNumber}</td>
         <td>{order.items[0].rxNumber}</td>
-        <td>{order.items[0].status}</td>
-        {user.access === '0' ? (
+        <td>{status}</td>
+        {status === 'FOR APPROVAL' &&
+        (user.access === '0' ||
+          user.access === '1' ||
+          user.access === '2' ||
+          user.access === '3') ? (
           <td>
             <Icon
               className='icon'
@@ -97,7 +114,10 @@ const StatusRow = ({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          {user.access === '0' && (
+          {(user.access === '0' ||
+            user.access === '1' ||
+            user.access === '2' ||
+            user.access === '3') && (
             <Fragment>
               <Button variant='danger' onClick={orderRejected}>
                 REJECT

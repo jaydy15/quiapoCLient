@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Sidebar from './../Sidebar';
 import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
-import Joi from 'joi-browser';
+import { getOrders } from '../../../redux/order/orderActions';
+import Select from 'react-select';
 
-const NewOrder = ({ newNumber }) => {
+const NewOrder = ({ newNumber, orders, getOrders, branch }) => {
+  useEffect(() => {
+    getOrders(branch);
+    //eslint-disable-next-line
+  }, []);
   let history = useHistory();
   const alert = useAlert();
 
@@ -18,33 +23,28 @@ const NewOrder = ({ newNumber }) => {
   });
   const { OrderTypes, prefix, number } = formData;
 
-  const [error, setError] = useState({});
-
-  const schema = {
-    OrderTypes: Joi.string().required(),
-    number: Joi.number().required(),
-  };
-
-  if (OrderTypes === 'Bulk Order') {
-    schema.prefix = Joi.string().required();
-  }
+  const optPrefix = [
+    { label: 'B', value: 'B' },
+    { label: 'C', value: 'C' },
+    { label: 'D', value: 'D' },
+    { label: 'F', value: 'F' },
+  ];
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const OrderNumber = prefix + number;
-
-  const validate = () => {
-    const result = Joi.validate(formData, schema, { abortEarly: false });
-    if (!result.error) return null;
-
-    for (let item of result.error.details) error[item.path[0]] = item.message;
-    return error;
-  };
+  if (prefix.value === '' || prefix.value === 'undefine') {
+    setFormData({ ...formData, prefix: '' });
+  }
+  let OrderNumber;
+  if (OrderTypes === 'Bulk Order') {
+    OrderNumber = prefix.value + number;
+  } else {
+    OrderNumber = number;
+  }
 
   const numberfunction = () => {
-    validate();
     newNumber({
       OrderTypes,
       OrderNumber,
@@ -83,9 +83,6 @@ const NewOrder = ({ newNumber }) => {
                 <option value='Bulk Order'>Bulk Order</option>
                 <option value='Non Bulk Order'>Non Bulk Order</option>
               </select>
-              {error.OrderTypes && (
-                <div className='alert alert-danger'>{error.OrderTypes}</div>
-              )}
             </div>
           )}
 
@@ -96,13 +93,11 @@ const NewOrder = ({ newNumber }) => {
               </label>
               <div className='row'>
                 <div className='col-md-4' style={{ paddingRight: 0 }}>
-                  <input
-                    type='text'
-                    className='form-control'
-                    value={prefix}
-                    name='prefix'
-                    onChange={onChange}
-                    required
+                  <Select
+                    options={optPrefix}
+                    onChange={(selectedOption) => {
+                      setFormData({ ...formData, prefix: selectedOption });
+                    }}
                   />
                 </div>
                 <div className='col-md-8' style={{ paddingLeft: 0 }}>
@@ -116,12 +111,6 @@ const NewOrder = ({ newNumber }) => {
                   />
                 </div>
               </div>
-              {error.prefix && (
-                <div className='alert alert-danger'>{error.prefix}</div>
-              )}{' '}
-              {error.number && (
-                <div className='alert alert-danger'>{error.number}</div>
-              )}
             </div>
           ) : (
             <div className='form-group'>
@@ -136,9 +125,6 @@ const NewOrder = ({ newNumber }) => {
                 onChange={onChange}
                 required
               />
-              {error.number && (
-                <div className='alert alert-danger'>{error.number}</div>
-              )}
             </div>
           )}
 
@@ -153,6 +139,8 @@ const NewOrder = ({ newNumber }) => {
 
 const mapStateToProps = (state) => ({
   catalogue: state.catalogue,
+  orders: state.orders,
+  branch: state.auth.user.branchKey,
 });
 
-export default connect(mapStateToProps, { newNumber })(NewOrder);
+export default connect(mapStateToProps, { newNumber, getOrders })(NewOrder);

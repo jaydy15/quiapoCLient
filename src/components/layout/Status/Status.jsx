@@ -24,6 +24,7 @@ const Status = ({ orders, getOrders, branch, user }) => {
           <table className='table'>
             <thead>
               <tr>
+                <th scope='col'>TXN NUMBER</th>
                 <th scope='col'>RX NUMBER</th>
                 <th scope='col'>STATUS</th>
                 <th scope='col'>ACTIONS</th>

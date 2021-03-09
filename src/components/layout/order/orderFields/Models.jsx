@@ -16,18 +16,18 @@ const Models = ({
 
   let optLensModel = [];
   let optCSAModel = [];
-  console.log(ItemCategories);
+
   // LENS ITEM BRANDS
   if (ItemCategories === 2) {
     let listLensId;
     let listBrandLens;
     if (OrderType === 2) {
       listLensId = lens
-        .filter((lens) => lens.orderTypeKey === OrderType)
+        .filter((lens) => lens.orderTypeKey === 1)
         .filter((lens) => lens.brandKey === Brand)
         .map((md) => md.id);
       listBrandLens = lens
-        .filter((lens) => lens.orderTypeKey === OrderType)
+        .filter((lens) => lens.orderTypeKey === 1)
         .filter((lens) => lens.brandKey === Brand)
         .map((md) => md.name);
     } else {
@@ -46,7 +46,7 @@ const Models = ({
         label: listBrandLens[i],
         value: listLensId[i],
       };
-      console.log(optLensModel);
+
       optLensModel.push(formattObj);
     }
   } else if (
@@ -62,12 +62,12 @@ const Models = ({
       .filter((csa) => csa.scKey === ItemCategories)
       .filter((csa) => csa.brandKey === Brand)
       .map((md) => md.id);
-    console.log(listCSAId);
+
     let listBrandCSA = [];
     for (let x = 0; x < listCSAId.length; x++) {
       let findCSAModel = model.find((elm) => elm.id === listCSAModelKey[x])
         .modelName;
-      console.log(findCSAModel);
+
       listBrandCSA.push(findCSAModel);
     }
 

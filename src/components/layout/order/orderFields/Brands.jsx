@@ -13,7 +13,7 @@ const Brands = ({
   ...ownprops
 }) => {
   const { onChange } = ownprops;
-  console.log(ItemCategories);
+
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
   };
@@ -25,8 +25,6 @@ const Brands = ({
   const bulkLensBrand = lens
     .filter((len) => len.orderTypeKey === 1)
     .map((br) => br.brandKey);
-
-  console.log(bulkLensBrand);
 
   const fsBrand = _.filter(fs, ['supplyCategoryKey', ItemCategories]).map(
     (br) => br.brandKey
@@ -48,14 +46,12 @@ const Brands = ({
     }
     let listBrandLens = [];
 
-    console.log(listLensId);
-
     for (let x = 0; x < listLensId.length; x++) {
       let findLensBrand = brands.find((brand) => brand.id === listLensId[x])
         .name;
       listBrandLens.push(findLensBrand);
     }
-    console.log(listBrandLens);
+
     for (let i = 0; i < listLensId.length; i++) {
       let formattObj = {
         label: listBrandLens[i],
@@ -74,7 +70,7 @@ const Brands = ({
     let listBrandCSA = [];
     for (let x = 0; x < listCSAId.length; x++) {
       let findCSABrand = brands.find((brand) => brand.id === listCSAId[x]).name;
-      console.log(findCSABrand);
+
       listBrandCSA.push(findCSABrand);
     }
 
@@ -85,7 +81,6 @@ const Brands = ({
       };
       optBrandCSA.push(formattObj);
     }
-    console.log(optBrandCSA);
   }
   return (
     <div>

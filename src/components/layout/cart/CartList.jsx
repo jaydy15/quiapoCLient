@@ -27,7 +27,7 @@ const CartList = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(item[0].itemCategories);
+  console.log(item[0]);
   let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
@@ -58,29 +58,16 @@ const CartList = ({
 
   //FOR SUBMIT FOR APPROVAL
   const onSubmit = (e) => {
-    console.log('button clicked');
+    console.log(item[0]);
     e.preventDefault();
     const formattedItems = [];
     const itemKey = [];
     for (let i = 0; i < item.length; i++) {
-      // if (item[i].itemCategories === 2) {
-      //   itemKey.push(item[i].model);
-      // } else if (
-      //   item[i].itemCategories === 1 ||
-      //   item[i].itemCategories === 5 ||
-      //   item[i].itemCategories === 6
-      // ) {
-      //   itemKey.push(
-      //     csaItems.find((csa) => csa.csaModelKey === parseInt(item[i].model)).id
-      //   );
-      // } else {
-      //   itemKey.push(
-      //     fsItems.find((fs) => fs.fsModelKey === parseInt(item[i].model)).id
-      //   );
-      // }
-      console.log(itemKey);
       if (item[i].nonLensQty === '') {
         item[i].nonLensQty = 0;
+      }
+      if (item[i].size === '') {
+        item[i].size = 0;
       }
       const formatItem = {
         typeName: 'PO',
@@ -110,7 +97,7 @@ const CartList = ({
       items: formattedItems,
       isBulk,
     };
-    //console.log(toGenerate);
+    console.log(toGenerate);
     forApproval(toGenerate);
     removeNumber(rxNumber);
   };
@@ -123,7 +110,16 @@ const CartList = ({
             className='row'
             style={{ border: '1px solid #eee', margin: '20px' }}>
             <div className='col-md-12'>
-              <h3 onClick={handleShow}>Rx Number : {rxNumber}</h3>
+              <h3
+                className='rxCart'
+                style={{
+                  textDecoration: 'underline',
+                  color: '#003699',
+                  cursor: 'pointer',
+                }}
+                onClick={handleShow}>
+                Rx Number : {rxNumber}
+              </h3>
               <div className='row'>
                 <div className='col-md-3'>
                   <p>Order Type: {formatODTY}</p>
