@@ -7,6 +7,7 @@ import Brands from './orderFields/Brands';
 import ItemCategory from './orderFields/ItemCategory';
 import Models from './orderFields/Models';
 import Colors from './orderFields/Colors';
+import Units from './orderFields/Units';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,6 +44,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     FrameType: '',
     AdditionalInstructions: '',
     LensParamId: '',
+    nonLensUnitName: '',
   });
 
   const {
@@ -73,6 +75,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     FrameType,
     AdditionalInstructions,
     LensParamId,
+    nonLensUnitName,
   } = formData;
 
   const onChange = (e) => {
@@ -127,6 +130,13 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
       maxAdd = parseFloat(arrayLensParam[0].maxAdd);
       minAdd = parseFloat(arrayLensParam[0].minAdd);
     }
+  } else {
+    maxSph = 25;
+    minSph = -25;
+    maxCyl = -0.25;
+    minCyl = -8;
+    maxAdd = 4;
+    minAdd = 0.25;
   }
 
   const SoDetails =
@@ -204,6 +214,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
       osPd: OsPd,
       osQty: OsQty,
       lensParamKey: paramId,
+      nonLensUnitName: nonLensUnitName.value,
     });
     alert.show('Order have been added to the cart successfully');
     setTimeout(() => {
@@ -415,6 +426,18 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
           </div>
         ) : null}
       </div>
+      {ItemCategories.value !== 1 && ItemCategories.value !== 2 ? (
+        <div className='row'>
+          <div className='col-md-4'>
+            <Units
+              value={nonLensUnitName}
+              onChange={(selectedOption) => {
+                setFormData({ ...formData, nonLensUnitName: selectedOption });
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
       <div className='row'>
         <div className='col-md-12'>
           {ItemCategories.value === 1 || ItemCategories.value === 2 ? (
