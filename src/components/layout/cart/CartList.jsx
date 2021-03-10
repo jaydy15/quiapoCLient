@@ -87,6 +87,7 @@ const CartList = ({
         soDetails: item[i].soDetails,
         nonLensQty: item[i].nonLensQty,
         status: 'FOR APPROVAL',
+        lensParamKey: item[i].lensParamKey,
       };
       formattedItems.push(formatItem);
     }

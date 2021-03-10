@@ -12,7 +12,7 @@ import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
 
-const OrderFields = ({ auth, lists, addToCart }) => {
+const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
   const alert = useAlert();
   let history = useHistory();
   const [formData, setFormData] = useState({
@@ -42,6 +42,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     Bridge: '',
     FrameType: '',
     AdditionalInstructions: '',
+    LensParamId: '',
   });
 
   const {
@@ -71,6 +72,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
     Bridge,
     FrameType,
     AdditionalInstructions,
+    LensParamId,
   } = formData;
 
   const onChange = (e) => {
@@ -107,6 +109,25 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       AdditionalInstructions: '',
     });
   };
+  let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
+  let paramId;
+  if (ItemCategories.value === 2) {
+    const arrayLensParam = lensParam.filter(
+      (item) =>
+        item.lensItemKey === Model.value &&
+        parseInt(item.id.slice(-1)) === OrderType.value
+    );
+    if (arrayLensParam.length > 0) {
+      console.log(arrayLensParam[0]);
+      paramId = arrayLensParam[0].id;
+      maxSph = parseFloat(arrayLensParam[0].maxSph);
+      minSph = parseFloat(arrayLensParam[0].minSph);
+      maxCyl = parseFloat(arrayLensParam[0].maxCyl);
+      minCyl = parseFloat(arrayLensParam[0].minCyl);
+      maxAdd = parseFloat(arrayLensParam[0].maxAdd);
+      minAdd = parseFloat(arrayLensParam[0].minAdd);
+    }
+  }
 
   const SoDetails =
     Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
@@ -114,6 +135,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
   const onSubmit = (e) => {
     const tempID = uuidv4();
     console.log(tempID);
+    console.log('lensparamid', paramId);
     e.preventDefault();
     if (Size === ' ' || Size === undefined) {
       setFormData({ ...formData, Size: 0.0 });
@@ -149,7 +171,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       OdDetails = '0|0|0|0|0|0';
       OsDetails = '0|0|0|0|0|0';
     }
-
+    setFormData({ ...formData, LensParamId: paramId });
     addToCart({
       tempID,
       rxNumber: RxNumber.value,
@@ -181,6 +203,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       osAdd: OsAdd,
       osPd: OsPd,
       osQty: OsQty,
+      lensParamKey: paramId,
     });
     alert.show('Order have been added to the cart successfully');
     setTimeout(() => {
@@ -218,9 +241,10 @@ const OrderFields = ({ auth, lists, addToCart }) => {
       }
     }
   };
+
   const sphLoad = () => {
     let grades = [];
-    for (let i = -25.0; i <= 25.0; i = i + 0.25) {
+    for (let i = minSph; i <= maxSph; i = i + 0.25) {
       grades.push(gradify(i));
     }
     return grades;
@@ -228,7 +252,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
 
   const cylLoad = () => {
     let grades = [];
-    for (let i = -8.0; i <= -0.25; i = i + 0.25) {
+    for (let i = minCyl; i <= maxCyl; i = i + 0.25) {
       grades.push(gradify(i));
     }
     return grades;
@@ -244,7 +268,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
 
   const addLoad = () => {
     let grades = [];
-    for (let i = 0.25; i <= 4.0; i = i + 0.25) {
+    for (let i = minAdd; i <= maxAdd; i = i + 0.25) {
       grades.push(gradify(i));
     }
     return grades;
@@ -626,6 +650,7 @@ const OrderFields = ({ auth, lists, addToCart }) => {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   lists: state.cart.lists,
+  lensParam: state.catalogue.lensParam,
 });
 
 export default connect(mapStateToProps, { addToCart })(OrderFields);
