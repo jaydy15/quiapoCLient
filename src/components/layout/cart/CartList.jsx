@@ -71,7 +71,7 @@ const CartList = ({
       }
       const formatItem = {
         typeName: 'PO',
-        fromBranchKey: branch,
+        fromBranchKey: 177,
         toBranchKey: branch,
         userIdKey: user,
         orderTypeKey: parseInt(item[i].orderType),

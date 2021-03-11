@@ -72,6 +72,13 @@ export const approveOrder = (id, branch) => async (dispatch) => {
     updateBody: { status: 'APPROVED' },
   };
   await axios.put(`/api/orders/${id}`, obj, config);
+  const invObj = {
+    txNumber: id,
+    method: 'commit',
+    effect: 'origin',
+    branchId: branch,
+  };
+  await axios.put('api/inventories?NegativeStauts=REJECTED', invObj, config);
   console.log('update successful');
 };
 

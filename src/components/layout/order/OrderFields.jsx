@@ -137,6 +137,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     minCyl = -8;
     maxAdd = 4;
     minAdd = 0.25;
+    paramId = '';
   }
 
   const SoDetails =
@@ -149,6 +150,13 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     e.preventDefault();
     if (Size === ' ' || Size === undefined) {
       setFormData({ ...formData, Size: 0.0 });
+    }
+    let varNonLenUnit;
+    if (nonLensUnitName.value === ' ' || nonLensUnitName.value === undefined) {
+      varNonLenUnit = '';
+      setFormData({ ...formData, nonLensUnitName: varNonLenUnit });
+    } else {
+      varNonLenUnit = nonLensUnitName.value;
     }
     let OdDetails;
     let OsDetails;
@@ -214,7 +222,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
       osPd: OsPd,
       osQty: OsQty,
       lensParamKey: paramId,
-      nonLensUnitName: nonLensUnitName.value,
+      nonLensUnitName: varNonLenUnit,
     });
     alert.show('Order have been added to the cart successfully');
     setTimeout(() => {
