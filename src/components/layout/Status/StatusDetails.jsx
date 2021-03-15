@@ -51,27 +51,31 @@ const StatusDetails = ({
   console.log(formatItem);
   return (
     <div>
+      <table className='table'>
+        <tbody>
+          <tr>
+            <th scope='col'>RX NUMBER</th>
+            <th scope='col'>DATE</th>
+            <th scope='col'>BRANCH</th>
+            <th scope='col'>ENCODED BY</th>
+          </tr>
+          <tr>
+            <td>{items[0].rxNumber}</td>
+            <td>
+              <Moment format='ddd, MMMM D YYYY, h:mm a'>
+                {items[0].transactionDetailDate}
+              </Moment>
+            </td>
+            <td>{formatBranch}</td>
+            <td>{user}</td>
+          </tr>
+        </tbody>
+      </table>
       {items.map((item, index) => (
         <div>
           <p>{index + 1}</p>
           <table className='table'>
             <tbody>
-              <tr>
-                <th scope='col'>RX NUMBER</th>
-                <th scope='col'>DATE</th>
-                <th scope='col'>BRANCH</th>
-                <th scope='col'>ENCODED BY</th>
-              </tr>
-              <tr>
-                <td>{item.rxNumber}</td>
-                <td>
-                  <Moment format='ddd, MMMM D YYYY, h:mm a'>
-                    {item.transactionDetailDate}
-                  </Moment>
-                </td>
-                <td>{formatBranch}</td>
-                <td>{user}</td>
-              </tr>
               <tr>
                 <th scope='col'>ORDER TYPE</th>
                 <th scope='col'>SUPPLY CATEGORY</th>

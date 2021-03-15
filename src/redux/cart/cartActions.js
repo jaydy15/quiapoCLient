@@ -79,6 +79,7 @@ export const approveOrder = (id, branch) => async (dispatch) => {
     branchId: branch,
   };
   await axios.put('api/inventories?NegativeStauts=REJECTED', invObj, config);
+  console.log(invObj);
   console.log('update successful');
 };
 

@@ -5,16 +5,20 @@ import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
-import { getOrders } from '../../../redux/order/orderActions';
+import { getTransactions } from '../../../redux/order/orderActions';
 import Select from 'react-select';
 
-const NewOrder = ({ newNumber, orders, getOrders, branch }) => {
+const NewOrder = ({ newNumber, transactions, branch, getTransactions }) => {
   useEffect(() => {
-    getOrders(branch);
+    getTransactions(branch);
     //eslint-disable-next-line
   }, []);
   let history = useHistory();
   const alert = useAlert();
+
+  const unique = (value, index, self) => {
+    return self.indexOf(value) === index;
+  };
 
   const [formData, setFormData] = useState({
     OrderTypes: '',
@@ -43,17 +47,28 @@ const NewOrder = ({ newNumber, orders, getOrders, branch }) => {
   } else {
     OrderNumber = number;
   }
+  let isDuplicate;
+  if (transactions !== '') {
+    const listRx = transactions.map((trans) => trans.rxNumber);
+    const rx = listRx.filter(unique);
+    isDuplicate = rx.filter((rx) => rx === OrderNumber);
+    console.log(isDuplicate);
+  }
 
   const numberfunction = () => {
-    newNumber({
-      OrderTypes,
-      OrderNumber,
-    });
-    console.log(OrderNumber);
-    alert.show('Order Number Successfully Created');
-    setTimeout(() => {
-      history.push('/order');
-    }, 1000);
+    if (isDuplicate.length === 1) {
+      alert.show('Order Number is Duplicated, Please Enter Another Rx Number');
+    } else {
+      newNumber({
+        OrderTypes,
+        OrderNumber,
+      });
+      console.log(OrderNumber);
+      alert.show('Order Number Successfully Created');
+      setTimeout(() => {
+        history.push('/order');
+      }, 1000);
+    }
   };
 
   const onSubmit = (e) => {
@@ -139,8 +154,10 @@ const NewOrder = ({ newNumber, orders, getOrders, branch }) => {
 
 const mapStateToProps = (state) => ({
   catalogue: state.catalogue,
-  orders: state.orders,
+  transactions: state.orders.transactions,
   branch: state.auth.user.branchKey,
 });
 
-export default connect(mapStateToProps, { newNumber, getOrders })(NewOrder);
+export default connect(mapStateToProps, { newNumber, getTransactions })(
+  NewOrder
+);
