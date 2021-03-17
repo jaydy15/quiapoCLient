@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { login } from '../redux/auth/authActions';
 import { setAlert } from './../redux/alert/alertActions';
 import Alerts from './Alerts';
+import { useAlert } from 'react-alert';
 import { loadUser } from './../redux/auth/authActions';
 
 const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   let history = useHistory();
+  const alert = useAlert();
   const { error, isAuthenticated } = auth;
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,8 +30,8 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login({ username, password });
-    if (error === 'Invalid Credentials') {
-      setAlert(error, 'danger');
+    if (error) {
+      setAlert('Invalid Credentials', 'danger');
     }
   };
 

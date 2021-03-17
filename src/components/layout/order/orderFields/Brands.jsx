@@ -84,7 +84,7 @@ const Brands = ({
   }
   return (
     <div>
-      {brands !== undefined && (
+      {ItemCategories ? null : (
         <div className='form-group'>
           <label htmlFor='brand'>
             Brand<span style={{ color: 'red' }}>*</span>
@@ -92,6 +92,40 @@ const Brands = ({
           <Select options={optBrandCSA} onChange={onChange} />
         </div>
       )}
+      {ItemCategories === 2 && OrderType === 1 && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Brand<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={optBrandCSA} onChange={onChange} />
+        </div>
+      )}
+      {ItemCategories === 2 && OrderType === 3 && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Brand<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={optBrandCSA} onChange={onChange} />
+        </div>
+      )}
+      {(ItemCategories === 1 || ItemCategories === 5 || ItemCategories === 6) &&
+        OrderType === 1 && (
+          <div className='form-group'>
+            <label htmlFor='brand'>
+              Brand<span style={{ color: 'red' }}>*</span>
+            </label>
+            <Select options={optBrandCSA} onChange={onChange} />
+          </div>
+        )}
+      {(ItemCategories === 1 || ItemCategories === 5 || ItemCategories === 6) &&
+        OrderType === 3 && (
+          <div className='form-group'>
+            <label htmlFor='brand'>
+              Brand<span style={{ color: 'red' }}>*</span>
+            </label>
+            <Select options={optBrandCSA} onChange={onChange} />
+          </div>
+        )}
     </div>
   );
 };

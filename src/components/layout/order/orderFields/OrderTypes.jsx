@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 
 const OrderTypes = ({ orderTypes, lists, RxNumber, ...ownprops }) => {
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState(Math.random()), []);
+  useEffect(() => {
+    forceUpdate();
+  }, []);
   const { onChange } = ownprops;
-
   const selected = lists
     .filter((num) => num.OrderNumber.toString() === RxNumber)
     .map((elm) => elm.OrderTypes)
@@ -50,26 +54,27 @@ const OrderTypes = ({ orderTypes, lists, RxNumber, ...ownprops }) => {
           <label htmlFor='orderType'>
             Order Type<span style={{ color: 'red' }}>*</span>
           </label>
-          <Select options={optOrderType} onChange={onChange} />
-          {/* <select onChange={onChange} className='form-control' name='OrderType'>
-            <option>Select Order Type</option>
-            {selected === 'Non Bulk Order' &&
-              orderTypes
-                .filter((or) => or.id === 1 || or.id === 3)
-                .map((order) => (
-                  <option key={order.id} value={order.id}>
-                    {order.typeDesc}
-                  </option>
-                ))}
-            {selected === 'Bulk Order' &&
-              orderTypes
-                .filter((or) => or.id === 2)
-                .map((order) => (
-                  <option key={order.id} value={order.id}>
-                    {order.typeDesc}
-                  </option>
-                ))}
-          </select> */}
+          {selected ? null : (
+            <Select
+              options={optOrderType}
+              onChange={onChange}
+              placeholder='Select Order Type'
+            />
+          )}
+          {selected === 'Non Bulk Order' && (
+            <Select
+              options={optOrderType}
+              onChange={onChange}
+              placeholder='Select Order Type'
+            />
+          )}
+          {selected === 'Bulk Order' && (
+            <Select
+              options={optOrderType}
+              onChange={onChange}
+              placeholder='Select Order Type'
+            />
+          )}
         </div>
       )}
     </div>

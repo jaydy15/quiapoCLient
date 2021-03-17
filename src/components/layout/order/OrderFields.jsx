@@ -151,6 +151,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     if (Size === ' ' || Size === undefined) {
       setFormData({ ...formData, Size: 0.0 });
     }
+
     let varNonLenUnit;
     if (nonLensUnitName.value === ' ' || nonLensUnitName.value === undefined) {
       varNonLenUnit = '';
@@ -162,25 +163,25 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     let OsDetails;
     if (ItemCategories.value === 1 || ItemCategories.value === 2) {
       OdDetails =
-        OdSph.value +
+        OdSph +
         '|' +
-        OdCyl.value +
+        OdCyl +
         '|' +
-        OdAxis.value +
+        OdAxis +
         '|' +
-        OdAdd.value +
+        OdAdd +
         '|' +
         OdPd +
         '|' +
         OdQty;
       OsDetails =
-        OsSph.value +
+        OsSph +
         '|' +
-        OsCyl.value +
+        OsCyl +
         '|' +
-        OsAxis.value +
+        OsAxis +
         '|' +
-        OsAdd.value +
+        OsAdd +
         '|' +
         OsPd +
         '|' +
@@ -365,7 +366,6 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
             }}
             value={OrderType.value}
             RxNumber={RxNumber.value}
-            required
           />
         </div>
 
@@ -411,7 +411,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
             value={Color}
           />
         </div>
-        <div className='col-md-4'>
+        {/* <div className='col-md-4'>
           <InputField
             type='number'
             name='Size'
@@ -419,7 +419,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
             onChange={onChange}
             label='Size'
           />
-        </div>
+        </div> */}
         {ItemCategories.value !== 1 && ItemCategories.value !== 2 ? (
           <div className='col-md-4'>
             <InputField
@@ -458,9 +458,14 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                     <div className='col-md-2'>
                       <label htmlFor=''>OD SPH</label>
                       <Select
+                        value={OdSph.value}
                         options={optSph}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OdSph: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OdSph: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -468,8 +473,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OD CYL</label>
                       <Select
                         options={optCyl}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OdCyl: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OdCyl: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -477,8 +486,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OD AXIS</label>
                       <Select
                         options={optAxis}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OdAxis: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OdAxis: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -486,8 +499,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OD ADD</label>
                       <Select
                         options={optAdd}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OdAdd: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OdAdd: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -521,8 +538,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OS SPH</label>
                       <Select
                         options={optSph}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OsSph: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OsSph: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -530,8 +551,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OS CYL</label>
                       <Select
                         options={optCyl}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OsCyl: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OsCyl: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -539,8 +564,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OS AXIS</label>
                       <Select
                         options={optAxis}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OsAxis: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OsAxis: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -548,8 +577,12 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                       <label htmlFor=''>OS ADD</label>
                       <Select
                         options={optAdd}
+                        defaultValue={{ label: 'N/A', value: 0 }}
                         onChange={(selectedOption) => {
-                          setFormData({ ...formData, OsAdd: selectedOption });
+                          setFormData({
+                            ...formData,
+                            OsAdd: selectedOption.value,
+                          });
                         }}
                       />
                     </div>
@@ -582,7 +615,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
       </div>
       <div className='row'>
         <div className='col-md-12'>
-          {OrderType === '3' && ItemCategories === '2' && (
+          {OrderType.value === 3 && ItemCategories.value === 2 && (
             <Fragment>
               <h3 style={{ paddingTop: '20px' }}>Frame Info</h3>
               <hr />
@@ -668,12 +701,19 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
           ) : null}
         </div>
       </div>
-      <button
-        onClick={onSubmit}
-        type='submit'
-        className='btn btn-block btn-success'>
-        Add To Cart
-      </button>
+      {RxNumber.value !== undefined &&
+        OrderType.value !== undefined &&
+        ItemCategories.value !== undefined &&
+        Brand.value !== undefined &&
+        Model.value !== undefined &&
+        Color.value !== undefined && (
+          <button
+            onClick={onSubmit}
+            type='submit'
+            className='btn btn-block btn-success'>
+            Add To Cart
+          </button>
+        )}
     </form>
   );
 };

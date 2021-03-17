@@ -37,27 +37,29 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
   return (
     <div>
       {/* ITEM CATEGORY FOR JOB ORDER AND SPECIAL ORDER */}
-      {OrderType !== 2 && itemCategory !== undefined && (
+
+      {OrderType ? null : (
         <div className='form-group'>
           <label htmlFor='brand'>
             Item Category<span style={{ color: 'red' }}>*</span>
           </label>
           <Select options={optSC} onChange={onChange} />
-          {/* <select
-            onChange={onChange}
-            className='form-control'
-            name='ItemCategories'>
-            <option>Select Item Category</option>
-            {itemCategory
-              .filter((ic) => {
-                return ic.id <= 2;
-              })
-              .map((flic) => (
-                <option key={flic.id} value={flic.id}>
-                  {flic.desc}
-                </option>
-              ))}
-          </select> */}
+        </div>
+      )}
+      {OrderType === 1 && itemCategory !== undefined && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Item Category<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={optSC} onChange={onChange} />
+        </div>
+      )}
+      {OrderType === 3 && itemCategory !== undefined && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Item Category<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={optSC} onChange={onChange} />
         </div>
       )}
       {/* BULK ORDER ITEM CATEGORY */}
@@ -65,17 +67,6 @@ const ItemCategory = ({ itemCategory, ...ownprops }) => {
         <div className='form-group'>
           <label htmlFor='brand'>Item Category</label>
           <Select options={optSC} onChange={onChange} />
-          {/* <select
-            onChange={onChange}
-            className='form-control'
-            name='ItemCategories'>
-            <option>Select Item Category</option>
-            {itemCategory.map((ic) => (
-              <option key={ic.id} value={ic.id}>
-                {ic.desc}
-              </option>
-            ))}
-          </select> */}
         </div>
       )}
     </div>

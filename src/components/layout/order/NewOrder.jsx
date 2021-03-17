@@ -7,8 +7,18 @@ import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
 import { getTransactions } from '../../../redux/order/orderActions';
 import Select from 'react-select';
+import { setAlert } from '../../../redux/alert/alertActions';
+import Alerts from '../../Alerts';
+import { set } from 'lodash';
 
-const NewOrder = ({ newNumber, transactions, branch, getTransactions }) => {
+const NewOrder = ({
+  newNumber,
+  transactions,
+  branch,
+  getTransactions,
+  setAlert,
+  localRx
+}) => {
   useEffect(() => {
     getTransactions(branch);
     //eslint-disable-next-line
@@ -54,17 +64,27 @@ const NewOrder = ({ newNumber, transactions, branch, getTransactions }) => {
     isDuplicate = rx.filter((rx) => rx === OrderNumber);
     console.log(isDuplicate);
   }
+  let localDuplicate;
+  const lrx = localRx.map(number => number.OrderNumber)
+  console.log(lrx)
+  localDuplicate = lrx.filter(number=> number === OrderNumber)
+  console.log(localDuplicate)
 
   const numberfunction = () => {
-    if (isDuplicate.length === 1) {
-      alert.show('Order Number is Duplicated, Please Enter Another Rx Number');
+    if (isDuplicate.length === 1 || localDuplicate.length === 1) {
+      // alert.show('Order Number is Duplicated, Please Enter Another Rx Number');
+      setAlert(
+        'RX Number is Duplicated, Please Enter Another Rx Number',
+        'danger'
+      );
     } else {
       newNumber({
         OrderTypes,
         OrderNumber,
       });
       console.log(OrderNumber);
-      alert.show('Order Number Successfully Created');
+      // alert.show('Order Number Successfully Created');
+      setAlert('Order Number Successfully Created', 'success');
       setTimeout(() => {
         history.push('/order');
       }, 1000);
@@ -78,12 +98,14 @@ const NewOrder = ({ newNumber, transactions, branch, getTransactions }) => {
   return (
     <div>
       <Navbar />
+
       <div className='dcontainer'>
         <div className='left-side'>
           <Sidebar />
         </div>
         <div className='main-content'>
           <h1>New Order</h1>
+          <Alerts />
           {OrderTypes !== null && (
             <div className='form-group'>
               <label htmlFor=''>
@@ -156,8 +178,11 @@ const mapStateToProps = (state) => ({
   catalogue: state.catalogue,
   transactions: state.orders.transactions,
   branch: state.auth.user.branchKey,
+  localRx : state.cart.lists
 });
 
-export default connect(mapStateToProps, { newNumber, getTransactions })(
-  NewOrder
-);
+export default connect(mapStateToProps, {
+  newNumber,
+  getTransactions,
+  setAlert,
+})(NewOrder);

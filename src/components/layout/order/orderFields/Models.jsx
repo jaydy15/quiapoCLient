@@ -92,65 +92,44 @@ const Models = ({
   }
   return (
     <div>
-      {model !== undefined && (
+      {Brand ? null : (
         <div className='form-group'>
           <label htmlFor='brand'>
             Model<span style={{ color: 'red' }}>*</span>
           </label>
           <Select options={finalOpt} onChange={onChange} />
-          {/* <select onChange={onChange} className='form-control' name='Model'>
-            <option>Select Model</option>
-            {ItemCategories === 2 &&
-              lens
-                .filter((lens) => lens.orderTypeKey === OrderType)
-                .filter((lens) => lens.brandKey === Brand)
-                .map((md) => (
-                  <option key={md.id} value={md.id}>
-                    {md.name}
-                  </option>
-                ))}
-            {ItemCategories === 2 &&
-              OrderType === 2 &&
-              lens
-                .filter((lens) => lens.orderTypeKey === 1)
-                .filter((lens) => lens.brandKey === Brand)
-                .map((md) => (
-                  <option key={md.id} value={md.id}>
-                    {md.name}
-                  </option>
-                ))}
-            {(ItemCategories === 3 || ItemCategories === 4) &&
-              fs
-                .filter((fs) => fs.brandKey === Brand)
-                .map((md) => (
-                  <option key={md.id} value={md.fsModelKey}>
-                    {model.find((elm) => elm.id === md.fsModelKey).modelName}
-                  </option>
-                ))}
-            {(ItemCategories === 1 ||
-              ItemCategories === 5 ||
-              ItemCategories === 6) &&
-              csa
-                .filter((csa) => csa.orderTypeKey === OrderType)
-                .filter((csa) => csa.scKey === ItemCategories)
-                .filter((csa) => csa.brandKey === Brand)
-                .map((md) => (
-                  <option key={md.id} value={md.csaModelKey}>
-                    {model.find((elm) => elm.id === md.csaModelKey).modelName}
-                  </option>
-                ))}
-            {ItemCategories === 1 &&
-              OrderType === 2 &&
-              csa
-                .filter((csa) => csa.orderTypeKey === 1)
-                .filter((csa) => csa.scKey === ItemCategories)
-                .filter((csa) => csa.brandKey === Brand)
-                .map((md) => (
-                  <option key={md.id} value={md.csaModelKey}>
-                    {model.find((elm) => elm.id === md.csaModelKey).modelName}
-                  </option>
-                ))}
-          </select> */}
+        </div>
+      )}
+      {OrderType === 1 && ItemCategories === 2 && Brand && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={finalOpt} onChange={onChange} />
+        </div>
+      )}
+      {OrderType === 1 && ItemCategories === 1 && Brand && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={finalOpt} onChange={onChange} />
+        </div>
+      )}
+      {OrderType === 3 && ItemCategories === 2 && Brand && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={finalOpt} onChange={onChange} />
+        </div>
+      )}
+      {OrderType === 3 && ItemCategories === 1 && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={finalOpt} onChange={onChange} />
         </div>
       )}
     </div>

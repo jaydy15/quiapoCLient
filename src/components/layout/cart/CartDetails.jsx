@@ -38,10 +38,10 @@ const CartDetails = ({
               <p>Order Type : {formatODTY}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdSph : {bulk.odSph.value}</p>
+              <p>OdSph : {bulk.odSph}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsSph : {bulk.osSph.value}</p>
+              <p>OsSph : {bulk.osSph}</p>
             </div>
             <div className='col-md-2'>
               <p>Horizontal : {bulk.horizontal}</p>
@@ -52,10 +52,10 @@ const CartDetails = ({
               <p>Item Category : {formatITCY}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdCyl : {bulk.odCyl.value}</p>
+              <p>OdCyl : {bulk.odCyl}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsCyl : {bulk.osCyl.value}</p>
+              <p>OsCyl : {bulk.osCyl}</p>
             </div>
             <div className='col-md-2'>
               <p>Vertical : {bulk.vertical}</p>
@@ -66,10 +66,10 @@ const CartDetails = ({
               <p>Brand : {formatBrand}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdAxis : {bulk.odAxis.value}</p>
+              <p>OdAxis : {bulk.odAxis}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsAxis : {bulk.osAxis.value}</p>
+              <p>OsAxis : {bulk.osAxis}</p>
             </div>
             <div className='col-md-2'>
               <p>Bridge : {bulk.bridge}</p>
@@ -80,10 +80,10 @@ const CartDetails = ({
               <p>Model : {formatMDL}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdAxis : {bulk.odAxis.value}</p>
+              <p>OdAxis : {bulk.odAxis}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsAxis : {bulk.osAxis.value}</p>
+              <p>OsAxis : {bulk.osAxis}</p>
             </div>
             <div className='col-md-2'>
               <p>Frame Type : {bulk.frameType}</p>

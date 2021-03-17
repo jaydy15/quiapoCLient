@@ -31,7 +31,6 @@ export const login = (formData) => async (dispatch) => {
 
   try {
     const res = await axios.post('/api/auth', formData, config);
-    console.log(formData);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -50,7 +49,7 @@ export const login = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: err.response.data.msg,
+      payload: err.name,
     });
   }
 };

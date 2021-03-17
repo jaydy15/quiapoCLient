@@ -6,7 +6,7 @@ const Alerts = ({ alerts, errors }) => {
     alerts.length > 0 &&
     alerts.map((alert) => (
       <div key={alert.id} className={`alert alert-${alert.type}`}>
-        <i className='far fa-times-circle' />
+        <i className='fas fa-info-circle' />
         {alert.msg}
       </div>
     ))
