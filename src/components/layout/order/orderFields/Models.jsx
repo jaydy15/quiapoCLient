@@ -132,6 +132,14 @@ const Models = ({
           <Select options={finalOpt} onChange={onChange} />
         </div>
       )}
+      {OrderType === 2 && ItemCategories <= 6 && Brand && (
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Model<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select options={finalOpt} onChange={onChange} />
+        </div>
+      )}
     </div>
   );
 };
