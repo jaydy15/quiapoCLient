@@ -32,6 +32,7 @@ const CartBulkDetail = ({
     console.log(bulk.rxNumber);
     removeItem(bulk.rxNumber, bulk.tempID);
   };
+
   return (
     <div>
       <table className='table'>

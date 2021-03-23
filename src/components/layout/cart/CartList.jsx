@@ -27,7 +27,8 @@ const CartList = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(item[0]);
+  if (item.length >= 1) {
+  }
   let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
@@ -48,12 +49,14 @@ const CartList = ({
   }
 
   //BULK OR NON BULK
-  const ot = list.find((x) => x.OrderNumber === item[0].rxNumber).OrderTypes;
   let isBulk;
-  if (ot === 'Bulk Order') {
-    isBulk = true;
-  } else {
-    isBulk = false;
+  if (item.length > 1) {
+    const ot = list.find((x) => x.OrderNumber === item[0].rxNumber).OrderTypes;
+    if (ot === 'Bulk Order') {
+      isBulk = true;
+    } else {
+      isBulk = false;
+    }
   }
 
   //FOR SUBMIT FOR APPROVAL

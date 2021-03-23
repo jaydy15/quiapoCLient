@@ -117,10 +117,11 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
   let paramId;
   if (ItemCategories.value === 2) {
-    const arrayLensParam = lensParam.filter(
-      (item) =>
-        item.lensItemKey === Model.value &&
-        parseInt(item.id.slice(-1)) === OrderType.value
+    const arrayLensParam = lensParam.filter((item) =>
+      item.lensItemKey === Model.value &&
+      parseInt(item.id.slice(-1)) === OrderType.value > 2
+        ? 1
+        : 3
     );
     if (arrayLensParam.length > 0) {
       console.log(arrayLensParam[0]);

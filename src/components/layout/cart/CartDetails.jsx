@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { removeItem } from '../../../redux/cart/cartActions';
 import CartBulkDetail from './CartBulkDetail';
 
 const CartDetails = ({
@@ -10,6 +11,7 @@ const CartDetails = ({
   lens,
   fscsaModels,
   csaItems,
+  removeItem,
 }) => {
   const formatITCY = itemcategory.find((itm) => itm.id === bulk.itemCategories)
     .desc;
@@ -28,6 +30,11 @@ const CartDetails = ({
     formatMDL = csaItems.find((csa) => csa.id.toString() === bulk.model)
       .description;
   }
+
+  const removeItemFromCart = () => {
+    console.log(bulk.rxNumber, bulk.tempID);
+    removeItem(bulk.rxNumber, bulk.tempID);
+  };
   return (
     <div>
       {formatODTY === 'BULK ORDER' && <CartBulkDetail bulk={bulk} />}
@@ -45,6 +52,11 @@ const CartDetails = ({
             </div>
             <div className='col-md-2'>
               <p>Horizontal : {bulk.horizontal}</p>
+            </div>
+            <div className='col-md-2'>
+              <button className='btn btn-danger' onClick={removeItemFromCart}>
+                DELETE
+              </button>
             </div>
           </div>
           <div className='row'>
@@ -132,4 +144,4 @@ const mapStateToProps = (state) => ({
   csaItems: state.catalogue.csaItems,
 });
 
-export default connect(mapStateToProps)(CartDetails);
+export default connect(mapStateToProps, { removeItem })(CartDetails);
