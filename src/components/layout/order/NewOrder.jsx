@@ -10,6 +10,7 @@ import Select from 'react-select';
 import { setAlert } from '../../../redux/alert/alertActions';
 import Alerts from '../../Alerts';
 import { set } from 'lodash';
+import { useForm } from 'react-hook-form';
 
 const NewOrder = ({
   newNumber,
@@ -17,7 +18,7 @@ const NewOrder = ({
   branch,
   getTransactions,
   setAlert,
-  localRx
+  localRx,
 }) => {
   useEffect(() => {
     getTransactions(branch);
@@ -65,10 +66,10 @@ const NewOrder = ({
     console.log(isDuplicate);
   }
   let localDuplicate;
-  const lrx = localRx.map(number => number.OrderNumber)
-  console.log(lrx)
-  localDuplicate = lrx.filter(number=> number === OrderNumber)
-  console.log(localDuplicate)
+  const lrx = localRx.map((number) => number.OrderNumber);
+  console.log(lrx);
+  localDuplicate = lrx.filter((number) => number === OrderNumber);
+  console.log(localDuplicate);
 
   const numberfunction = () => {
     if (isDuplicate.length === 1 || localDuplicate.length === 1) {
@@ -91,6 +92,8 @@ const NewOrder = ({
     }
   };
 
+  const { register, handleSubmit, watch, errors } = useForm();
+
   const onSubmit = (e) => {
     numberfunction();
   };
@@ -106,68 +109,89 @@ const NewOrder = ({
         <div className='main-content'>
           <h1>New Order</h1>
           <Alerts />
-          {OrderTypes !== null && (
-            <div className='form-group'>
-              <label htmlFor=''>
-                Order Type<span style={{ color: 'red' }}>*</span>
-              </label>
-              <select
-                name='OrderTypes'
-                className='form-control'
-                onChange={onChange}
-                required>
-                <option value=''> Select Order Type</option>
-                <option value='Bulk Order'>Bulk Order</option>
-                <option value='Non Bulk Order'>Non Bulk Order</option>
-              </select>
-            </div>
-          )}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {OrderTypes !== null && (
+              <div className='form-group'>
+                <label htmlFor=''>
+                  Order Type<span style={{ color: 'red' }}>*</span>
+                </label>
+                <select
+                  name='OrderTypes'
+                  className='form-control'
+                  onChange={onChange}
+                  ref={register({ required: true })}>
+                  <option value=''> Select Order Type</option>
+                  <option value='Bulk Order'>Bulk Order</option>
+                  <option value='Non Bulk Order'>Non Bulk Order</option>
+                </select>
+              </div>
+            )}
+            {errors.OrderTypes && (
+              <span className='alert alert-danger'>OrderTypes is required</span>
+            )}
 
-          {OrderTypes === 'Bulk Order' ? (
-            <div className='form-group'>
-              <label htmlFor=''>
-                BO NUMBER<span style={{ color: 'red' }}>*</span>
-              </label>
-              <div className='row'>
-                <div className='col-md-4' style={{ paddingRight: 0 }}>
-                  <Select
-                    options={optPrefix}
-                    onChange={(selectedOption) => {
-                      setFormData({ ...formData, prefix: selectedOption });
-                    }}
-                  />
-                </div>
-                <div className='col-md-8' style={{ paddingLeft: 0 }}>
-                  <input
-                    type='text'
-                    className='form-control'
-                    value={number}
-                    name='number'
-                    onChange={onChange}
-                    required
-                  />
+            {OrderTypes === 'Bulk Order' ? (
+              <div className='form-group'>
+                <label htmlFor=''>
+                  BO NUMBER<span style={{ color: 'red' }}>*</span>
+                </label>
+                <div className='row'>
+                  <div className='col-md-4' style={{ paddingRight: 0 }}>
+                    <Select
+                      ref={register({ required: true })}
+                      name='prefix'
+                      options={optPrefix}
+                      onChange={(selectedOption) => {
+                        setFormData({ ...formData, prefix: selectedOption });
+                      }}
+                    />
+                  </div>
+                  {errors.prefix && (
+                    <span className='alert alert-danger'>
+                      Prefix is required
+                    </span>
+                  )}
+                  <div className='col-md-8' style={{ paddingLeft: 0 }}>
+                    <input
+                      type='text'
+                      className='form-control'
+                      value={number}
+                      name='number'
+                      onChange={onChange}
+                      ref={register({ required: true })}
+                    />
+                  </div>
+                  {errors.number && (
+                    <span className='alert alert-danger'>Rx is required</span>
+                  )}
                 </div>
               </div>
+            ) : (
+              <div className='form-group'>
+                <label htmlFor=''>
+                  RX Number<span style={{ color: 'red' }}>*</span>
+                </label>
+                <input
+                  type='text'
+                  className='form-control'
+                  name='number'
+                  value={number}
+                  onChange={onChange}
+                  ref={register({ required: true })}
+                />
+                <div>
+                  {errors.number && (
+                    <span className='alert alert-danger'>Rx is required</span>
+                  )}
+                </div>
+              </div>
+            )}
+            <div>
+              <button className='btn btn-block btn-success'>
+                Create Order
+              </button>
             </div>
-          ) : (
-            <div className='form-group'>
-              <label htmlFor=''>
-                RX Number<span style={{ color: 'red' }}>*</span>
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                name='number'
-                value={number}
-                onChange={onChange}
-                required
-              />
-            </div>
-          )}
-
-          <button className='btn btn-block btn-success' onClick={onSubmit}>
-            Create Order
-          </button>
+          </form>
         </div>
       </div>
     </div>
@@ -178,7 +202,7 @@ const mapStateToProps = (state) => ({
   catalogue: state.catalogue,
   transactions: state.orders.transactions,
   branch: state.auth.user.branchKey,
-  localRx : state.cart.lists
+  localRx: state.cart.lists,
 });
 
 export default connect(mapStateToProps, {

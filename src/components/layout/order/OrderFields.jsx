@@ -12,10 +12,12 @@ import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
+import { useForm } from 'react-hook-form';
 
 const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
   const alert = useAlert();
   let history = useHistory();
+  const { register, handleSubmit, watch, errors } = useForm();
   const [formData, setFormData] = useState({
     RxNumber: {},
     OrderType: '',
@@ -147,7 +149,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     const tempID = uuidv4();
     console.log(tempID);
     console.log('lensparamid', paramId);
-    e.preventDefault();
+    // e.preventDefault();
     if (Size === ' ' || Size === undefined) {
       setFormData({ ...formData, Size: 0.0 });
     }
@@ -324,7 +326,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
   const optAdd = utils(addGrades);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className='row'>
         <div className='col-md-4'>
           <div className='form-group'>
@@ -452,6 +454,16 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
             <Fragment>
               <h3>Grade Info</h3>
               <hr />
+              {errors.OdQty && (
+                <div className='alert alert-danger'>
+                  OD QTY SHOULD BE A MAXIMUM OF ONE ITEM
+                </div>
+              )}
+              {errors.OsQty && (
+                <div className='alert alert-danger'>
+                  OS QTY SHOULD BE A MAXIMUM OF ONE ITEM
+                </div>
+              )}
               <div className='row'>
                 <div className='col-md-12'>
                   <div className='row'>
@@ -518,16 +530,31 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                         name='OdPd'
                       />
                     </div>
-                    <div className='col-md-2'>
-                      <label htmlFor=''>OD QTY</label>
-                      <input
-                        type='number'
-                        className='form-control'
-                        onChange={onChange}
-                        style={{ margin: '0' }}
-                        name='OdQty'
-                      />
-                    </div>
+                    {ItemCategories.value === 2 && OrderType.value !== 2 ? (
+                      <div className='col-md-2'>
+                        <label htmlFor=''>OD QTY LENS</label>
+                        <input
+                          type='number'
+                          ref={register({ min: 0, max: 1 })}
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OdQty'
+                        />
+                      </div>
+                    ) : (
+                      <div className='col-md-2'>
+                        <label htmlFor=''>OD QTY</label>
+                        <input
+                          type='number'
+                          ref={register({ min: 0, max: 400 })}
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OdQty'
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -596,16 +623,31 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                         name='OsPd'
                       />
                     </div>
-                    <div className='col-md-2'>
-                      <label htmlFor=''>OS QTY</label>
-                      <input
-                        type='number'
-                        className='form-control'
-                        onChange={onChange}
-                        style={{ margin: '0' }}
-                        name='OsQty'
-                      />
-                    </div>
+                    {ItemCategories.value === 2 && OrderType.value !== 2 ? (
+                      <div className='col-md-2'>
+                        <label htmlFor=''>OS QTY</label>
+                        <input
+                          type='number'
+                          ref={register({ min: 0, max: 1 })}
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OsQty'
+                        />
+                      </div>
+                    ) : (
+                      <div className='col-md-2'>
+                        <label htmlFor=''>OS QTY</label>
+                        <input
+                          type='number'
+                          ref={register({ min: 0, max: 200 })}
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OsQty'
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -707,10 +749,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
         Brand.value !== undefined &&
         Model.value !== undefined &&
         Color.value !== undefined && (
-          <button
-            onClick={onSubmit}
-            type='submit'
-            className='btn btn-block btn-success'>
+          <button type='submit' className='btn btn-block btn-success'>
             Add To Cart
           </button>
         )}
