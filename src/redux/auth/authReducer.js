@@ -30,6 +30,7 @@ export default (state = INITIAL_STATE, action) => {
         ...action.payload,
         isAuthenticated: true,
         loading: false,
+        token: action.payload,
       };
     case LOGIN_FAIL:
     case LOGOUT:

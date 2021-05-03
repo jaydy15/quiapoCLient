@@ -13,6 +13,7 @@ const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   const { error, isAuthenticated } = auth;
   useEffect(() => {
     if (isAuthenticated) {
+      loadUser();
       history.push('/home');
     }
   });

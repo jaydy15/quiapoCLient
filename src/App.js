@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -10,14 +10,16 @@ import Cart from './components/layout/cart/Cart';
 import Status from './components/layout/Status/Status';
 import NewOrder from './components/layout/order/NewOrder';
 import Table from './components/Table';
+import ConfirmPassword from './components/layout/user/ConfirmPassword';
+import { loadUser } from './redux/auth/authActions';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 function App() {
-  // useEffect(() => {
-  //   store.dispatch(loadUser());
-  // }, []);
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   return (
     <Router>
@@ -30,6 +32,11 @@ function App() {
           <PrivateRoute exact path='/status' component={Status} />
           <PrivateRoute exact path='/new-order' component={NewOrder} />
           <PrivateRoute exact path='/table' component={Table} />
+          <PrivateRoute
+            exact
+            path='/confirm-password'
+            component={ConfirmPassword}
+          />
         </Switch>
       </div>
     </Router>
