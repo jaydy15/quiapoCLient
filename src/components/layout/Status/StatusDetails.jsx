@@ -12,6 +12,7 @@ const StatusDetails = ({
   fsItems,
   csaItems,
   fscsaModels,
+  colors,
 }) => {
   const formatOrderType = orderType.find(
     (ot) => ot.id === items[0].orderTypeKey
@@ -48,7 +49,7 @@ const StatusDetails = ({
       console.log(formatItem);
     }
   }
-  console.log(formatItem);
+  console.log(items);
   return (
     <div>
       <table className='table'>
@@ -96,13 +97,18 @@ const StatusDetails = ({
               </tr>
               <tr>
                 <th scope='col'>OD DETAILS</th>
-                <th scope='col'>PATIENTS NAME</th>
+                <th scope='col'>COLOR</th>
                 <th scope='col'>OS DETAILS</th>
                 <th scope='col'>SO DETAILS</th>
               </tr>
               <tr>
                 <td>{item.odDetails === '|||||' ? null : item.odDetails}</td>
-                <td>{item.pxName}</td>
+                <td>
+                  {
+                    colors.find((color) => color.id === item.supplyCategoryKey)
+                      .colorName
+                  }
+                </td>
                 <td>{item.osDetails === '|||||' ? null : item.osDetails}</td>
                 <td>{item.soDetails === '|||' ? null : item.soDetails}</td>
               </tr>
@@ -123,6 +129,7 @@ const mapStateToProps = (state) => ({
   fsItems: state.catalogue.fsItems,
   csaItems: state.catalogue.csaItems,
   fscsaModels: state.catalogue.fscsaModels,
+  colors: state.catalogue.colors,
 });
 
 export default connect(mapStateToProps)(StatusDetails);
