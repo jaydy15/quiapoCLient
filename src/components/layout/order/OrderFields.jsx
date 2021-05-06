@@ -48,6 +48,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     LensParamId: '',
     nonLensUnitName: '',
   });
+  const [frameShape, setHolder] = useState('SELECT LENS SHAPE');
 
   const {
     RxNumber,
@@ -144,7 +145,15 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
   }
 
   const SoDetails =
-    Horizontal + '|' + Vertical + '|' + Bridge + '|' + FrameType;
+    Horizontal +
+    '|' +
+    Vertical +
+    '|' +
+    Bridge +
+    '|' +
+    FrameType +
+    '|' +
+    frameShape;
 
   const onSubmit = (e) => {
     const tempID = uuidv4();
@@ -251,6 +260,16 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     console.log(`Option selected:`, selectedOption);
   };
 
+  const optFrameType = [
+    { value: 1, label: 'Metal Full Frame' },
+    { value: 2, label: 'Metal Groove' },
+    { value: 3, label: 'Plastic Full Frame' },
+    { value: 4, label: 'Plastic Groove' },
+    { value: 5, label: 'Optyl Full Frame' },
+    { value: 6, label: 'Rimless' },
+    { value: 7, label: 'Nylor' },
+  ];
+
   // GRADES RELATED
   const gradify = (item) => {
     let number = item.toFixed(2);
@@ -332,8 +351,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
         <div className='col-md-4'>
           <div className='form-group'>
             <label htmlFor=''>
-              Selected Active Transaction Number{' '}
-              <span style={{ color: 'red' }}>*</span>
+              ACTIVE RX / BO NUMBER <span style={{ color: 'red' }}>*</span>
             </label>
             <Select options={optRxNumber} onChange={handleChange} />
           </div>
@@ -348,17 +366,6 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
               placeholder={auth.user && auth.user.BranchDetail.name}
             />
           </div>
-        </div>
-        <div className='col-md-4'>
-          <InputField
-            type='text'
-            placeholder='RX Number'
-            name='RxNumber'
-            value={RxNumber.value}
-            onChange={onChange}
-            label='RX Number'
-            bol='true'
-          />
         </div>
       </div>
       <div className='row'>
@@ -697,15 +704,123 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
                   />
                 </div>
                 <div className='col-md-3'>
-                  <InputField
-                    type='text'
-                    placeholder='Non Lens Qty'
-                    name='FrameType'
-                    value={FrameType}
-                    onChange={onChange}
-                    label='Frame Type'
-                    bol='false'
+                  <label htmlFor=''>Frame Type</label>
+                  <Select
+                    options={optFrameType}
+                    onChange={(selectedOption) => {
+                      setFormData({
+                        ...formData,
+                        FrameType: selectedOption.value,
+                      });
+                    }}
                   />
+                </div>
+              </div>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-md-6'>
+                    <div className='form-group'>
+                      <label htmlFor=''>Frame Shape</label>
+                      <input type='text' disabled value={frameShape} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 1')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 2')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 3')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 4')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 5')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 6')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 7')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 8')}>
+                      <img
+                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='col-md-3'>
+                    <button
+                      type='button'
+                      onClick={() => setHolder('LENS SHAPE 9')}>
+                      <img
+                        src='https://images.pexels.com/photos/39716/pexels-photo-39716.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        alt='Snow'
+                        style={{ width: '150px' }}></img>
+                    </button>
+                  </div>
                 </div>
               </div>
             </Fragment>
@@ -744,12 +859,29 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
           ) : null}
         </div>
       </div>
-      {RxNumber.value !== undefined &&
+      {OrderType.value !== 3 &&
+        RxNumber.value !== undefined &&
         OrderType.value !== undefined &&
         ItemCategories.value !== undefined &&
         Brand.value !== undefined &&
         Model.value !== undefined &&
         Color.value !== undefined && (
+          <button type='submit' className='btn btn-block btn-success'>
+            Add To Cart
+          </button>
+        )}
+      {OrderType.value === 3 &&
+        RxNumber.value !== undefined &&
+        OrderType.value !== undefined &&
+        ItemCategories.value === 2 &&
+        Brand.value !== undefined &&
+        Model.value !== undefined &&
+        Color.value !== undefined &&
+        Horizontal !== '' &&
+        Vertical !== '' &&
+        Bridge !== '' &&
+        FrameType !== '' &&
+        frameShape !== '' && (
           <button type='submit' className='btn btn-block btn-success'>
             Add To Cart
           </button>
