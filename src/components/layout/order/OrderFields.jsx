@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
 import { useForm } from 'react-hook-form';
 
-const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
+const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   const alert = useAlert();
   let history = useHistory();
   const { register, handleSubmit, watch, errors } = useForm();
@@ -260,15 +260,18 @@ const OrderFields = ({ auth, lists, addToCart, lensParam }) => {
     console.log(`Option selected:`, selectedOption);
   };
 
-  const optFrameType = [
-    { value: 1, label: 'Metal Full Frame' },
-    { value: 2, label: 'Metal Groove' },
-    { value: 3, label: 'Plastic Full Frame' },
-    { value: 4, label: 'Plastic Groove' },
-    { value: 5, label: 'Optyl Full Frame' },
-    { value: 6, label: 'Rimless' },
-    { value: 7, label: 'Nylor' },
-  ];
+  const listFrameType = generalEnums
+    .map((ge) => ge)
+    .filter((ge) => ge.type === 1);
+
+  const optFrameType = [];
+  for (let i = 0; i < listFrameType.length; i++) {
+    let formattObj = {
+      label: listFrameType[i].desc,
+      value: listFrameType[i].id,
+    };
+    optFrameType.push(formattObj);
+  }
 
   // GRADES RELATED
   const gradify = (item) => {
@@ -894,6 +897,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   lists: state.cart.lists,
   lensParam: state.catalogue.lensParam,
+  generalEnums: state.catalogue.generalEnums,
 });
 
 export default connect(mapStateToProps, { addToCart })(OrderFields);
