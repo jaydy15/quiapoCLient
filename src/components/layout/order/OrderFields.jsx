@@ -13,6 +13,15 @@ import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
 import { useForm } from 'react-hook-form';
+import OBLONG from './../../../assets/images/OBLONG.jpg';
+import AVIATOR from './../../../assets/images/AVIATOR.jpg';
+import CATEYE from './../../../assets/images/CAT EYE.jpg';
+import SYMMETRICAL from './../../../assets/images/SYMMETRICAL.jpg';
+import CUTAWAYRECTANGLE from './../../../assets/images/CUT AWAY RECTANGLE.jpg';
+import RECTANGLE from './../../../assets/images/RECTANGLE.jpg';
+import CUTAWAYOVAL from './../../../assets/images/CUT AWAY OVAL.jpg';
+import SHARPRECTANGLE from './../../../assets/images/SHARP RECTANGLE.jpg';
+import OVAL from './../../../assets/images/OVAL.jpg';
 
 const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   const alert = useAlert();
@@ -49,6 +58,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     nonLensUnitName: '',
   });
   const [frameShape, setHolder] = useState('SELECT LENS SHAPE');
+  const [frameShapeId, setFrameShapeId] = useState('');
 
   const {
     RxNumber,
@@ -153,7 +163,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     '|' +
     FrameType +
     '|' +
-    frameShape;
+    frameShapeId;
 
   const onSubmit = (e) => {
     const tempID = uuidv4();
@@ -272,6 +282,25 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     };
     optFrameType.push(formattObj);
   }
+
+  const listFrameShape = generalEnums
+    .map((ge) => ge)
+    .filter((ge) => ge.type === 0);
+
+  const arrayFrameShape = [];
+  for (let i = 0; i < listFrameShape.length; i++) {
+    let formattObj = {
+      label: listFrameShape[i].desc,
+      value: listFrameShape[i].id,
+    };
+    arrayFrameShape.push(formattObj);
+  }
+  console.log(arrayFrameShape);
+
+  const setFS = (num) => {
+    setFrameShapeId(arrayFrameShape[num].value);
+    setHolder(arrayFrameShape[num].label);
+  };
 
   // GRADES RELATED
   const gradify = (item) => {
@@ -730,98 +759,85 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                 </div>
 
                 <div className='row'>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 1')}>
+                  <div className='col-m-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(0)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={OBLONG}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 2')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(1)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={OVAL}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 3')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(2)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={AVIATOR}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 4')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(3)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={CATEYE}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                </div>
-                <div className='row mt-3'>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 5')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(4)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={SYMMETRICAL}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 6')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(5)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={CUTAWAYRECTANGLE}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 7')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(6)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={RECTANGLE}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 8')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(7)}>
                       <img
-                        src='https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={CUTAWAYOVAL}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
-                </div>
-                <div className='row mt-3'>
-                  <div className='col-md-3'>
-                    <button
-                      type='button'
-                      onClick={() => setHolder('LENS SHAPE 9')}>
+                  <div className='col-p-3' style={{ padding: '10px' }}>
+                    <button type='button' onClick={() => setFS(8)}>
                       <img
-                        src='https://images.pexels.com/photos/39716/pexels-photo-39716.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-                        alt='Snow'
-                        style={{ width: '150px' }}></img>
+                        src={SHARPRECTANGLE}
+                        alt=''
+                        style={{ width: '150px', height: '200px' }}
+                      />
                     </button>
                   </div>
                 </div>
