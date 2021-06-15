@@ -764,7 +764,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={OBLONG}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -773,7 +773,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={OVAL}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -782,7 +782,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={AVIATOR}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -791,7 +791,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={CATEYE}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -800,7 +800,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={SYMMETRICAL}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -809,7 +809,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={CUTAWAYRECTANGLE}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -818,7 +818,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={RECTANGLE}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -827,7 +827,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={CUTAWAYOVAL}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>
@@ -836,7 +836,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                       <img
                         src={SHARPRECTANGLE}
                         alt=''
-                        style={{ width: '150px', height: '200px' }}
+                        style={{ width: '300px', height: '290px' }}
                       />
                     </button>
                   </div>

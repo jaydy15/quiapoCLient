@@ -12,6 +12,8 @@ import NewOrder from './components/layout/order/NewOrder';
 import Table from './components/Table';
 import ConfirmPassword from './components/layout/user/ConfirmPassword';
 import { loadUser } from './redux/auth/authActions';
+import PasswordConfirmedRoute from './components/routing/PasswordConfirmedRoute';
+import AdCatalogue from './components/layout/order/AdCatalogue';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -29,9 +31,9 @@ function App() {
           <PrivateRoute exact path='/home' component={Dashboard} />
           <PrivateRoute exact path='/order' component={Order} />
           <PrivateRoute exact path='/cart' component={Cart} />
-          <PrivateRoute exact path='/status' component={Status} />
+          <PrivateRoute path='/status' component={Status} />
+          <PrivateRoute path='/search-catalogue' component={AdCatalogue} />
           <PrivateRoute exact path='/new-order' component={NewOrder} />
-          <PrivateRoute exact path='/table' component={Table} />
           <PrivateRoute
             exact
             path='/confirm-password'

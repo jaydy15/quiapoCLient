@@ -4,12 +4,20 @@ import Sidebar from './../Sidebar';
 import OrderFields from './OrderFields';
 import { loadUser } from './../../../redux/auth/authActions';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-const Order = ({ catalogue }) => {
+const Order = ({ catalogue, auth }) => {
   useEffect(() => {
     loadUser();
     //eslint-disable-next-line
   }, []);
+  let history = useHistory();
+
+  if (auth.user !== null) {
+    if (auth.user.status === 0) {
+      history.push('/confirm-password');
+    }
+  }
   return (
     <div>
       <Navbar />
@@ -32,6 +40,7 @@ const Order = ({ catalogue }) => {
 
 const mapStateToProps = (state) => ({
   catalogue: state.catalogue,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { loadUser })(Order);

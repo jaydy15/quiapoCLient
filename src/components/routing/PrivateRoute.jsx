@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ component: Component, auth, ...props }) => {
+const PrivateRoute = ({ component: Component, auth, status, ...props }) => {
   const { isAuthenticated, loading } = auth;
 
   return (

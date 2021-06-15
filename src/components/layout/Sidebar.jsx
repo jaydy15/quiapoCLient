@@ -27,19 +27,14 @@ const Sidebar = ({ auth }) => {
                 <Link to='/order'>Open Catalogue</Link>
               </li>
               <li>
+                <Link to='/search-catalogue'>Search Catalogue</Link>
+              </li>
+              <li>
                 <Link to='/cart'>Cart</Link>
               </li>
               <li>
                 <Link to='/status'>Status</Link>
               </li>
-              <li>
-                <Link to='/table'>Table</Link>
-              </li>
-              {/* {user && user.access === '0' && (
-                <li>
-                  <Link to='/status'>APPROVE OR REJECT</Link>
-                </li>
-              )} */}
             </ul>
           </div>
         </div>

@@ -4,13 +4,21 @@ import Sidebar from './../Sidebar';
 import { connect } from 'react-redux';
 import { getOrders } from './../../../redux/order/orderActions';
 import StatusRow from './StatusRow';
+import { useHistory } from 'react-router-dom';
 
-const Status = ({ orders, getOrders, branch, user }) => {
+const Status = ({ orders, getOrders, branch, user, auth }) => {
   console.log(orders);
+  let history = useHistory();
+
   useEffect(() => {
     getOrders(branch.toString());
     //eslint-disable-next-line
   }, []);
+  if (auth.user !== null) {
+    if (auth.user.status === 0) {
+      history.push('/confirm-password');
+    }
+  }
 
   return (
     <div>
@@ -47,6 +55,7 @@ const mapStateToProps = (state) => ({
   orders: state.orders.orders,
   branch: state.auth.user.BranchDetail.id,
   user: state.auth.user,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getOrders })(Status);

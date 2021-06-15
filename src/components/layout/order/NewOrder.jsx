@@ -19,14 +19,20 @@ const NewOrder = ({
   getTransactions,
   setAlert,
   localRx,
+  auth,
 }) => {
   useEffect(() => {
     getTransactions(branch);
     //eslint-disable-next-line
   }, []);
+
   let history = useHistory();
   const alert = useAlert();
-
+  if (auth.user !== null) {
+    if (auth.user.status === 0) {
+      history.push('/confirm-password');
+    }
+  }
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
   };
@@ -203,6 +209,7 @@ const mapStateToProps = (state) => ({
   transactions: state.orders.transactions,
   branch: state.auth.user.branchKey,
   localRx: state.cart.lists,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
