@@ -13,15 +13,6 @@ import { useAlert } from 'react-alert';
 import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
 import { useForm } from 'react-hook-form';
-import OBLONG from './../../../assets/images/OBLONG.jpg';
-import AVIATOR from './../../../assets/images/AVIATOR.jpg';
-import CATEYE from './../../../assets/images/CAT EYE.jpg';
-import SYMMETRICAL from './../../../assets/images/SYMMETRICAL.jpg';
-import CUTAWAYRECTANGLE from './../../../assets/images/CUT AWAY RECTANGLE.jpg';
-import RECTANGLE from './../../../assets/images/RECTANGLE.jpg';
-import CUTAWAYOVAL from './../../../assets/images/CUT AWAY OVAL.jpg';
-import SHARPRECTANGLE from './../../../assets/images/SHARP RECTANGLE.jpg';
-import OVAL from './../../../assets/images/OVAL.jpg';
 
 const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   const alert = useAlert();
@@ -128,11 +119,8 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
   let paramId;
   if (ItemCategories.value === 2) {
-    const arrayLensParam = lensParam.filter((item) =>
-      item.lensItemKey === Model.value &&
-      parseInt(item.id.slice(-1)) === OrderType.value > 2
-        ? 1
-        : 3
+    const arrayLensParam = lensParam.filter(
+      (item) => item.lensItemKey === Model.value
     );
     if (arrayLensParam.length > 0) {
       console.log(arrayLensParam[0]);
@@ -762,7 +750,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-m-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(0)}>
                       <img
-                        src={OBLONG}
+                        src='/images/OBLONG.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -771,7 +759,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(1)}>
                       <img
-                        src={OVAL}
+                        src='/images/OVAL.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -780,7 +768,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(2)}>
                       <img
-                        src={AVIATOR}
+                        src='/images/AVIATOR.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -789,7 +777,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(3)}>
                       <img
-                        src={CATEYE}
+                        src='/images/CAT_EYE.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -798,7 +786,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(4)}>
                       <img
-                        src={SYMMETRICAL}
+                        src='/images/SYMMETRICAL.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -807,7 +795,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(5)}>
                       <img
-                        src={CUTAWAYRECTANGLE}
+                        src='/images/CUT_AWAY_RECTANGLE.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -816,7 +804,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(6)}>
                       <img
-                        src={RECTANGLE}
+                        src='/images/RECTANGLE.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -825,7 +813,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(7)}>
                       <img
-                        src={CUTAWAYOVAL}
+                        src='/images/CUT_AWAY_OVAL.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
@@ -834,7 +822,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   <div className='col-p-3' style={{ padding: '10px' }}>
                     <button type='button' onClick={() => setFS(8)}>
                       <img
-                        src={SHARPRECTANGLE}
+                        src='/images/SHARP_RECTANGLE.jpg'
                         alt=''
                         style={{ width: '300px', height: '290px' }}
                       />
