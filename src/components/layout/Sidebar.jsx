@@ -27,9 +27,6 @@ const Sidebar = ({ auth }) => {
                 <Link to='/order'>Open Catalogue</Link>
               </li>
               <li>
-                <Link to='/search-catalogue'>Search Catalogue</Link>
-              </li>
-              <li>
                 <Link to='/cart'>Cart</Link>
               </li>
               <li>
