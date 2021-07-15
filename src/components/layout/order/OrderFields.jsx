@@ -47,6 +47,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     AdditionalInstructions: '',
     LensParamId: '',
     nonLensUnitName: '',
+    fitting: '',
   });
   const [frameShape, setHolder] = useState('SELECT LENS SHAPE');
   const [frameShapeId, setFrameShapeId] = useState('');
@@ -80,6 +81,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     AdditionalInstructions,
     LensParamId,
     nonLensUnitName,
+    fitting,
   } = formData;
 
   const onChange = (e) => {
@@ -118,12 +120,22 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   };
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
   let paramId;
+  let counter;
+  const optFitting = [];
   if (ItemCategories.value === 2) {
     const arrayLensParam = lensParam.filter(
       (item) => item.lensItemKey === Model.value
     );
-    if (arrayLensParam.length > 0) {
-      console.log(arrayLensParam[0]);
+    counter = arrayLensParam.length;
+    for (let i = 0; i < arrayLensParam.length; i++) {
+      let formattObj = {
+        label: arrayLensParam[i].fitting,
+        value: arrayLensParam[i].fitting,
+      };
+      optFitting.push(formattObj);
+    }
+    if (arrayLensParam.length === 1) {
+      console.log(arrayLensParam);
       paramId = arrayLensParam[0].id;
       maxSph = parseFloat(arrayLensParam[0].maxSph);
       minSph = parseFloat(arrayLensParam[0].minSph);
@@ -131,6 +143,19 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
       minCyl = parseFloat(arrayLensParam[0].minCyl);
       maxAdd = parseFloat(arrayLensParam[0].maxAdd);
       minAdd = parseFloat(arrayLensParam[0].minAdd);
+    } else if (arrayLensParam.length > 1) {
+      const arrayLensFitting = lensParam.filter(
+        (item) => item.lensItemKey === Model.value && item.fitting === fitting
+      );
+      if (arrayLensFitting.length > 0) {
+        paramId = arrayLensFitting[0].id;
+        maxSph = parseFloat(arrayLensFitting[0].maxSph);
+        minSph = parseFloat(arrayLensFitting[0].minSph);
+        maxCyl = parseFloat(arrayLensFitting[0].maxCyl);
+        minCyl = parseFloat(arrayLensFitting[0].minCyl);
+        maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
+        minAdd = parseFloat(arrayLensFitting[0].minAdd);
+      }
     }
   } else {
     maxSph = 25;
@@ -441,15 +466,23 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
             value={Color}
           />
         </div>
-        {/* <div className='col-md-4'>
-          <InputField
-            type='number'
-            name='Size'
-            value={Size}
-            onChange={onChange}
-            label='Size'
-          />
-        </div> */}
+        {counter > 0 && (
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor=''>FITTING</label>
+              <Select
+                options={optFitting}
+                defaultValue={{ label: 'N/A', value: 0 }}
+                onChange={(selectedOption) => {
+                  setFormData({
+                    ...formData,
+                    fitting: selectedOption.value,
+                  });
+                }}
+              />
+            </div>
+          </div>
+        )}
         {ItemCategories.value !== 1 && ItemCategories.value !== 2 ? (
           <div className='col-md-4'>
             <InputField
@@ -496,91 +529,105 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                 <div className='col-md-12'>
                   <div className='row'>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OD SPH</label>
-                      <Select
-                        value={OdSph.value}
-                        options={optSph}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OdSph: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OD SPH</label>
+                        <Select
+                          value={OdSph.value}
+                          options={optSph}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OdSph: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OD CYL</label>
-                      <Select
-                        options={optCyl}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OdCyl: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OD CYL</label>
+                        <Select
+                          options={optCyl}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OdCyl: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OD AXIS</label>
-                      <Select
-                        options={optAxis}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OdAxis: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OD AXIS</label>
+                        <Select
+                          options={optAxis}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OdAxis: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OD ADD</label>
-                      <Select
-                        options={optAdd}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OdAdd: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OD ADD</label>
+                        <Select
+                          options={optAdd}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OdAdd: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OD PD</label>
-                      <input
-                        type='number'
-                        className='form-control'
-                        onChange={onChange}
-                        style={{ margin: '0' }}
-                        name='OdPd'
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OD PD</label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OdPd'
+                        />
+                      </div>
                     </div>
                     {ItemCategories.value === 2 && OrderType.value !== 2 ? (
                       <div className='col-md-2'>
-                        <label htmlFor=''>OD QTY LENS</label>
-                        <input
-                          type='number'
-                          ref={register({ min: 0, max: 1 })}
-                          className='form-control'
-                          onChange={onChange}
-                          style={{ margin: '0' }}
-                          name='OdQty'
-                        />
+                        <div className='form-group'>
+                          <label htmlFor=''>OD QTY LENS</label>
+                          <input
+                            type='number'
+                            ref={register({ min: 0, max: 1 })}
+                            className='form-control'
+                            onChange={onChange}
+                            style={{ margin: '0' }}
+                            name='OdQty'
+                          />
+                        </div>
                       </div>
                     ) : (
                       <div className='col-md-2'>
-                        <label htmlFor=''>OD QTY</label>
-                        <input
-                          type='number'
-                          ref={register({ min: 0, max: 400 })}
-                          className='form-control'
-                          onChange={onChange}
-                          style={{ margin: '0' }}
-                          name='OdQty'
-                        />
+                        <div className='form-group'>
+                          <label htmlFor=''>OD QTY</label>
+                          <input
+                            type='number'
+                            ref={register({ min: 0, max: 400 })}
+                            className='form-control'
+                            onChange={onChange}
+                            style={{ margin: '0' }}
+                            name='OdQty'
+                          />
+                        </div>
                       </div>
                     )}
                   </div>
@@ -590,90 +637,104 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                 <div className='col-md-12'>
                   <div className='row'>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OS SPH</label>
-                      <Select
-                        options={optSph}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OsSph: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OS SPH</label>
+                        <Select
+                          options={optSph}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OsSph: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OS CYL</label>
-                      <Select
-                        options={optCyl}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OsCyl: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OS CYL</label>
+                        <Select
+                          options={optCyl}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OsCyl: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OS AXIS</label>
-                      <Select
-                        options={optAxis}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OsAxis: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OS AXIS</label>
+                        <Select
+                          options={optAxis}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OsAxis: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OS ADD</label>
-                      <Select
-                        options={optAdd}
-                        defaultValue={{ label: 'N/A', value: 0 }}
-                        onChange={(selectedOption) => {
-                          setFormData({
-                            ...formData,
-                            OsAdd: selectedOption.value,
-                          });
-                        }}
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OS ADD</label>
+                        <Select
+                          options={optAdd}
+                          defaultValue={{ label: 'N/A', value: 0 }}
+                          onChange={(selectedOption) => {
+                            setFormData({
+                              ...formData,
+                              OsAdd: selectedOption.value,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
                     <div className='col-md-2'>
-                      <label htmlFor=''>OS PD</label>
-                      <input
-                        type='number'
-                        className='form-control'
-                        onChange={onChange}
-                        style={{ margin: '0' }}
-                        name='OsPd'
-                      />
+                      <div className='form-group'>
+                        <label htmlFor=''>OS PD</label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          onChange={onChange}
+                          style={{ margin: '0' }}
+                          name='OsPd'
+                        />
+                      </div>
                     </div>
                     {ItemCategories.value === 2 && OrderType.value !== 2 ? (
                       <div className='col-md-2'>
-                        <label htmlFor=''>OS QTY</label>
-                        <input
-                          type='number'
-                          ref={register({ min: 0, max: 1 })}
-                          className='form-control'
-                          onChange={onChange}
-                          style={{ margin: '0' }}
-                          name='OsQty'
-                        />
+                        <div className='form-group'>
+                          <label htmlFor=''>OS QTY</label>
+                          <input
+                            type='number'
+                            ref={register({ min: 0, max: 1 })}
+                            className='form-control'
+                            onChange={onChange}
+                            style={{ margin: '0' }}
+                            name='OsQty'
+                          />
+                        </div>
                       </div>
                     ) : (
                       <div className='col-md-2'>
-                        <label htmlFor=''>OS QTY</label>
-                        <input
-                          type='number'
-                          ref={register({ min: 0, max: 200 })}
-                          className='form-control'
-                          onChange={onChange}
-                          style={{ margin: '0' }}
-                          name='OsQty'
-                        />
+                        <div className='form-group'>
+                          <label htmlFor=''>OS QTY</label>
+                          <input
+                            type='number'
+                            ref={register({ min: 0, max: 200 })}
+                            className='form-control'
+                            onChange={onChange}
+                            style={{ margin: '0' }}
+                            name='OsQty'
+                          />
+                        </div>
                       </div>
                     )}
                   </div>
