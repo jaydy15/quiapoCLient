@@ -121,15 +121,30 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
   let paramId;
   let counter;
+  let labelSpace = `something       something`;
   const optFitting = [];
   if (ItemCategories.value === 2) {
     const arrayLensParam = lensParam.filter(
       (item) => item.lensItemKey === Model.value
+      //&&
+      // parseInt(item.id.slice(-1)) === OrderType.value > 2
+      //   ? 1
+      //   : 3
     );
     counter = arrayLensParam.length;
+    console.log(arrayLensParam);
     for (let i = 0; i < arrayLensParam.length; i++) {
       let formattObj = {
-        label: arrayLensParam[i].fitting,
+        label:
+          arrayLensParam[i].maxSph +
+          ' ' +
+          arrayLensParam[i].minSph +
+          ' | ' +
+          arrayLensParam[i].maxCyl +
+          ' ' +
+          arrayLensParam[i].minCyl +
+          ' | ' +
+          arrayLensParam[i].fitting,
         value: arrayLensParam[i].fitting,
       };
       optFitting.push(formattObj);
@@ -389,6 +404,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   const optCyl = utils(cylGrades);
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
+  console.log(labelSpace);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -466,10 +482,17 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
             value={Color}
           />
         </div>
-        {counter > 0 && (
-          <div className='col-md-4'>
+        {counter > 1 && (
+          <div className='col-md-8'>
             <div className='form-group'>
-              <label htmlFor=''>FITTING</label>
+              <label htmlFor=''>
+                {'SPH' +
+                  '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' +
+                  'CYL' +
+                  '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' +
+                  'FITTING' +
+                  '\xa0\xa0\xa0\xa0\xa0'}
+              </label>
               <Select
                 options={optFitting}
                 defaultValue={{ label: 'N/A', value: 0 }}
@@ -785,16 +808,18 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
                   />
                 </div>
                 <div className='col-md-3'>
-                  <label htmlFor=''>Frame Type</label>
-                  <Select
-                    options={optFrameType}
-                    onChange={(selectedOption) => {
-                      setFormData({
-                        ...formData,
-                        FrameType: selectedOption.value,
-                      });
-                    }}
-                  />
+                  <div className='form-group'>
+                    <label htmlFor=''>Frame Type</label>
+                    <Select
+                      options={optFrameType}
+                      onChange={(selectedOption) => {
+                        setFormData({
+                          ...formData,
+                          FrameType: selectedOption.value,
+                        });
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
               <div className='container'>
