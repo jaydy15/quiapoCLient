@@ -169,8 +169,36 @@ const OrderFields = ({
       maxAdd = parseFloat(arrayLensParam[0].maxAdd);
       minAdd = parseFloat(arrayLensParam[0].minAdd);
       colorFind = arrayLensParam[0].cdKeys.slice(1, -1).split(',');
-      console.log(colorFind);
-      if (colorFind.length > 1) {
+
+      const clrsarray = colorFind.map((cf) => cf.substring(0, 4));
+      const daysarray = colorFind.map((cf) => cf.slice(-2));
+      console.log(clrsarray.length);
+      for (let x = 0; x < clrsarray.length; x++) {
+        let hldrlbl = colors.find(
+          (color) => color.id == clrsarray[x]
+        ).colorName;
+        let hldrid = colors.find((color) => color.id == clrsarray[x]).id;
+        let hldrobj = {
+          label: hldrlbl + ' ' + daysarray[x] + ' days',
+          value: hldrid,
+        };
+        optColor.push(hldrobj);
+
+        console.log(optColor);
+      }
+    } else if (arrayLensParam.length > 1) {
+      const arrayLensFitting = lensParam.filter(
+        (item) => item.lensItemKey === Model.value && item.fitting === fitting
+      );
+      if (arrayLensFitting.length > 0) {
+        paramId = arrayLensFitting[0].id;
+        maxSph = parseFloat(arrayLensFitting[0].maxSph);
+        minSph = parseFloat(arrayLensFitting[0].minSph);
+        maxCyl = parseFloat(arrayLensFitting[0].maxCyl);
+        minCyl = parseFloat(arrayLensFitting[0].minCyl);
+        maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
+        minAdd = parseFloat(arrayLensFitting[0].minAdd);
+        colorFind = arrayLensFitting[0].cdKeys.slice(1, -1).split(',');
         const clrsarray = colorFind.map((cf) => cf.substring(0, 4));
         const daysarray = colorFind.map((cf) => cf.slice(-2));
         console.log(clrsarray.length);
@@ -186,33 +214,6 @@ const OrderFields = ({
           optColor.push(hldrobj);
         }
         console.log(optColor);
-      }
-    } else if (arrayLensParam.length > 1) {
-      const arrayLensFitting = lensParam.filter(
-        (item) => item.lensItemKey === Model.value && item.fitting === fitting
-      );
-      if (arrayLensFitting.length > 0) {
-        paramId = arrayLensFitting[0].id;
-        maxSph = parseFloat(arrayLensFitting[0].maxSph);
-        minSph = parseFloat(arrayLensFitting[0].minSph);
-        maxCyl = parseFloat(arrayLensFitting[0].maxCyl);
-        minCyl = parseFloat(arrayLensFitting[0].minCyl);
-        maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
-        minAdd = parseFloat(arrayLensFitting[0].minAdd);
-        colorFind = arrayLensParam[0].cdKeys.split(',');
-        console.log(colorFind);
-        if (colorFind.length > 1) {
-          const clrsarray = colorFind.map((cf) => cf.substring(1, 4));
-          console.log(clrsarray);
-        }
-        // console.log(colors);
-        // colorSearch = colors.find((color) => color.id == colorFind);
-        // console.log(colorSearch);
-        // let formatColor = {
-        //   label: colorSearch.colorName,
-        //   value: colorSearch.id,
-        // };
-        // optColor.push(formatColor);
       }
     }
   } else {
