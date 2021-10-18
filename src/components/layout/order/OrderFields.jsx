@@ -14,7 +14,14 @@ import { v4 as uuidv4 } from 'uuid';
 import Select from 'react-select';
 import { useForm } from 'react-hook-form';
 
-const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
+const OrderFields = ({
+  auth,
+  lists,
+  addToCart,
+  lensParam,
+  generalEnums,
+  colors,
+}) => {
   const alert = useAlert();
   let history = useHistory();
   const { register, handleSubmit, watch, errors } = useForm();
@@ -121,7 +128,9 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
   let paramId;
   let counter;
-  let labelSpace = `something       something`;
+  let colorFind,
+    colorSearch = [];
+  let optColor = [];
   const optFitting = [];
   if (ItemCategories.value === 2) {
     const arrayLensParam = lensParam.filter(
@@ -148,6 +157,7 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
         value: arrayLensParam[i].fitting,
       };
       optFitting.push(formattObj);
+      console.log(arrayLensParam[i].cdKey);
     }
     if (arrayLensParam.length === 1) {
       console.log(arrayLensParam);
@@ -158,6 +168,25 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
       minCyl = parseFloat(arrayLensParam[0].minCyl);
       maxAdd = parseFloat(arrayLensParam[0].maxAdd);
       minAdd = parseFloat(arrayLensParam[0].minAdd);
+      colorFind = arrayLensParam[0].cdKeys.slice(1, -1).split(',');
+      console.log(colorFind);
+      if (colorFind.length > 1) {
+        const clrsarray = colorFind.map((cf) => cf.substring(0, 4));
+        const daysarray = colorFind.map((cf) => cf.slice(-2));
+        console.log(clrsarray.length);
+        for (let x = 0; x < clrsarray.length; x++) {
+          let hldrlbl = colors.find(
+            (color) => color.id == clrsarray[x]
+          ).colorName;
+          let hldrid = colors.find((color) => color.id == clrsarray[x]).id;
+          let hldrobj = {
+            label: hldrlbl + ' ' + daysarray[x] + ' days',
+            value: hldrid,
+          };
+          optColor.push(hldrobj);
+        }
+        console.log(optColor);
+      }
     } else if (arrayLensParam.length > 1) {
       const arrayLensFitting = lensParam.filter(
         (item) => item.lensItemKey === Model.value && item.fitting === fitting
@@ -170,6 +199,20 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
         minCyl = parseFloat(arrayLensFitting[0].minCyl);
         maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
         minAdd = parseFloat(arrayLensFitting[0].minAdd);
+        colorFind = arrayLensParam[0].cdKeys.split(',');
+        console.log(colorFind);
+        if (colorFind.length > 1) {
+          const clrsarray = colorFind.map((cf) => cf.substring(1, 4));
+          console.log(clrsarray);
+        }
+        // console.log(colors);
+        // colorSearch = colors.find((color) => color.id == colorFind);
+        // console.log(colorSearch);
+        // let formatColor = {
+        //   label: colorSearch.colorName,
+        //   value: colorSearch.id,
+        // };
+        // optColor.push(formatColor);
       }
     }
   } else {
@@ -295,7 +338,6 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
 
   const handleChange = (selectedOption) => {
     setFormData({ ...formData, RxNumber: selectedOption });
-    console.log(`Option selected:`, selectedOption);
   };
 
   const listFrameType = generalEnums
@@ -323,7 +365,6 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
     };
     arrayFrameShape.push(formattObj);
   }
-  console.log(arrayFrameShape);
 
   const setFS = (num) => {
     setFrameShapeId(arrayFrameShape[num].value);
@@ -404,7 +445,6 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
   const optCyl = utils(cylGrades);
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
-  console.log(labelSpace);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -475,12 +515,20 @@ const OrderFields = ({ auth, lists, addToCart, lensParam, generalEnums }) => {
       </div>
       <div className='row'>
         <div className='col-md-4'>
-          <Colors
-            onChange={(selectedOption) => {
-              setFormData({ ...formData, Color: selectedOption });
-            }}
-            value={Color}
-          />
+          <div className='form-group'>
+            <label htmlFor='brand'>
+              Color<span style={{ color: 'red' }}>*</span>
+            </label>
+            <Select
+              options={optColor}
+              onChange={(selectedOption) => {
+                setFormData({
+                  ...formData,
+                  Color: selectedOption,
+                });
+              }}
+            />
+          </div>
         </div>
         {counter > 1 && (
           <div className='col-md-8'>
@@ -988,6 +1036,7 @@ const mapStateToProps = (state) => ({
   lists: state.cart.lists,
   lensParam: state.catalogue.lensParam,
   generalEnums: state.catalogue.generalEnums,
+  colors: state.catalogue.colors,
 });
 
 export default connect(mapStateToProps, { addToCart })(OrderFields);
