@@ -12,23 +12,28 @@ const CartDetails = ({
   fscsaModels,
   csaItems,
   removeItem,
+  colors,
+  genEnum,
 }) => {
-  const formatITCY = itemcategory.find((itm) => itm.id === bulk.itemCategories)
-    .desc;
-  const formatODTY = ordertype.find((itm) => itm.id === bulk.orderType)
-    .typeDesc;
+  console.log(bulk);
+  console.log(lens);
+  const formatITCY = itemcategory.find(
+    (itm) => itm.id === bulk.itemCategories
+  ).desc;
+  const formatODTY = ordertype.find(
+    (itm) => itm.id === bulk.orderType
+  ).typeDesc;
 
   const formatBrand = brands.find((br) => br.id === bulk.brand).name;
+  const formatColor = colors.find((cl) => cl.id === bulk.color).colorName;
   let formatMDL;
   if (bulk.itemCategories === 2) {
-    formatMDL = lens.find((len) => len.id === bulk.model).name;
-  } else if (
-    bulk.itemCategories === 1 ||
-    bulk.itemCategories === 5 ||
-    bulk.itemCategories === 6
-  ) {
-    formatMDL = csaItems.find((csa) => csa.id.toString() === bulk.model)
-      .description;
+    formatMDL = lens.find((len) => len.id.toString() === bulk.model).name;
+    console.log(formatMDL);
+  } else {
+    formatMDL = csaItems.find(
+      (csa) => csa.id.toString() === bulk.model
+    ).description;
   }
 
   const removeItemFromCart = () => {
@@ -97,13 +102,19 @@ const CartDetails = ({
             <div className='col-md-2'>
               <p>OsAxis : {bulk.osAxis}</p>
             </div>
-            <div className='col-md-2'>
-              <p>Frame Type : {bulk.frameType}</p>
-            </div>
+
+            {bulk.orderType === 3 && (
+              <div className='col-md-2'>
+                <p>
+                  Frame Type :
+                  {genEnum.find((ge) => ge.id === bulk.frameType).desc}
+                </p>
+              </div>
+            )}
           </div>
           <div className='row'>
             <div className='col-md-4'>
-              <p>Color : {bulk.color}</p>
+              <p>Color : {formatColor}</p>
             </div>
             <div className='col-md-2'>
               <p>OdPd : {bulk.odPd}</p>
@@ -142,6 +153,8 @@ const mapStateToProps = (state) => ({
   lens: state.catalogue.lensItems,
   fscsaModels: state.catalogue.fscsaModels,
   csaItems: state.catalogue.csaItems,
+  colors: state.catalogue.colors,
+  genEnum: state.catalogue.generalEnums,
 });
 
 export default connect(mapStateToProps, { removeItem })(CartDetails);

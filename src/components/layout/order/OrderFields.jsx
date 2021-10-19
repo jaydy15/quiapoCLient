@@ -6,7 +6,6 @@ import OrderTypes from './orderFields/OrderTypes';
 import Brands from './orderFields/Brands';
 import ItemCategory from './orderFields/ItemCategory';
 import Models from './orderFields/Models';
-import Colors from './orderFields/Colors';
 import Units from './orderFields/Units';
 import { addToCart } from './../../../redux/cart/cartActions';
 import { useAlert } from 'react-alert';
@@ -976,7 +975,6 @@ const OrderFields = ({
                   value={PatientsName}
                   onChange={onChange}
                   label="Patient's Name"
-                  bol='false'
                 />
               </div>
             </div>
@@ -989,12 +987,14 @@ const OrderFields = ({
         ItemCategories.value !== undefined &&
         Brand.value !== undefined &&
         Model.value !== undefined &&
-        Color.value !== undefined && (
+        Color.value !== undefined &&
+        OdQty !== '0' &&
+        OsQty !== '0' && (
           <button type='submit' className='btn btn-block btn-success'>
             Add To Cart
           </button>
         )}
-      {OrderType.value === 3 &&
+      {(OrderType.value === 3 || OrderType.value === 1) &&
         RxNumber.value !== undefined &&
         OrderType.value !== undefined &&
         ItemCategories.value === 2 &&
@@ -1005,7 +1005,8 @@ const OrderFields = ({
         Vertical !== '' &&
         Bridge !== '' &&
         FrameType !== '' &&
-        frameShape !== '' && (
+        frameShape !== '' &&
+        PatientsName !== '' && (
           <button type='submit' className='btn btn-block btn-success'>
             Add To Cart
           </button>

@@ -19,11 +19,12 @@ const Brands = ({
   };
 
   const lensBrand = lens
-    .filter((len) => len.orderTypeKey === OrderType)
+    .filter(
+      (len) => len.orderTypeKey === OrderType && len.supplyCategoryKey !== 1
+    )
     .map((br) => br.brandKey);
-
   const bulkLensBrand = lens
-    .filter((len) => len.orderTypeKey === 1)
+    .filter((len) => len.orderTypeKey === 1 && len.supplyCategoryKey !== 1)
     .map((br) => br.brandKey);
 
   const fsBrand = _.filter(fs, ['supplyCategoryKey', ItemCategories]).map(
@@ -47,8 +48,9 @@ const Brands = ({
     let listBrandLens = [];
 
     for (let x = 0; x < listLensId.length; x++) {
-      let findLensBrand = brands.find((brand) => brand.id === listLensId[x])
-        .name;
+      let findLensBrand = brands.find(
+        (brand) => brand.id === listLensId[x]
+      ).name;
       listBrandLens.push(findLensBrand);
     }
 

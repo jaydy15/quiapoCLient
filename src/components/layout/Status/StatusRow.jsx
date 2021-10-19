@@ -117,16 +117,17 @@ const StatusRow = ({
           {(user.access === '0' ||
             user.access === '1' ||
             user.access === '2' ||
-            user.access === '3') && (
-            <Fragment>
-              <Button variant='danger' onClick={orderRejected}>
-                REJECT
-              </Button>
-              <Button variant='success' onClick={orderApproved}>
-                APPROVE
-              </Button>
-            </Fragment>
-          )}
+            user.access === '3') &&
+            status === 'FOR APPROVAL' && (
+              <Fragment>
+                <Button variant='danger' onClick={orderRejected}>
+                  REJECT
+                </Button>
+                <Button variant='success' onClick={orderApproved}>
+                  APPROVE
+                </Button>
+              </Fragment>
+            )}
         </Modal.Footer>
       </Modal>
     </Fragment>

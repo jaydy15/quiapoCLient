@@ -13,8 +13,9 @@ const CartBulkDetail = ({
   colors,
   csaItems,
 }) => {
-  const formatITCY = itemcategory.find((itm) => itm.id === bulk.itemCategories)
-    .desc;
+  const formatITCY = itemcategory.find(
+    (itm) => itm.id === bulk.itemCategories
+  ).desc;
   const formatBrand = brands.find((br) => br.id === bulk.brand).name;
   if (bulk.color !== '') {
     const formatColor = colors.find((cl) => cl.id === bulk.color).colorName;
@@ -26,6 +27,8 @@ const CartBulkDetail = ({
     bulk.itemCategories === 6
   ) {
     formatMDL = csaItems.find((item) => item.id === bulk.model).description;
+  } else {
+    formatMDL = lens.find((len) => len.id.toString() === bulk.model).name;
   }
 
   const removeItemFromCart = () => {

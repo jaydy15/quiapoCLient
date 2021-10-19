@@ -22,7 +22,7 @@ const StatusDetails = ({
   ).desc;
   const formatBranch = branch.find((bh) => bh.id === items[0].toBranchKey).name;
   const user = users.find((us) => us.id === items[0].userIdKey).username;
-
+  const formatColor = colors.find((cl) => cl.id === items[0].cdKey).colorName;
   let formatItem = [],
     modelKey = [];
   for (let i = 0; i < items.length; i++) {
@@ -73,7 +73,7 @@ const StatusDetails = ({
         </tbody>
       </table>
       {items.map((item, index) => (
-        <div>
+        <div key={index}>
           <p>{index + 1}</p>
           <table className='table'>
             <tbody>
@@ -103,12 +103,7 @@ const StatusDetails = ({
               </tr>
               <tr>
                 <td>{item.odDetails === '|||||' ? null : item.odDetails}</td>
-                <td>
-                  {
-                    colors.find((color) => color.id === item.supplyCategoryKey)
-                      .colorName
-                  }
-                </td>
+                <td>{formatColor}</td>
                 <td>{item.osDetails === '|||||' ? null : item.osDetails}</td>
                 <td>{item.soDetails === '|||' ? null : item.soDetails}</td>
               </tr>

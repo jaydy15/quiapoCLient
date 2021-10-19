@@ -41,7 +41,7 @@ const Status = ({ orders, getOrders, branch, user, auth }) => {
             <tbody>
               {orders &&
                 orders.map((order) => (
-                  <StatusRow key={order.items[0].rxNumber} order={order} />
+                  <StatusRow key={order.items[0].txNumber} order={order} />
                 ))}
             </tbody>
           </table>
