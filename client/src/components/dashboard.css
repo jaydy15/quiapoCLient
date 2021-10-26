@@ -1,0 +1,26 @@
+.dcontainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 5px;
+}
+
+.user-info {
+  align-self: flex-start;
+}
+
+.side-bar {
+  align-self: flex-start;
+}
+
+.main-content {
+  flex: 0.95;
+  margin: 10px;
+}
