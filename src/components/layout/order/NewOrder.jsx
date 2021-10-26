@@ -40,9 +40,10 @@ const NewOrder = ({
   const [formData, setFormData] = useState({
     OrderTypes: '',
     prefix: '',
-    number: '',
+    rxNumber: '',
+    boNumber: '',
   });
-  const { OrderTypes, prefix, number } = formData;
+  const { OrderTypes, prefix, rxNumber, boNumber } = formData;
 
   const optPrefix = [
     { label: 'B', value: 'B' },
@@ -60,9 +61,9 @@ const NewOrder = ({
   }
   let OrderNumber;
   if (OrderTypes === 'Bulk Order') {
-    OrderNumber = prefix.value + number;
+    OrderNumber = prefix.value + boNumber;
   } else {
-    OrderNumber = number;
+    OrderNumber = rxNumber;
   }
   let isDuplicate;
   if (transactions !== '') {
@@ -161,8 +162,8 @@ const NewOrder = ({
                     <input
                       type='text'
                       className='form-control'
-                      value={number}
-                      name='number'
+                      value={boNumber}
+                      name='boNumber'
                       onChange={onChange}
                       ref={register({ required: true })}
                     />
@@ -180,13 +181,13 @@ const NewOrder = ({
                 <input
                   type='text'
                   className='form-control'
-                  name='number'
-                  value={number}
+                  name='rxNumber'
+                  value={rxNumber}
                   onChange={onChange}
                   ref={register({ required: true })}
                 />
                 <div>
-                  {errors.number && (
+                  {errors.rxNumber && (
                     <span className='alert alert-danger'>Rx is required</span>
                   )}
                 </div>
