@@ -6,7 +6,7 @@ import { setAlert } from '../../../../redux/alert/alertActions';
 import { saveBrand } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
-const AddBrand = ({
+const AddMaterial = ({
   setAlert,
   handleClose,
   saveBrand,
@@ -51,11 +51,13 @@ const AddBrand = ({
           />
         </div>
 
-        <button className='btn btn-block btn-success'>Add Brand</button>
+        <button className='btn btn-block btn-success'>Add Material</button>
       </form>
       <Alerts />
     </Fragment>
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(AddBrand);
+export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+  AddMaterial
+);

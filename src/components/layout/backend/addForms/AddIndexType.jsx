@@ -6,7 +6,7 @@ import { setAlert } from '../../../../redux/alert/alertActions';
 import { saveBrand } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
-const AddBrand = ({
+const AddIndexType = ({
   setAlert,
   handleClose,
   saveBrand,
@@ -51,11 +51,13 @@ const AddBrand = ({
           />
         </div>
 
-        <button className='btn btn-block btn-success'>Add Brand</button>
+        <button className='btn btn-block btn-success'>Add Index Type</button>
       </form>
       <Alerts />
     </Fragment>
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(AddBrand);
+export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+  AddIndexType
+);

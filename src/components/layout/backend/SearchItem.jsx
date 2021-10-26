@@ -4,6 +4,10 @@ import Sidebar from '../Sidebar';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
 import AddBrand from './addForms/AddBrand';
+import AddLensType from './addForms/AddLensType';
+import AddIndexType from './addForms/AddIndexType';
+import AddProductFamily from './addForms/AddProductFamily';
+import AddMaterial from './addForms/AddMaterial';
 
 const SearchItem = () => {
   const [barcode, setBarcode] = useState();
@@ -116,7 +120,22 @@ const SearchItem = () => {
             />
           </div>
           {classes.userInput == 'Brand' && (
-            <AddBrand handleClose={handleClose2} />
+            <AddBrand handleClose={handleClose2} setClasses={setClasses} />
+          )}
+          {classes.userInput == 'Lens Type' && (
+            <AddLensType handleClose={handleClose2} setClasses={setClasses} />
+          )}
+          {classes.userInput == 'Index Type' && (
+            <AddIndexType handleClose={handleClose2} setClasses={setClasses} />
+          )}
+          {classes.userInput == 'Product Family' && (
+            <AddProductFamily
+              handleClose={handleClose2}
+              setClasses={setClasses}
+            />
+          )}
+          {classes.userInput == 'Material' && (
+            <AddMaterial handleClose={handleClose2} setClasses={setClasses} />
           )}
           {/* <div className='form-group'>
             <label htmlFor=''>
