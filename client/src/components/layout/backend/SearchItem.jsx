@@ -3,10 +3,11 @@ import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
+import AddBrand from './addForms/AddBrand';
 
 const SearchItem = () => {
   const [barcode, setBarcode] = useState();
-  const [classes, setClasses] = useState();
+  const [classes, setClasses] = useState('');
   const [newclasses, setNewClasses] = useState();
   const [show, setShow] = useState(false);
 
@@ -23,10 +24,10 @@ const SearchItem = () => {
     { label: 'Lens Type', value: 'Lens Type' },
     { label: 'Index Type', value: 'Index Type' },
     { label: 'Product Family', value: 'Product Family' },
-    { label: 'Supply Category', value: 'Supply Category' },
     { label: 'Material', value: 'Material' },
   ];
 
+  console.log(classes.userInput);
   return (
     <Fragment>
       <div>
@@ -110,11 +111,14 @@ const SearchItem = () => {
               name='classes'
               options={optClasses}
               onChange={(selectedOption) => {
-                setClasses({ selectedOption });
+                setClasses({ userInput: selectedOption.value });
               }}
             />
           </div>
-          <div className='form-group'>
+          {classes.userInput == 'Brand' && (
+            <AddBrand handleClose={handleClose2} />
+          )}
+          {/* <div className='form-group'>
             <label htmlFor=''>
               Name<span style={{ color: 'red' }}>*</span>
             </label>
@@ -124,7 +128,7 @@ const SearchItem = () => {
               name='newclasses'
               onChange={(e) => setNewClasses(e.target.value)}
             />
-          </div>
+          </div> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
