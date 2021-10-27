@@ -3,17 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveBrand } from '../../../../redux/backend/backendActions';
+import { saveLensType } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
 const AddLensType = ({
   setAlert,
   handleClose,
-  saveBrand,
+  saveLensType,
   setClasses,
   loadCatalogue,
 }) => {
   const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
   const {
     register,
     handleSubmit,
@@ -22,10 +23,10 @@ const AddLensType = ({
   } = useForm();
 
   const onSubmit = (data) => {
-    const { name } = data;
-    saveBrand(name);
+    const { name, desc } = data;
+    saveLensType(name, desc);
 
-    setAlert('Brand Added Successfully', 'success');
+    setAlert('New Product Family Added Successfully', 'success');
 
     setTimeout(() => {
       setClasses('');
@@ -40,7 +41,7 @@ const AddLensType = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label htmlFor=''>
-            Name<span style={{ color: 'red' }}>*</span>
+            Product Family Name<span style={{ color: 'red' }}>*</span>
           </label>
           <input
             type='text'
@@ -50,14 +51,28 @@ const AddLensType = ({
             ref={register({ required: true })}
           />
         </div>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Description<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='desc'
+            onChange={(e) => setDesc(e.target.value)}
+            ref={register({ required: true })}
+          />
+        </div>
 
-        <button className='btn btn-block btn-success'>Add Lens Type</button>
+        <button className='btn btn-block btn-success'>
+          Add Product Family
+        </button>
       </form>
       <Alerts />
     </Fragment>
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+export default connect(null, { setAlert, saveLensType, loadCatalogue })(
   AddLensType
 );

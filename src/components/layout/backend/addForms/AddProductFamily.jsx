@@ -3,17 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveBrand } from '../../../../redux/backend/backendActions';
+import { saveProductFamily } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
 const AddProductFamily = ({
   setAlert,
   handleClose,
-  saveBrand,
+  saveProductFamily,
   setClasses,
   loadCatalogue,
 }) => {
   const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
   const {
     register,
     handleSubmit,
@@ -22,10 +23,10 @@ const AddProductFamily = ({
   } = useForm();
 
   const onSubmit = (data) => {
-    const { name } = data;
-    saveBrand(name);
+    const { name, desc } = data;
+    saveProductFamily(name, desc);
 
-    setAlert('Brand Added Successfully', 'success');
+    setAlert('New Product Family Added Successfully', 'success');
 
     setTimeout(() => {
       setClasses('');
@@ -40,13 +41,25 @@ const AddProductFamily = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label htmlFor=''>
-            Name<span style={{ color: 'red' }}>*</span>
+            Product Family Name<span style={{ color: 'red' }}>*</span>
           </label>
           <input
             type='text'
             className='form-control'
             name='name'
             onChange={(e) => setName(e.target.value)}
+            ref={register({ required: true })}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Description<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='desc'
+            onChange={(e) => setDesc(e.target.value)}
             ref={register({ required: true })}
           />
         </div>
@@ -60,6 +73,6 @@ const AddProductFamily = ({
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+export default connect(null, { setAlert, saveProductFamily, loadCatalogue })(
   AddProductFamily
 );

@@ -3,13 +3,13 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveBrand } from '../../../../redux/backend/backendActions';
+import { saveMaterial } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
 const AddMaterial = ({
   setAlert,
   handleClose,
-  saveBrand,
+  saveMaterial,
   setClasses,
   loadCatalogue,
 }) => {
@@ -23,9 +23,9 @@ const AddMaterial = ({
 
   const onSubmit = (data) => {
     const { name } = data;
-    saveBrand(name);
+    saveMaterial(name);
 
-    setAlert('Brand Added Successfully', 'success');
+    setAlert('New Lens Material Added Successfully', 'success');
 
     setTimeout(() => {
       setClasses('');
@@ -58,6 +58,6 @@ const AddMaterial = ({
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+export default connect(null, { setAlert, saveMaterial, loadCatalogue })(
   AddMaterial
 );

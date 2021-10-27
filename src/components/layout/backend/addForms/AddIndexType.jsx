@@ -3,17 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveBrand } from '../../../../redux/backend/backendActions';
+import { saveIndexType } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
 const AddIndexType = ({
   setAlert,
   handleClose,
-  saveBrand,
+  saveIndexType,
   setClasses,
   loadCatalogue,
 }) => {
   const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
   const {
     register,
     handleSubmit,
@@ -22,10 +23,10 @@ const AddIndexType = ({
   } = useForm();
 
   const onSubmit = (data) => {
-    const { name } = data;
-    saveBrand(name);
+    const { name, desc } = data;
+    saveIndexType(name, desc);
 
-    setAlert('Brand Added Successfully', 'success');
+    setAlert('New Index Added Successfully', 'success');
 
     setTimeout(() => {
       setClasses('');
@@ -40,13 +41,25 @@ const AddIndexType = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label htmlFor=''>
-            Name<span style={{ color: 'red' }}>*</span>
+            Index<span style={{ color: 'red' }}>*</span>
           </label>
           <input
             type='text'
             className='form-control'
             name='name'
             onChange={(e) => setName(e.target.value)}
+            ref={register({ required: true })}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Description<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='desc'
+            onChange={(e) => setDesc(e.target.value)}
             ref={register({ required: true })}
           />
         </div>
@@ -58,6 +71,6 @@ const AddIndexType = ({
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(
+export default connect(null, { setAlert, saveIndexType, loadCatalogue })(
   AddIndexType
 );
