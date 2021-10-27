@@ -1,3 +1,4 @@
+import { LOAD_ALL_CLASSES } from './backendTypes';
 import axios from 'axios';
 
 export const saveBrand = (formData) => async (dispatch) => {
@@ -37,4 +38,10 @@ export const saveLensType = (name, desc) => async (dispatch) => {
     desc: desc,
   };
   await axios.post('/api/lensTypes', obj);
+};
+
+export const loadClasses = () => async (dispatch) => {
+  const res = await axios.get('/api/localClasses');
+
+  dispatch({ type: LOAD_ALL_CLASSES, payload: res.data });
 };

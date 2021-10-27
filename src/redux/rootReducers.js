@@ -6,6 +6,7 @@ import localCatalogReducers from './localCatalog/localCatalogReducers';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import orderReducers from './order/orderReducers';
+import backendReducer from './backend/backendReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   cart: cartReducers,
   catalogue: localCatalogReducers,
   orders: orderReducers,
+  classes: backendReducer,
 });
 
 const persistConfig = {

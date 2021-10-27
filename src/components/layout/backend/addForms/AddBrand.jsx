@@ -1,9 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveBrand } from '../../../../redux/backend/backendActions';
+import {
+  loadClasses,
+  saveBrand,
+} from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
 
 const AddBrand = ({
@@ -11,8 +14,14 @@ const AddBrand = ({
   handleClose,
   saveBrand,
   setClasses,
-  loadCatalogue,
+  brand,
+  loadClasses,
 }) => {
+  useEffect(() => {
+    loadClasses();
+
+    //eslint-disable-next-line
+  }, []);
   const [name, setName] = useState('');
   const {
     register,
@@ -23,16 +32,20 @@ const AddBrand = ({
 
   const onSubmit = (data) => {
     const { name } = data;
-    saveBrand(name);
-
-    setAlert('Brand Added Successfully', 'success');
-
-    setTimeout(() => {
-      setClasses('');
-      setName('');
-      loadCatalogue();
-      handleClose();
-    }, 1000);
+    const isDuplicate = brand.filter((br) => br.name == name.toUpperCase());
+    console.log(isDuplicate);
+    if (isDuplicate.length == 0) {
+      saveBrand(name);
+      setAlert('Brand Added Successfully', 'success');
+      setTimeout(() => {
+        setClasses('');
+        setName('');
+        loadClasses();
+        handleClose();
+      }, 1000);
+    } else {
+      setAlert('Brand is already exists, enter another brand', 'danger');
+    }
   };
 
   return (
@@ -49,8 +62,12 @@ const AddBrand = ({
             onChange={(e) => setName(e.target.value)}
             ref={register({ required: true })}
           />
+          {errors.name && (
+            <div className='alert alert-danger col-md-3'>
+              Brand Name is required
+            </div>
+          )}
         </div>
-
         <button className='btn btn-block btn-success'>Add Brand</button>
       </form>
       <Alerts />
@@ -58,4 +75,13 @@ const AddBrand = ({
   );
 };
 
-export default connect(null, { setAlert, saveBrand, loadCatalogue })(AddBrand);
+const mapStateToProps = (state) => ({
+  brand: state.classes.brand,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  saveBrand,
+  loadCatalogue,
+  loadClasses,
+})(AddBrand);
