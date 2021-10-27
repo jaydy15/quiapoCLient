@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveMaterial } from '../../../../redux/backend/backendActions';
-import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
+import {
+  saveMaterial,
+  loadClasses,
+} from '../../../../redux/backend/backendActions';
 
 const AddMaterial = ({
   setAlert,
   handleClose,
   saveMaterial,
   setClasses,
-  loadCatalogue,
+  loadClasses,
+  lensMaterial,
 }) => {
   const [name, setName] = useState('');
   const {
@@ -23,16 +26,22 @@ const AddMaterial = ({
 
   const onSubmit = (data) => {
     const { name } = data;
-    saveMaterial(name);
-
-    setAlert('New Lens Material Added Successfully', 'success');
-
-    setTimeout(() => {
-      setClasses('');
-      setName('');
-      loadCatalogue();
-      handleClose();
-    }, 1000);
+    const isDuplicate = lensMaterial.filter(
+      (br) => br.name == name.toUpperCase()
+    );
+    console.log(isDuplicate);
+    if (isDuplicate.length == 0) {
+      saveMaterial(name.toUpperCase());
+      setAlert('Brand Added Successfully', 'success');
+      setTimeout(() => {
+        setClasses('');
+        setName('');
+        loadClasses();
+        handleClose();
+      }, 1000);
+    } else {
+      setAlert('Brand is already exists, enter another brand', 'danger');
+    }
   };
 
   return (
@@ -58,6 +67,12 @@ const AddMaterial = ({
   );
 };
 
-export default connect(null, { setAlert, saveMaterial, loadCatalogue })(
-  AddMaterial
-);
+const mapStateToProps = (state) => ({
+  lensMaterial: state.classes.lensMaterial,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  saveMaterial,
+  loadClasses,
+})(AddMaterial);

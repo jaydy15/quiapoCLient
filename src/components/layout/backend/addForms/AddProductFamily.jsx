@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveProductFamily } from '../../../../redux/backend/backendActions';
-import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
+import {
+  saveProductFamily,
+  loadClasses,
+} from '../../../../redux/backend/backendActions';
 
 const AddProductFamily = ({
   setAlert,
   handleClose,
   saveProductFamily,
   setClasses,
-  loadCatalogue,
+  loadClasses,
+  productFamily,
 }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -24,16 +27,22 @@ const AddProductFamily = ({
 
   const onSubmit = (data) => {
     const { name, desc } = data;
-    saveProductFamily(name, desc);
-
-    setAlert('New Product Family Added Successfully', 'success');
-
-    setTimeout(() => {
-      setClasses('');
-      setName('');
-      loadCatalogue();
-      handleClose();
-    }, 1000);
+    const isDuplicate = productFamily.filter(
+      (br) => br.name == name.toUpperCase()
+    );
+    console.log(isDuplicate);
+    if (isDuplicate.length == 0) {
+      saveProductFamily(name.toUpperCase(), desc.toUpperCase());
+      setAlert('Brand Added Successfully', 'success');
+      setTimeout(() => {
+        setClasses('');
+        setName('');
+        loadClasses();
+        handleClose();
+      }, 1000);
+    } else {
+      setAlert('Brand is already exists, enter another brand', 'danger');
+    }
   };
 
   return (
@@ -73,6 +82,12 @@ const AddProductFamily = ({
   );
 };
 
-export default connect(null, { setAlert, saveProductFamily, loadCatalogue })(
-  AddProductFamily
-);
+const mapStateToProps = (state) => ({
+  productFamily: state.classes.productFamily,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  saveProductFamily,
+  loadClasses,
+})(AddProductFamily);

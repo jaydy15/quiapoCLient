@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveLensType } from '../../../../redux/backend/backendActions';
-import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
+import {
+  saveLensType,
+  loadClasses,
+} from '../../../../redux/backend/backendActions';
 
 const AddLensType = ({
   setAlert,
   handleClose,
   saveLensType,
   setClasses,
-  loadCatalogue,
+  loadClasses,
+  lensType,
 }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -24,16 +27,20 @@ const AddLensType = ({
 
   const onSubmit = (data) => {
     const { name, desc } = data;
-    saveLensType(name, desc);
-
-    setAlert('New Product Family Added Successfully', 'success');
-
-    setTimeout(() => {
-      setClasses('');
-      setName('');
-      loadCatalogue();
-      handleClose();
-    }, 1000);
+    const isDuplicate = lensType.filter((br) => br.name == name.toUpperCase());
+    console.log(isDuplicate);
+    if (isDuplicate.length == 0) {
+      saveLensType(name.toUpperCase(), desc.toUpperCase());
+      setAlert('Brand Added Successfully', 'success');
+      setTimeout(() => {
+        setClasses('');
+        setName('');
+        loadClasses();
+        handleClose();
+      }, 1000);
+    } else {
+      setAlert('Brand is already exists, enter another brand', 'danger');
+    }
   };
 
   return (
@@ -73,6 +80,12 @@ const AddLensType = ({
   );
 };
 
-export default connect(null, { setAlert, saveLensType, loadCatalogue })(
-  AddLensType
-);
+const mapStateToProps = (state) => ({
+  lensType: state.classes.lensType,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  saveLensType,
+  loadClasses,
+})(AddLensType);

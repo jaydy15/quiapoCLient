@@ -35,7 +35,7 @@ const AddBrand = ({
     const isDuplicate = brand.filter((br) => br.name == name.toUpperCase());
     console.log(isDuplicate);
     if (isDuplicate.length == 0) {
-      saveBrand(name);
+      saveBrand(name.toUpperCase());
       setAlert('Brand Added Successfully', 'success');
       setTimeout(() => {
         setClasses('');

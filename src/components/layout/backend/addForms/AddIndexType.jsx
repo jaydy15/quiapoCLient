@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import Alerts from '../../../Alerts';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alertActions';
-import { saveIndexType } from '../../../../redux/backend/backendActions';
-import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
+import {
+  loadClasses,
+  saveIndexType,
+} from '../../../../redux/backend/backendActions';
 
 const AddIndexType = ({
   setAlert,
   handleClose,
   saveIndexType,
   setClasses,
-  loadCatalogue,
+  loadClasses,
+  indexType,
 }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -24,16 +27,20 @@ const AddIndexType = ({
 
   const onSubmit = (data) => {
     const { name, desc } = data;
-    saveIndexType(name, desc);
-
-    setAlert('New Index Added Successfully', 'success');
-
-    setTimeout(() => {
-      setClasses('');
-      setName('');
-      loadCatalogue();
-      handleClose();
-    }, 1000);
+    const isDuplicate = indexType.filter((br) => br.name == name.toUpperCase());
+    console.log(isDuplicate);
+    if (isDuplicate.length == 0) {
+      saveIndexType(name, desc);
+      setAlert('Brand Added Successfully', 'success');
+      setTimeout(() => {
+        setClasses('');
+        setName('');
+        loadClasses();
+        handleClose();
+      }, 1000);
+    } else {
+      setAlert('Brand is already exists, enter another brand', 'danger');
+    }
   };
 
   return (
@@ -71,6 +78,12 @@ const AddIndexType = ({
   );
 };
 
-export default connect(null, { setAlert, saveIndexType, loadCatalogue })(
-  AddIndexType
-);
+const mapStateToProps = (state) => ({
+  indexType: state.classes.indexType,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  saveIndexType,
+  loadClasses,
+})(AddIndexType);
