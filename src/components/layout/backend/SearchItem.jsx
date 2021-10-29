@@ -8,6 +8,7 @@ import AddLensType from './addForms/AddLensType';
 import AddIndexType from './addForms/AddIndexType';
 import AddProductFamily from './addForms/AddProductFamily';
 import AddMaterial from './addForms/AddMaterial';
+import AddLensItem from './addItemForms/AddLensItem';
 
 const SearchItem = () => {
   const [barcode, setBarcode] = useState();
@@ -91,12 +92,7 @@ const SearchItem = () => {
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <h1>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
-              magnam sequi totam accusantium modi, nihil vel neque nostrum
-              laudantium, perspiciatis iure et eligendi veniam doloremque vitae
-              impedit aut, a in?
-            </h1>
+            <AddLensItem />
           </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
