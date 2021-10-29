@@ -12,6 +12,12 @@ const AddLensItem = ({
   supplycategory,
   lensMaterial,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const [formData, setFormData] = useState({
     ordrTyp: '',
     brnd: '',
@@ -44,7 +50,6 @@ const AddLensItem = ({
       arrayHolder.push(formattObj);
     }
   };
-
   const optionFillerDesc = (arrayName, arrayHolder) => {
     const list = arrayName.map((item) => item);
 
@@ -76,100 +81,113 @@ const AddLensItem = ({
   optionFillerDesc2(supplycategory, optsupplycategory);
   optionFiller(lensMaterial, optLensMaterial);
 
-  console.log(optProductFamily);
-  console.log(optLensMaterial);
-  console.log(optlensType);
-  console.log(optindexType);
-  console.log(optbrand);
-  console.log(optorderType);
-  console.log(optsupplycategory);
+  const onSubmit = (data) => {
+    console.log(ordrTyp, brnd, lensTyp, indxTyp, prodFam, suppCat, lensMat);
+    const checkLensId =
+      ordrTyp.toString().padStart(2, '0') +
+      '' +
+      brnd.toString().padStart(5, '0') +
+      '' +
+      lensTyp.toString().padStart(3, '0') +
+      '' +
+      indxTyp.toString().padStart(2, '0') +
+      '' +
+      prodFam.toString().padStart(5, '0') +
+      '' +
+      lensMat.toString().padStart(5, '0') +
+      '' +
+      suppCat.toString().padStart(2, '0');
+  };
   return (
-    <div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Order Type<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optorderType}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, ordrTyp: selectedOption.id });
-          }}
-        />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Order Type<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='ordrTyp'
+            options={optorderType}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, ordrTyp: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Brand<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='brnd'
+            options={optbrand}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, brnd: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Lens Type<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='lensTyp'
+            options={optlensType}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, lensTyp: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Index Type<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='indxTyp'
+            options={optindexType}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, indxTyp: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Product Family<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='prodFam'
+            options={optProductFamily}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, prodFam: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Lens Material <span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='lensMat'
+            options={optLensMaterial}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, lensMat: selectedOption.value });
+            }}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Supply Category<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='suppCat'
+            options={optsupplycategory}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, suppCat: selectedOption.value });
+            }}
+          />
+        </div>
+        <button className='btn btn-block btn-success'>Add Lens Item</button>
       </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Brand<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optbrand}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, brnd: selectedOption.id });
-          }}
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Lens Type<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optlensType}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, lensTyp: selectedOption.id });
-          }}
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Index Type<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optindexType}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, indxTyp: selectedOption.id });
-          }}
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Product Family<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optProductFamily}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, prodFam: selectedOption.id });
-          }}
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Supply Category<span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optsupplycategory}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, suppCat: selectedOption.id });
-          }}
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='brand'>
-          Lens Material <span style={{ color: 'red' }}>*</span>
-        </label>
-        <Select
-          name='classes'
-          options={optLensMaterial}
-          onChange={(selectedOption) => {
-            setFormData({ ...formData, lensMat: selectedOption.id });
-          }}
-        />
-      </div>
-    </div>
+    </form>
   );
 };
 
