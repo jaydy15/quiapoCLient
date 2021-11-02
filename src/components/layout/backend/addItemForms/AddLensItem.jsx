@@ -28,6 +28,9 @@ const AddLensItem = ({
     lensMat: '',
   });
 
+  const [lensName, setLensName] = useState('');
+  const [lensKey, setLensKey] = useState('');
+
   const { prodFam, lensMat, lensTyp, brnd, ordrTyp, suppCat, indxTyp } =
     formData;
 
@@ -101,6 +104,30 @@ const AddLensItem = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Lens Name<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='lensName'
+            onChange={(e) => setLensKey(e.target.value)}
+            ref={register({ required: true })}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Lens Key<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='lensKey'
+            onChange={(e) => setLensKey(e.target.value)}
+            ref={register({ required: true })}
+          />
+        </div>
         <div className='form-group'>
           <label htmlFor='brand'>
             Order Type<span style={{ color: 'red' }}>*</span>

@@ -1,0 +1,37 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import Select from 'react-select';
+import AddCSAItem from './AddCSAItem';
+import AddLensItem from './AddLensItem';
+
+const AddNewItem = () => {
+  const [itemCategory, setItemCategory] = useState('');
+  const optItemCategory = [
+    { label: 'Lens', value: 'Lens' },
+    { label: 'Frame', value: 'Frame' },
+    { label: 'Accessories', value: 'Accessories' },
+  ];
+
+  console.log(itemCategory.userInput);
+  return (
+    <div>
+      <div className='form-group'>
+        <label htmlFor='brand'>
+          Item Category<span style={{ color: 'red' }}>*</span>
+        </label>
+        <Select
+          name='itemCategory'
+          options={optItemCategory}
+          onChange={(selectedOption) => {
+            setItemCategory({ userInput: selectedOption.value });
+          }}
+        />
+      </div>
+      {itemCategory.userInput == 'Lens' && <AddLensItem />}
+      {itemCategory.userInput == 'Accessories' && <AddCSAItem />}
+    </div>
+  );
+};
+
+export default AddNewItem;

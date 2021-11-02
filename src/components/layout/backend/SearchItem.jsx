@@ -3,17 +3,12 @@ import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
-import AddBrand from './addForms/AddBrand';
-import AddLensType from './addForms/AddLensType';
-import AddIndexType from './addForms/AddIndexType';
-import AddProductFamily from './addForms/AddProductFamily';
-import AddMaterial from './addForms/AddMaterial';
 import AddLensItem from './addItemForms/AddLensItem';
+import AddClassesForm from './addForms/AddClassesForm';
+import AddNewItem from './addItemForms/AddNewItem';
 
 const SearchItem = () => {
   const [barcode, setBarcode] = useState();
-  const [classes, setClasses] = useState('');
-  const [newclasses, setNewClasses] = useState();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -24,15 +19,11 @@ const SearchItem = () => {
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
 
-  const optClasses = [
-    { label: 'Brand', value: 'Brand' },
-    { label: 'Lens Type', value: 'Lens Type' },
-    { label: 'Index Type', value: 'Index Type' },
-    { label: 'Product Family', value: 'Product Family' },
-    { label: 'Material', value: 'Material' },
-  ];
+  const [show3, setShow3] = useState(false);
 
-  console.log(classes.userInput);
+  const handleClose3 = () => setShow3(false);
+  const handleShow3 = () => setShow3(true);
+
   return (
     <Fragment>
       <div>
@@ -61,7 +52,17 @@ const SearchItem = () => {
                   data-toggle='modal'
                   data-target='#myModal'
                   onClick={handleShow2}>
-                  New
+                  New Classes
+                </button>
+              </div>
+              <div className='p-2'>
+                <button
+                  type='button'
+                  className='btn btn-success'
+                  data-toggle='modal'
+                  data-target='#myModal'
+                  onClick={handleShow3}>
+                  New Lens Param
                 </button>
               </div>
             </div>
@@ -88,11 +89,11 @@ const SearchItem = () => {
       {/* New Item Complete Info */}
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton>
-          <Modal.Title>Order Details</Modal.Title>
+          <Modal.Title>Add New Item</Modal.Title>
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <AddLensItem />
+            <AddNewItem />
           </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
@@ -103,47 +104,21 @@ const SearchItem = () => {
           <Modal.Title>New Class</Modal.Title>
         </Modal.Header>
         <Modal.Body className='show-grid'>
-          <div className='form-group'>
-            <label htmlFor='brand'>
-              Class<span style={{ color: 'red' }}>*</span>
-            </label>
-            <Select
-              name='classes'
-              options={optClasses}
-              onChange={(selectedOption) => {
-                setClasses({ userInput: selectedOption.value });
-              }}
-            />
+          <div>
+            <AddClassesForm handleClose2={handleClose2} />
           </div>
-          {classes.userInput == 'Brand' && (
-            <AddBrand handleClose={handleClose2} setClasses={setClasses} />
-          )}
-          {classes.userInput == 'Lens Type' && (
-            <AddLensType handleClose={handleClose2} setClasses={setClasses} />
-          )}
-          {classes.userInput == 'Index Type' && (
-            <AddIndexType handleClose={handleClose2} setClasses={setClasses} />
-          )}
-          {classes.userInput == 'Product Family' && (
-            <AddProductFamily
-              handleClose={handleClose2}
-              setClasses={setClasses}
-            />
-          )}
-          {classes.userInput == 'Material' && (
-            <AddMaterial handleClose={handleClose2} setClasses={setClasses} />
-          )}
-          {/* <div className='form-group'>
-            <label htmlFor=''>
-              Name<span style={{ color: 'red' }}>*</span>
-            </label>
-            <input
-              type='text'
-              className='form-control'
-              name='newclasses'
-              onChange={(e) => setNewClasses(e.target.value)}
-            />
-          </div> */}
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+      {/* New Lens Param */}
+      <Modal show={show3} onHide={handleClose3} size='lg'>
+        <Modal.Header closeButton>
+          <Modal.Title>New Lens Param</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='show-grid'>
+          <div>
+            <AddClassesForm handleClose2={handleClose2} />
+          </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
