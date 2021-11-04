@@ -56,3 +56,14 @@ export const saveCSAItems = (formData) => async (dispatch) => {
 
   await axios.post('/api/csaItems', formData, config);
 };
+
+export const saveFSItems = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token'),
+    },
+  };
+
+  await axios.post('/api/fsItems', formData, config);
+};

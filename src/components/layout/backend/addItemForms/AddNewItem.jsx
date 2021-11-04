@@ -33,7 +33,9 @@ const AddNewItem = ({ handleClose }) => {
       {itemCategory.userInput == 'Accessories' && (
         <AddCSAItem handleClose={handleClose} />
       )}
-      {itemCategory.userInput == 'Frame' && <AddFSItem />}
+      {itemCategory.userInput == 'Frame' && (
+        <AddFSItem handleClose={handleClose} />
+      )}
     </div>
   );
 };

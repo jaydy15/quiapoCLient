@@ -32,7 +32,7 @@ const Sidebar = ({ auth }) => {
               <li>
                 <Link to='/status'>Status</Link>
               </li>
-              {auth.user.access == 0 && (
+              {user && auth.user.access == 0 && (
                 <li>
                   <Link to='/admin'>Admin Page</Link>
                 </li>
