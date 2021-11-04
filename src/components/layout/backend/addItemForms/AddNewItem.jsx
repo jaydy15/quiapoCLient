@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import AddCSAItem from './AddCSAItem';
+import AddFSItem from './AddFSItem';
 import AddLensItem from './AddLensItem';
 
-const AddNewItem = () => {
+const AddNewItem = ({ handleClose }) => {
   const [itemCategory, setItemCategory] = useState('');
   const optItemCategory = [
     { label: 'Lens', value: 'Lens' },
@@ -29,7 +30,10 @@ const AddNewItem = () => {
         />
       </div>
       {itemCategory.userInput == 'Lens' && <AddLensItem />}
-      {itemCategory.userInput == 'Accessories' && <AddCSAItem />}
+      {itemCategory.userInput == 'Accessories' && (
+        <AddCSAItem handleClose={handleClose} />
+      )}
+      {itemCategory.userInput == 'Frame' && <AddFSItem />}
     </div>
   );
 };

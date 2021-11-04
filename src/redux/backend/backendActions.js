@@ -45,3 +45,14 @@ export const loadClasses = () => async (dispatch) => {
 
   dispatch({ type: LOAD_ALL_CLASSES, payload: res.data });
 };
+
+export const saveCSAItems = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token'),
+    },
+  };
+
+  await axios.post('/api/csaItems', formData, config);
+};

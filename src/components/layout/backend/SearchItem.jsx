@@ -93,7 +93,7 @@ const SearchItem = () => {
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <AddNewItem />
+            <AddNewItem handleClose={handleClose} />
           </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
