@@ -6,6 +6,7 @@ import Select from 'react-select';
 import AddLensItem from './addItemForms/AddLensItem';
 import AddClassesForm from './addClassesForms/AddClassesForm';
 import AddNewItem from './addItemForms/AddNewItem';
+import AddLensParams from './addLensParams/AddLensParams';
 
 const SearchItem = () => {
   const [barcode, setBarcode] = useState();
@@ -117,7 +118,7 @@ const SearchItem = () => {
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <AddClassesForm handleClose2={handleClose2} />
+            <AddLensParams handleClose2={handleClose2} />
           </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
