@@ -82,3 +82,13 @@ export const saveFSItems = (formData) => async (dispatch) => {
 
   await axios.post('/api/fsItems', formData, config);
 };
+export const saveLensItems = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token'),
+    },
+  };
+
+  await axios.post('/api/lensItems', formData, config);
+};

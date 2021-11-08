@@ -29,7 +29,9 @@ const AddNewItem = ({ handleClose }) => {
           }}
         />
       </div>
-      {itemCategory.userInput == 'Lens' && <AddLensItem />}
+      {itemCategory.userInput == 'Lens' && (
+        <AddLensItem handleClose={handleClose} />
+      )}
       {itemCategory.userInput == 'Accessories' && (
         <AddCSAItem handleClose={handleClose} />
       )}
