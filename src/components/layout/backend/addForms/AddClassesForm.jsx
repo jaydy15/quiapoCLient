@@ -1,9 +1,11 @@
 import React, { useState, Fragment } from 'react';
 import Select from 'react-select';
 import AddBrand from './AddBrand';
+import AddColor from './AddColor';
 import AddIndexType from './AddIndexType';
 import AddLensType from './AddLensType';
 import AddMaterial from './AddMaterial';
+import AddModels from './AddModels';
 import AddProductFamily from './AddProductFamily';
 
 const AddClassesForm = ({ handleClose2 }) => {
@@ -14,6 +16,8 @@ const AddClassesForm = ({ handleClose2 }) => {
     { label: 'Index Type', value: 'Index Type' },
     { label: 'Product Family', value: 'Product Family' },
     { label: 'Material', value: 'Material' },
+    { label: 'Color', value: 'Color' },
+    { label: 'Models', value: 'Models' },
   ];
 
   console.log(classes.userInput);
@@ -45,6 +49,12 @@ const AddClassesForm = ({ handleClose2 }) => {
       )}
       {classes.userInput == 'Material' && (
         <AddMaterial handleClose={handleClose2} setClasses={setClasses} />
+      )}
+      {classes.userInput == 'Color' && (
+        <AddColor handleClose={handleClose2} setClasses={setClasses} />
+      )}
+      {classes.userInput == 'Models' && (
+        <AddModels handleClose={handleClose2} setClasses={setClasses} />
       )}
     </div>
   );

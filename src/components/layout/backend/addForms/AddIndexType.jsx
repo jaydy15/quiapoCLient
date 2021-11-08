@@ -31,7 +31,7 @@ const AddIndexType = ({
     console.log(isDuplicate);
     if (isDuplicate.length == 0) {
       saveIndexType(name, desc);
-      setAlert('Brand Added Successfully', 'success');
+      setAlert('Index Type Added Successfully', 'success');
       setTimeout(() => {
         setClasses('');
         setName('');
@@ -39,7 +39,10 @@ const AddIndexType = ({
         handleClose();
       }, 1000);
     } else {
-      setAlert('Brand is already exists, enter another brand', 'danger');
+      setAlert(
+        'An index type already exists, enter another index type',
+        'danger'
+      );
     }
   };
 

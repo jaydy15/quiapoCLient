@@ -44,7 +44,7 @@ const AddBrand = ({
         handleClose();
       }, 1000);
     } else {
-      setAlert('Brand is already exists, enter another brand', 'danger');
+      setAlert('A brand already exists, enter another brand', 'danger');
     }
   };
 

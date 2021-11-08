@@ -32,6 +32,21 @@ export const saveMaterial = (formData) => async (dispatch) => {
   await axios.post('/api/lensMaterials', obj);
 };
 
+export const saveColor = (formData) => async (dispatch) => {
+  const obj = {
+    colorName: formData,
+  };
+  await axios.post('/api/colorDays', obj);
+};
+
+export const saveModel = (name, desc) => async (dispatch) => {
+  const obj = {
+    modelName: name,
+    modelDescription: desc,
+  };
+  await axios.post('/api/fscsaModels', obj);
+};
+
 export const saveLensType = (name, desc) => async (dispatch) => {
   const obj = {
     name: name,

@@ -33,7 +33,7 @@ const AddProductFamily = ({
     console.log(isDuplicate);
     if (isDuplicate.length == 0) {
       saveProductFamily(name.toUpperCase(), desc.toUpperCase());
-      setAlert('Brand Added Successfully', 'success');
+      setAlert('Product Family Added Successfully', 'success');
       setTimeout(() => {
         setClasses('');
         setName('');
@@ -41,7 +41,10 @@ const AddProductFamily = ({
         handleClose();
       }, 1000);
     } else {
-      setAlert('Brand is already exists, enter another brand', 'danger');
+      setAlert(
+        'A product family already exists, enter another product family',
+        'danger'
+      );
     }
   };
 

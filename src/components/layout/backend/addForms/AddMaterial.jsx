@@ -32,7 +32,7 @@ const AddMaterial = ({
     console.log(isDuplicate);
     if (isDuplicate.length == 0) {
       saveMaterial(name.toUpperCase());
-      setAlert('Brand Added Successfully', 'success');
+      setAlert('Lens Material Added Successfully', 'success');
       setTimeout(() => {
         setClasses('');
         setName('');
@@ -40,7 +40,10 @@ const AddMaterial = ({
         handleClose();
       }, 1000);
     } else {
-      setAlert('Brand is already exists, enter another brand', 'danger');
+      setAlert(
+        'A lens material already exists, enter another lens material',
+        'danger'
+      );
     }
   };
 
