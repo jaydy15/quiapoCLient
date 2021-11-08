@@ -994,6 +994,17 @@ const OrderFields = ({
             Add To Cart
           </button>
         )}
+      {OrderType.value == 2 &&
+        RxNumber.value !== undefined &&
+        OrderType.value !== undefined &&
+        ItemCategories.value !== undefined &&
+        Brand.value !== undefined &&
+        Model.value !== undefined &&
+        Color.value !== undefined && (
+          <button type='submit' className='btn btn-block btn-success'>
+            Add To Cart
+          </button>
+        )}
       {(OrderType.value === 3 || OrderType.value === 1) &&
         RxNumber.value !== undefined &&
         OrderType.value !== undefined &&
