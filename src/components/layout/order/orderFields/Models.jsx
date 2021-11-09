@@ -14,8 +14,13 @@ const Models = ({
 }) => {
   const { onChange } = ownprops;
 
+  const unique = (value, index, self) => {
+    return self.indexOf(value) === index;
+  };
+
   let optLensModel = [];
   let optCSAModel = [];
+  let optFSModel = [];
 
   // LENS ITEM BRANDS
   if (ItemCategories === 2) {
@@ -65,8 +70,9 @@ const Models = ({
 
     let listBrandCSA = [];
     for (let x = 0; x < listCSAId.length; x++) {
-      let findCSAModel = model.find((elm) => elm.id === listCSAModelKey[x])
-        .modelName;
+      let findCSAModel = model.find(
+        (elm) => elm.id === listCSAModelKey[x]
+      ).modelName;
 
       listBrandCSA.push(findCSAModel);
     }
@@ -77,6 +83,30 @@ const Models = ({
         value: listCSAId[i],
       };
       optCSAModel.push(formattObj);
+    }
+  } else if (ItemCategories === 3 || ItemCategories === 4) {
+    let listFSKey = fs
+      .filter((fs) => fs.supplyCategoryKey === ItemCategories)
+      .filter((fs) => fs.brandKey === Brand)
+      .map((md) => md.fsModelKey);
+    let listFSId = fs
+      .filter((fs) => fs.supplyCategoryKey === ItemCategories)
+      .filter((fs) => fs.brandKey === Brand)
+      .map((md) => md.id);
+
+    let listBrandFS = [];
+    for (let x = 0; x < listFSId.length; x++) {
+      let findFSModel = model.find((elm) => elm.id === listFSKey[x]).modelName;
+
+      listBrandFS.push(findFSModel);
+    }
+
+    for (let i = 0; i < listFSId.length; i++) {
+      let formattObj = {
+        label: listBrandFS[i],
+        value: listFSId[i],
+      };
+      optFSModel.push(formattObj);
     }
   }
   const options = {};
@@ -89,6 +119,8 @@ const Models = ({
     ItemCategories === 6
   ) {
     finalOpt = optCSAModel;
+  } else if (ItemCategories === 3 || ItemCategories === 4) {
+    finalOpt = optFSModel;
   }
   return (
     <div>

@@ -149,6 +149,17 @@ const OrderFields = ({
     }
   };
 
+  if (ItemCategories !== 2) {
+    const listColor = colors.map((cl) => cl);
+    for (let i = 0; i < listColor.length; i++) {
+      let clrObj = {
+        label: listColor[i].colorName,
+        value: listColor[i].id,
+      };
+      optColor.push(clrObj);
+    }
+  }
+
   const gradeSetter = (grade) => {
     paramId = grade.id;
     maxSph = parseFloat(grade.maxSph);
@@ -179,6 +190,10 @@ const OrderFields = ({
           arrayLensParam[i].maxCyl +
           ' ' +
           arrayLensParam[i].minCyl +
+          ' | ' +
+          arrayLensParam[i].maxAdd +
+          ' ' +
+          arrayLensParam[i].minAdd +
           ' | ' +
           arrayLensParam[i].fitting,
         value: arrayLensParam[i].fitting,
@@ -377,7 +392,7 @@ const OrderFields = ({
 
   const cylLoad = () => {
     let grades = [];
-    for (let i = minCyl; i <= maxCyl; i = i + 0.25) {
+    for (let i = maxCyl; i <= minCyl; i = i + 0.25) {
       grades.push(gradify(i));
     }
     return grades;
@@ -519,6 +534,8 @@ const OrderFields = ({
                 {'SPH' +
                   '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' +
                   'CYL' +
+                  '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' +
+                  'ADD' +
                   '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' +
                   'FITTING' +
                   '\xa0\xa0\xa0\xa0\xa0'}

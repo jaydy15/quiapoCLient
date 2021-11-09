@@ -83,6 +83,26 @@ const Brands = ({
       };
       optBrandCSA.push(formattObj);
     }
+  } else if (ItemCategories === 3 || ItemCategories === 4) {
+    let listFsId = fs.map((fs) => fs.brandKey).filter(unique);
+    console.log(listFsId);
+    let listBrandFS = [];
+    for (let x = 0; x < listFsId.length; x++) {
+      let findFSBrand = brands
+        .filter((brand) => brand.id === listFsId[x])
+        .map((brand) => brand.name)
+        .toString();
+
+      listBrandFS.push(findFSBrand);
+    }
+
+    for (let i = 0; i < listFsId.length; i++) {
+      let formattObj = {
+        label: listBrandFS[i],
+        value: listFsId[i],
+      };
+      optBrandCSA.push(formattObj);
+    }
   }
   return (
     <div>
