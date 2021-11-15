@@ -5,6 +5,8 @@ import OrderFields from './OrderFields';
 import { loadUser } from './../../../redux/auth/authActions';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import OrderFieldsV2 from '../orderFieldsV2/OrderFieldsV2';
+import Menu from '../Menu';
 
 const Order = ({ catalogue, auth }) => {
   useEffect(() => {
@@ -21,14 +23,12 @@ const Order = ({ catalogue, auth }) => {
   return (
     <div>
       <Navbar />
+      <Menu />
       {catalogue !== null ? (
         <div className='dcontainer'>
-          <div className='left-side'>
-            <Sidebar />
-          </div>
           <div className='main-content'>
             <h1>Catalogue</h1>
-            <OrderFields />
+            <OrderFieldsV2 />
           </div>
         </div>
       ) : (
