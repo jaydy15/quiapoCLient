@@ -20,7 +20,7 @@ const ColorOptions = ({
 
   const isFS = ItemCategories == 3 || ItemCategories == 4;
   const isCA = ItemCategories == 5 || ItemCategories == 6;
-  const isLens = ItemCategories == 2;
+  const isLens = ItemCategories == 2 || ItemCategories == 1;
 
   let colorFind;
   let optColor = [];
