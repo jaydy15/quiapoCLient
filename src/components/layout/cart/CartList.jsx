@@ -32,10 +32,12 @@ const CartList = ({
   let formatODTY, formatBrand, formatITCY, formatMDL;
   // FIND DESC FOR ID VALUES
   if (item.length >= 1) {
+    console.log(item[0].model);
     formatODTY = ordertype.find((itm) => itm.id === item[0].orderType).typeDesc;
     formatBrand = brands.find((br) => br.id === item[0].brand).name;
-    formatITCY = itemcategory.find((itm) => itm.id === item[0].itemCategories)
-      .desc;
+    formatITCY = itemcategory.find(
+      (itm) => itm.id === item[0].itemCategories
+    ).desc;
     if (item[0].itemCategories === 2) {
       formatMDL = lens.find((len) => len.id === item[0].model).name;
     } else if (
@@ -43,8 +45,12 @@ const CartList = ({
       item[0].itemCategories === 5 ||
       item[0].itemCategories === 6
     ) {
-      formatMDL = csaItems.find((csa) => csa.id.toString() === item[0].model)
-        .description;
+      formatMDL = csaItems.find(
+        (csa) => csa.id.toString() === item[0].model
+      ).description;
+    } else if (item[0].itemCategories === 3 || item[0].itemCategories === 4) {
+      let mdlKey = fsItems.find((fs) => fs.id === item[0].model).fsModelKey;
+      formatMDL = fscaModels.find((mdl) => mdl.id === mdlKey).modelDescription;
     }
   }
 

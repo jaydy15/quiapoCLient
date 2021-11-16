@@ -14,6 +14,7 @@ const CartDetails = ({
   removeItem,
   colors,
   genEnum,
+  fsItems,
 }) => {
   console.log(bulk);
   console.log(lens);
@@ -27,9 +28,13 @@ const CartDetails = ({
   const formatBrand = brands.find((br) => br.id === bulk.brand).name;
   const formatColor = colors.find((cl) => cl.id === bulk.color).colorName;
   let formatMDL;
+  console.log(bulk.model);
   if (bulk.itemCategories === 2) {
     formatMDL = lens.find((len) => len.id.toString() === bulk.model).name;
     console.log(formatMDL);
+  } else if (bulk.itemCategories === 3 || bulk.itemCategories === 4) {
+    let mdlKey = fsItems.find((fs) => fs.id === bulk.model).fsModelKey;
+    formatMDL = fscsaModels.find((mdl) => mdl.id === mdlKey).modelDescription;
   } else {
     formatMDL = csaItems.find(
       (csa) => csa.id.toString() === bulk.model
@@ -155,6 +160,7 @@ const mapStateToProps = (state) => ({
   csaItems: state.catalogue.csaItems,
   colors: state.catalogue.colors,
   genEnum: state.catalogue.generalEnums,
+  fsItems: state.catalogue.fsItems,
 });
 
 export default connect(mapStateToProps, { removeItem })(CartDetails);

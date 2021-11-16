@@ -277,6 +277,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
                 Brand={Brand}
                 OrderType={OrderType}
                 ItemCategories={ItemCategories}
+                Model={Model}
               />
             </div>
           </div>

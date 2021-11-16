@@ -5,23 +5,23 @@ import { Link } from 'react-router-dom';
 const Menu = ({ auth }) => {
   const { user } = auth;
   return (
-    <ul class='nav justify-content-end'>
-      <li class='nav-item'>
+    <ul className='nav justify-content-end'>
+      <li className='nav-item'>
         <Link className='nav-link' to='/new-order'>
           New Order
         </Link>
       </li>
-      <li class='nav-item'>
+      <li className='nav-item'>
         <Link className='nav-link' to='/order'>
           Open Catalogue
         </Link>
       </li>
-      <li class='nav-item'>
+      <li className='nav-item'>
         <Link className='nav-link' to='/cart'>
           Cart
         </Link>
       </li>
-      <li class='nav-item'>
+      <li className='nav-item'>
         <Link className='nav-link' to='/status'>
           Status
         </Link>

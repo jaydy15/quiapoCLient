@@ -12,6 +12,7 @@ const CartBulkDetail = ({
   removeItem,
   colors,
   csaItems,
+  fsItems,
 }) => {
   const formatITCY = itemcategory.find(
     (itm) => itm.id === bulk.itemCategories
@@ -21,13 +22,13 @@ const CartBulkDetail = ({
     const formatColor = colors.find((cl) => cl.id === bulk.color).colorName;
   }
   let formatMDL;
-  if (
-    bulk.itemCategories === 1 ||
-    bulk.itemCategories === 5 ||
-    bulk.itemCategories === 6
-  ) {
+  console.log(bulk.itemCategories);
+  if (bulk.itemCategories === 5 || bulk.itemCategories === 6) {
     formatMDL = csaItems.find((item) => item.id === bulk.model).description;
-  } else {
+  } else if (bulk.itemCategories === 3 || bulk.itemCategories === 4) {
+    let mdlKey = fsItems.find((fs) => fs.id === bulk.model).fsModelKey;
+    formatMDL = fscsaModels.find((mdl) => mdl.id === mdlKey).modelDescription;
+  } else if (bulk.itemCategories === 1 || bulk.itemCategories === 2) {
     formatMDL = lens.find((len) => len.id.toString() === bulk.model).name;
   }
 
