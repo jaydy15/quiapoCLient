@@ -171,7 +171,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
         arrayValidation.push(valueChecker(LenShape, 'LenShape'));
       }
 
-      if (isBulk) {
+      if (isBulk && ItemCategories !== 2) {
         arrayValidation.push(valueChecker(NonLensQty, 'NonLensQty'));
         arrayValidation.push(valueChecker(nonLensUnitName, 'nonLensUnitName'));
       }

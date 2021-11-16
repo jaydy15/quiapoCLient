@@ -66,11 +66,13 @@ const CartBulkDetail = ({
                     ? colors.find((cl) => cl.id === bulk.color).colorName
                     : null}
                 </p>
-
-                <p>
-                  Non Lens Qty : {bulk.nonLensQty}{' '}
-                  {units.find((un) => un.id === bulk.nonLensUnitName).desc}
-                </p>
+                {bulk.itemCategories !== 2 && (
+                  <p>
+                    Non Lens Qty : {bulk.nonLensQty}{' '}
+                    {bulk.nonLensQty !== 0 &&
+                      units.find((un) => un.id === bulk.nonLensUnitName).desc}
+                  </p>
+                )}
               </div>
             </td>
             {(bulk.itemCategories === 1 || bulk.itemCategories === 2) && (

@@ -28,10 +28,9 @@ const StatusDetails = ({
     modelKey = [];
   for (let i = 0; i < items.length; i++) {
     console.log(items[i].supplyCategoryKey);
-    if (items[i].supplyCategoryKey === 2) {
+    if (items[i].supplyCategoryKey === 1 || items[i].supplyCategoryKey === 2) {
       formatItem.push(lens.find((len) => len.id === items[i].itemKey).name);
     } else if (
-      items[i].supplyCategoryKey === 1 ||
       items[i].supplyCategoryKey === 5 ||
       items[i].supplyCategoryKey === 6
     ) {
