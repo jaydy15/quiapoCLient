@@ -34,8 +34,11 @@ const StatusDetails = ({
       items[i].supplyCategoryKey === 5 ||
       items[i].supplyCategoryKey === 6
     ) {
+      let csaModelKey = csaItems.find(
+        (csa) => csa.id === items[i].itemKey
+      ).csaModelKey;
       formatItem.push(
-        csaItems.find((csa) => csa.id === items[i].itemKey).description
+        fscsaModels.find((fs) => fs.id === csaModelKey).modelDescription
       );
     } else {
       console.log(items[i].itemKey);
@@ -44,7 +47,7 @@ const StatusDetails = ({
       );
       console.log(modelKey);
       formatItem.push(
-        fscsaModels.find((fsca) => fsca.id === modelKey[0]).modelName
+        fscsaModels.find((fsca) => fsca.id === modelKey[0]).modelDescription
       );
       console.log(formatItem);
     }
