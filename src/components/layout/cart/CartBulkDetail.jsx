@@ -13,6 +13,7 @@ const CartBulkDetail = ({
   colors,
   csaItems,
   fsItems,
+  units,
 }) => {
   const formatITCY = itemcategory.find(
     (itm) => itm.id === bulk.itemCategories
@@ -66,7 +67,10 @@ const CartBulkDetail = ({
                     : null}
                 </p>
 
-                <p>Non Lens Qty : {bulk.nonLensQty}</p>
+                <p>
+                  Non Lens Qty : {bulk.nonLensQty}{' '}
+                  {units.find((un) => un.id === bulk.nonLensUnitName).desc}
+                </p>
               </div>
             </td>
             {(bulk.itemCategories === 1 || bulk.itemCategories === 2) && (
@@ -103,6 +107,7 @@ const mapStateToProps = (state) => ({
   colors: state.catalogue.colors,
   csaItems: state.catalogue.csaItems,
   fsItems: state.catalogue.fsItems,
+  units: state.catalogue.units,
 });
 
 export default connect(mapStateToProps, { removeItem })(CartBulkDetail);

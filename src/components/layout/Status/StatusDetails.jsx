@@ -13,6 +13,7 @@ const StatusDetails = ({
   csaItems,
   fscsaModels,
   colors,
+  units,
 }) => {
   const formatOrderType = orderType.find(
     (ot) => ot.id === items[0].orderTypeKey
@@ -53,6 +54,17 @@ const StatusDetails = ({
     }
   }
   console.log(items);
+  console.log(units);
+  let unName = [];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].supplyCategoryKey !== 2) {
+      let holder = units.find(
+        (un) => un.id.toString() === items[i].nonLensUnitName
+      ).desc;
+      console.log(holder);
+    }
+  }
+
   return (
     <div>
       <table className='table'>
@@ -84,7 +96,9 @@ const StatusDetails = ({
                 <th scope='col'>ORDER TYPE</th>
                 <th scope='col'>SUPPLY CATEGORY</th>
                 <th scope='col'>ITEM</th>
-                <th scope='col'>SIZE</th>
+                <th scope='col'>
+                  {item.supplyCategoryKey !== 2 && 'Non Lens Qty'}
+                </th>
               </tr>
               <tr>
                 <td>{formatOrderType}</td>
@@ -96,7 +110,13 @@ const StatusDetails = ({
                   }
                 </td>
                 <td>{formatItem[index]}</td>
-                <td>{item.size}</td>
+                <td>
+                  {item.supplyCategoryKey !== 2 && item.nonLensQty}{' '}
+                  {item.supplyCategoryKey !== 2 &&
+                    units.find(
+                      (un) => un.id.toString() === item.nonLensUnitName
+                    ).desc}
+                </td>
               </tr>
               <tr>
                 <th scope='col'>OD DETAILS</th>
@@ -128,6 +148,7 @@ const mapStateToProps = (state) => ({
   csaItems: state.catalogue.csaItems,
   fscsaModels: state.catalogue.fscsaModels,
   colors: state.catalogue.colors,
+  units: state.catalogue.units,
 });
 
 export default connect(mapStateToProps)(StatusDetails);
