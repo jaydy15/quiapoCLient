@@ -65,7 +65,7 @@ const CartBulkDetail = ({
                     ? colors.find((cl) => cl.id === bulk.color).colorName
                     : null}
                 </p>
-                <p>Size : {bulk.size}</p>
+
                 <p>Non Lens Qty : {bulk.nonLensQty}</p>
               </div>
             </td>

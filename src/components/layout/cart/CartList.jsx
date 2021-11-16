@@ -38,13 +38,9 @@ const CartList = ({
     formatITCY = itemcategory.find(
       (itm) => itm.id === item[0].itemCategories
     ).desc;
-    if (item[0].itemCategories === 2) {
+    if (item[0].itemCategories === 1 || item[0].itemCategories === 2) {
       formatMDL = lens.find((len) => len.id === item[0].model).name;
-    } else if (
-      item[0].itemCategories === 1 ||
-      item[0].itemCategories === 5 ||
-      item[0].itemCategories === 6
-    ) {
+    } else if (item[0].itemCategories === 5 || item[0].itemCategories === 6) {
       formatMDL = csaItems.find(
         (csa) => csa.id.toString() === item[0].model
       ).description;

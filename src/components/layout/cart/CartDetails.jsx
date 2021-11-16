@@ -29,7 +29,7 @@ const CartDetails = ({
   const formatColor = colors.find((cl) => cl.id === bulk.color).colorName;
   let formatMDL;
   console.log(bulk.model);
-  if (bulk.itemCategories === 2) {
+  if (bulk.itemCategories === 2 || bulk.itemCategories === 1) {
     formatMDL = lens.find((len) => len.id.toString() === bulk.model).name;
     console.log(formatMDL);
   } else if (bulk.itemCategories === 3 || bulk.itemCategories === 4) {
@@ -132,9 +132,6 @@ const CartDetails = ({
             </div>
           </div>
           <div className='row'>
-            <div className='col-md-4'>
-              <p>Size : {bulk.size}</p>
-            </div>
             <div className='col-md-2'>
               <p>OdQty : {bulk.odQty}</p>
             </div>

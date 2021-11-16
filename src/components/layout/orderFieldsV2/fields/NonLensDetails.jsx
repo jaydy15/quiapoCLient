@@ -10,6 +10,7 @@ const NonLensDetails = ({
   ItemCategories,
 }) => {
   const switcher =
+    ItemCategories == 1 ||
     ItemCategories == 3 ||
     ItemCategories == 4 ||
     ItemCategories == 5 ||
