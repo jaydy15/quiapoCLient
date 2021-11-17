@@ -23,7 +23,9 @@ const FittingOptions = ({ setFormData, formData, Model, lensParam }) => {
         '  ' +
         listFit[i].maxAdd +
         ' | ' +
-        listFit[i].fitting,
+        listFit[i].fitting +
+        ' | ' +
+        listFit[i].totalPower,
       value: listFit[i].id,
     };
     optFitting.push(formattObj);

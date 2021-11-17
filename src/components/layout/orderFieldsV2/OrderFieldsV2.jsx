@@ -21,7 +21,7 @@ import Alerts from '../../Alerts';
 import { addToCart } from '../../../redux/cart/cartActions';
 import { v4 as uuidv4 } from 'uuid';
 
-const OrderFieldsV2 = ({ setAlert, addToCart }) => {
+const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
   let history = useHistory();
   const alert = useAlert();
   const [formData, setFormData] = useState({
@@ -99,6 +99,22 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
     watch,
     formState: { errors },
   } = useForm();
+  // TOTAL POWER
+  let totalPower = 0;
+  if (Model !== '' && LensParamId !== '') {
+    const lensFit = lensParam.filter((item) => item.lensItemKey === Model);
+
+    if (lensFit.length > 0) {
+      const arrayLensFitting = lensParam.filter(
+        (item) => item.lensItemKey === Model && item.id === LensParamId
+      );
+      console.log(arrayLensFitting);
+      totalPower = arrayLensFitting[0].totalPower;
+    } else {
+      totalPower = lensFit[0].totalPower;
+    }
+  }
+  console.log(totalPower);
 
   const valueChecker = (value, field) => {
     if (value == '' || value == 0) {
@@ -124,6 +140,17 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
     }
   };
 
+  const powerChecker = (sph, cyl) => {
+    if (totalPower !== 0) {
+      if (sph + cyl > totalPower) {
+        setAlert('Please Check the SPH or CYL for TOTAL POWER', 'danger');
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+
   const isJO = OrderType == 1;
   const isSO = OrderType == 3;
   const isBulk = OrderType == 2;
@@ -145,6 +172,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
     FrameType +
     '|' +
     LenShape;
+
   const onSubmit = (e) => {
     const tempID = uuidv4();
     const Validation = () => {
@@ -155,6 +183,8 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
       arrayValidation.push(valueChecker(Brand, 'Brand'));
       arrayValidation.push(valueChecker(Model, 'Model'));
       arrayValidation.push(valueChecker(Color, 'Color'));
+      arrayValidation.push(powerChecker(OdSph, OdCyl));
+      arrayValidation.push(powerChecker(OsSph, OsCyl));
       // JOB ORDER LENS QUANTITY
       if ((isJO || isSO) && isLens && valueChecker(OdSph, 'OdSph')) {
         arrayValidation.push(numChecker(OdQty, 'OdQty'));
@@ -368,14 +398,18 @@ const OrderFieldsV2 = ({ setAlert, addToCart }) => {
             </div>
           </div>
 
+          <Alerts />
           <div className='row'>
             <input type='submit' className='btn btn-success btn-block' />
           </div>
         </div>
       </form>
-      <Alerts />
     </Fragment>
   );
 };
 
-export default connect(null, { setAlert, addToCart })(OrderFieldsV2);
+const mapStateToProps = (state) => ({
+  lensParam: state.catalogue.lensParam,
+});
+
+export default connect(mapStateToProps, { setAlert, addToCart })(OrderFieldsV2);
