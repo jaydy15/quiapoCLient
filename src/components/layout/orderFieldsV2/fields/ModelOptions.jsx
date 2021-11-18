@@ -123,6 +123,8 @@ const ModelOptions = ({
                 Model: selectedOption.value,
                 Color: '',
                 LensParamId: '',
+                LensParamIdOd: '',
+                LensParamIdOs: '',
               });
             }}
           />
@@ -137,6 +139,8 @@ const ModelOptions = ({
                 Model: selectedOption.value,
                 Color: '',
                 LensParamId: '',
+                LensParamIdOd: '',
+                LensParamIdOs: '',
               });
             }}
           />
@@ -177,6 +181,8 @@ const ModelOptions = ({
                 Model: selectedOption.value,
                 Color: '',
                 LensParamId: '',
+                LensParamIdOd: '',
+                LensParamIdOs: '',
               });
             }}
           />
@@ -191,6 +197,8 @@ const ModelOptions = ({
                 Model: selectedOption.value,
                 Color: '',
                 LensParamId: '',
+                LensParamIdOd: '',
+                LensParamIdOs: '',
               });
             }}
           />

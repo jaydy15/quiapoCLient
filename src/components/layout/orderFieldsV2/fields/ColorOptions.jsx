@@ -6,11 +6,10 @@ const ColorOptions = ({
   setFormData,
   formData,
   Model,
-  color,
   LensParamId,
-  lensParam,
-  lensItems,
   ItemCategories,
+  color,
+  lensParam,
   CAItems,
   FSItems,
 }) => {
@@ -103,7 +102,6 @@ const ColorOptions = ({
 
 const mapStateToProps = (state) => ({
   color: state.catalogue.colors,
-  lensItems: state.catalogue.lensItems,
   lensParam: state.catalogue.lensParam,
   CAItems: state.catalogue.csaItems,
   FSItems: state.catalogue.fsItems,

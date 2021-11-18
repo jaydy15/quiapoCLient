@@ -2,7 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 
-const FittingOptions = ({ setFormData, formData, Model, lensParam }) => {
+const FittingOptions = ({ setFormData, formData, Model, lensParam, field }) => {
+  let holder = '';
+  if (field == undefined) {
+    holder = 'LensParamId';
+  } else {
+    holder = field;
+  }
+
   const listFit = lensParam
     .filter((lp) => lp.lensItemKey == Model)
     .map((lp) => lp);
@@ -31,27 +38,23 @@ const FittingOptions = ({ setFormData, formData, Model, lensParam }) => {
     optFitting.push(formattObj);
   }
 
-  const switcher = listFit.length > 1;
-
   return (
     <div>
-      {switcher && (
-        <div className='form-group'>
-          <label htmlFor='Model'>
-            Fitting<span style={{ color: 'red' }}>*</span>
-          </label>
-          <Select
-            name='OrderType'
-            options={optFitting}
-            onChange={(selectedOption) => {
-              setFormData({
-                ...formData,
-                LensParamId: selectedOption.value,
-              });
-            }}
-          />
-        </div>
-      )}
+      <div className='form-group'>
+        <label htmlFor='Model'>
+          Fitting<span style={{ color: 'red' }}>*</span>
+        </label>
+        <Select
+          name={holder}
+          options={optFitting}
+          onChange={(selectedOption, e) => {
+            setFormData({
+              ...formData,
+              [e.name]: selectedOption.value,
+            });
+          }}
+        />
+      </div>
     </div>
   );
 };

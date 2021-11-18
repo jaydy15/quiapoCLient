@@ -53,6 +53,8 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
     LenShape: '0',
     AdditionalInstructions: '',
     LensParamId: '',
+    LensParamIdOd: '',
+    LensParamIdOs: '',
     nonLensUnitName: '',
     fitting: '',
   });
@@ -86,6 +88,8 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
     LenShape,
     AdditionalInstructions,
     LensParamId,
+    LensParamIdOd,
+    LensParamIdOs,
     nonLensUnitName,
   } = formData;
 
@@ -101,14 +105,17 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
   } = useForm();
   // TOTAL POWER
   let totalPower = 0;
-  if (Model !== '' && LensParamId !== '') {
+  let lensParamCounter = 0;
+  if (Model !== '') {
     const lensFit = lensParam.filter((item) => item.lensItemKey === Model);
-
+    lensParamCounter = lensFit.length;
+  }
+  if (Model !== '' && LensParamIdOd !== '') {
+    const lensFit = lensParam.filter((item) => item.lensItemKey === Model);
     if (lensFit.length > 0) {
       const arrayLensFitting = lensParam.filter(
-        (item) => item.lensItemKey === Model && item.id === LensParamId
+        (item) => item.lensItemKey === Model && item.id === LensParamIdOd
       );
-      console.log(arrayLensFitting);
       totalPower = arrayLensFitting[0].totalPower;
     } else {
       totalPower = lensFit[0].totalPower;
@@ -312,28 +319,26 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
             </div>
           </div>
 
-          <div className='row'>
-            <div className='col-md-4'>
-              <ColorOptions
-                setFormData={setFormData}
-                formData={formData}
-                Model={Model}
-                ItemCategories={ItemCategories}
-                LensParamId={LensParamId}
-              />
+          {lensParamCounter == 1 && (
+            <div className='row'>
+              <div className='col-md-4'>
+                <ColorOptions
+                  setFormData={setFormData}
+                  formData={formData}
+                  Model={Model}
+                  ItemCategories={ItemCategories}
+                  LensParamId={LensParamId}
+                />
+              </div>
+              <div className='col-md-6'>
+                <FittingOptions
+                  setFormData={setFormData}
+                  formData={formData}
+                  Model={Model}
+                />
+              </div>
             </div>
-            <div className='col-md-6'>
-              <FittingOptions
-                setFormData={setFormData}
-                formData={formData}
-                RxNumber={RxNumber}
-                Brand={Brand}
-                OrderType={OrderType}
-                ItemCategories={ItemCategories}
-                Model={Model}
-              />
-            </div>
-          </div>
+          )}
 
           <div className='row'>
             <div className='col-md-12'>
@@ -344,6 +349,9 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
                 ItemCategories={ItemCategories}
                 LensParamId={LensParamId}
                 onChange={onChange}
+                lensParamCounter={lensParamCounter}
+                LensParamIdOd={LensParamIdOd}
+                LensParamIdOs={LensParamIdOs}
               />
             </div>
           </div>
