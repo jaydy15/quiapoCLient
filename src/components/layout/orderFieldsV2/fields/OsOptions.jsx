@@ -14,6 +14,12 @@ const OsOptions = ({
   onChange,
   lensParamCounter,
   LensParamIdOs,
+  OsSph,
+  OsCyl,
+  OsAxis,
+  OsAdd,
+  OsPd,
+  OsQty,
 }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
 
@@ -138,8 +144,6 @@ const OsOptions = ({
     <Fragment>
       {switcher && (
         <Fragment>
-          <h3>Grade Details New</h3>
-
           {lensParamCounter > 1 && (
             <div className='row'>
               <div className='col-md-6'>
@@ -167,12 +171,13 @@ const OsOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>Os SPH</label>
                 <Select
+                  name={OsSph}
                   options={optSph}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OsSph: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -182,12 +187,13 @@ const OsOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>Os CYL</label>
                 <Select
+                  name={OsCyl}
                   options={optCyl}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OsCyl: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -198,11 +204,12 @@ const OsOptions = ({
                 <label htmlFor=''>Os AXIS</label>
                 <Select
                   options={optAxis}
+                  name={OsAxis}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OsAxis: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -212,12 +219,13 @@ const OsOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>Os ADD</label>
                 <Select
+                  name={OsAdd}
                   options={optAdd}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OsAdd: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -230,7 +238,7 @@ const OsOptions = ({
                   type='number'
                   className='form-control'
                   style={{ margin: '0' }}
-                  name='OsPd'
+                  name={OsPd}
                   onChange={onChange}
                 />
               </div>
@@ -240,10 +248,10 @@ const OsOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>Os QTY LENS</label>
                 <input
-                  type='number'
+                  type='text'
                   className='form-control'
                   style={{ margin: '0' }}
-                  name='OsQty'
+                  name={OsQty}
                   onChange={onChange}
                 />
               </div>

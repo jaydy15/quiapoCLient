@@ -14,6 +14,12 @@ const OdOptions = ({
   onChange,
   lensParamCounter,
   LensParamIdOd,
+  OdSph,
+  OdCyl,
+  OdAxis,
+  OdAdd,
+  OdPd,
+  OdQty,
 }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
 
@@ -167,12 +173,13 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD SPH</label>
                 <Select
+                  name={OdSph}
                   options={optSph}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OdSph: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -182,12 +189,13 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD CYL</label>
                 <Select
+                  name={OdCyl}
                   options={optCyl}
                   defaultValue={{ label: 'N/A', value: 0 }}
-                  onChange={(selectedOption) => {
+                  onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
-                      OdCyl: selectedOption.value,
+                      [e.name]: selectedOption.value,
                     });
                   }}
                 />
@@ -197,6 +205,7 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD AXIS</label>
                 <Select
+                  name={OdAxis}
                   options={optAxis}
                   defaultValue={{ label: 'N/A', value: 0 }}
                   onChange={(selectedOption) => {
@@ -212,6 +221,7 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD ADD</label>
                 <Select
+                  name={OdAdd}
                   options={optAdd}
                   defaultValue={{ label: 'N/A', value: 0 }}
                   onChange={(selectedOption) => {
@@ -227,10 +237,10 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD PD</label>
                 <input
-                  type='number'
+                  type='text'
                   className='form-control'
                   style={{ margin: '0' }}
-                  name='OdPd'
+                  name={OdPd}
                   onChange={onChange}
                 />
               </div>
@@ -240,16 +250,15 @@ const OdOptions = ({
               <div className='form-group'>
                 <label htmlFor=''>OD QTY LENS</label>
                 <input
-                  type='number'
+                  type='text'
                   className='form-control'
                   style={{ margin: '0' }}
-                  name='OdQty'
+                  name={OdQty}
                   onChange={onChange}
                 />
               </div>
             </div>
           </div>
-          <hr />
         </Fragment>
       )}
     </Fragment>

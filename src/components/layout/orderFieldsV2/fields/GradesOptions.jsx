@@ -20,6 +20,18 @@ const GradesOptions = ({
   lensParamCounter,
   LensParamIdOd,
   LensParamIdOs,
+  OdSph,
+  OdCyl,
+  OdAxis,
+  OdAdd,
+  OdPd,
+  OdQty,
+  OsSph,
+  OsCyl,
+  OsAxis,
+  OsAdd,
+  OsPd,
+  OsQty,
 }) => {
   const {
     register,
@@ -43,6 +55,12 @@ const GradesOptions = ({
             LensParamId={LensParamId}
             onChange={onChange}
             LensParamIdOd={LensParamIdOd}
+            OdSph={OdSph}
+            OdCyl={OdCyl}
+            OdAxis={OdAxis}
+            OdAdd={OdAdd}
+            OdPd={OdPd}
+            OdQty={OdQty}
           />
 
           <OsOptions
@@ -54,6 +72,12 @@ const GradesOptions = ({
             LensParamId={LensParamId}
             onChange={onChange}
             LensParamIdOs={LensParamIdOs}
+            OsSph={OsSph}
+            OsCyl={OsCyl}
+            OsAxis={OsAxis}
+            OsAdd={OsAdd}
+            OsPd={OsPd}
+            OsQty={OsQty}
           />
         </Fragment>
       )}

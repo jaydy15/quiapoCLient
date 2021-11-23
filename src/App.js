@@ -12,6 +12,7 @@ import NewOrder from './components/layout/order/NewOrder';
 import ConfirmPassword from './components/layout/user/ConfirmPassword';
 import { loadUser } from './redux/auth/authActions';
 import searchItem from './components/layout/backend/SearchItem';
+import OrderFieldsV2Bulk from './components/layout/orderFieldsV2/OrderFieldsV2Bulk';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -31,6 +32,11 @@ function App() {
           <PrivateRoute exact path='/cart' component={Cart} />
           <PrivateRoute path='/status' component={Status} />
           <PrivateRoute exact path='/new-order' component={NewOrder} />
+          <PrivateRoute
+            exact
+            path='/test-order'
+            component={OrderFieldsV2Bulk}
+          />
           <PrivateRoute exact path='/admin' component={searchItem} />
           <PrivateRoute
             exact

@@ -39,10 +39,11 @@ const Status = ({ orders, getOrders, branch, user, auth }) => {
               </tr>
             </thead>
             <tbody>
-              {orders &&
-                orders.map((order) => (
-                  <StatusRow key={order.items[0].txNumber} order={order} />
-                ))}
+              {orders
+                ? orders.map((order) => (
+                    <StatusRow key={order.items[0].txNumber} order={order} />
+                  ))
+                : null}
             </tbody>
           </table>
         </div>
