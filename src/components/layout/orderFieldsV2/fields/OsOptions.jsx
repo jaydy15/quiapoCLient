@@ -264,6 +264,15 @@ const OsOptions = ({
   );
 };
 
+OsOptions.defaultProps = {
+  OsSph: 'OsSph',
+  OsCyl: 'OsCyl',
+  OsAxis: 'OsAxis',
+  OsAdd: 'OsAdd',
+  OsPd: 'OsPd',
+  OsQty: 'OsQty',
+};
+
 const mapStateToProps = (state) => ({
   color: state.catalogue.colors,
   lensItems: state.catalogue.lensItems,

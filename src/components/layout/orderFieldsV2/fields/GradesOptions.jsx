@@ -32,6 +32,18 @@ const GradesOptions = ({
   OsAdd,
   OsPd,
   OsQty,
+  propOdSph,
+  propOdCyl,
+  propOdAxis,
+  propOdAdd,
+  propOdPd,
+  propOdQty,
+  propOsSph,
+  propOsCyl,
+  propOsAxis,
+  propOsAdd,
+  propOsPd,
+  propOsQty,
 }) => {
   const {
     register,
@@ -61,6 +73,12 @@ const GradesOptions = ({
             OdAdd={OdAdd}
             OdPd={OdPd}
             OdQty={OdQty}
+            propOdSph={propOdSph}
+            propOdCyl={propOdCyl}
+            propOdAxis={propOdAxis}
+            propOdAdd={propOdAdd}
+            propOdPd={propOdPd}
+            propOdQty={propOdQty}
           />
 
           <OsOptions
@@ -78,6 +96,12 @@ const GradesOptions = ({
             OsAdd={OsAdd}
             OsPd={OsPd}
             OsQty={OsQty}
+            propOsSph={propOsSph}
+            propOsCyl={propOsCyl}
+            propOsAxis={propOsAxis}
+            propOsAdd={propOsAdd}
+            propOsPd={propOsPd}
+            propOsQty={propOsQty}
           />
         </Fragment>
       )}

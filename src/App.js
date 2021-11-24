@@ -13,6 +13,7 @@ import ConfirmPassword from './components/layout/user/ConfirmPassword';
 import { loadUser } from './redux/auth/authActions';
 import searchItem from './components/layout/backend/SearchItem';
 import OrderFieldsV2Bulk from './components/layout/orderFieldsV2/OrderFieldsV2Bulk';
+import UpdateForm from './components/layout/updateForm/UpdateForm';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -37,6 +38,7 @@ function App() {
             path='/test-order'
             component={OrderFieldsV2Bulk}
           />
+          <PrivateRoute exact path='/edit-order' component={UpdateForm} />
           <PrivateRoute exact path='/admin' component={searchItem} />
           <PrivateRoute
             exact

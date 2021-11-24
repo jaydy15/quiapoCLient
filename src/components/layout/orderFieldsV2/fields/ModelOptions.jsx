@@ -15,6 +15,7 @@ const ModelOptions = ({
   fscaModels,
   lists,
   RxNumber,
+  propModel,
 }) => {
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -190,6 +191,7 @@ const ModelOptions = ({
         {ItemCategories == 2 && !isBulk && (
           <Select
             name='Model'
+            defaultValue={optLens.find((ln) => ln.value == propModel)}
             options={optLens}
             onChange={(selectedOption) => {
               setFormData({

@@ -1,6 +1,11 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeItem } from '../../../redux/cart/cartActions';
+import {
+  editOrder,
+  removeCurrent,
+  removeItem,
+} from '../../../redux/cart/cartActions';
 import CartBulkDetail from './CartBulkDetail';
 
 const CartDetails = ({
@@ -15,9 +20,10 @@ const CartDetails = ({
   colors,
   genEnum,
   fsItems,
+  editOrder,
+  removeCurrent,
 }) => {
-  console.log(bulk);
-  console.log(lens);
+  let history = useHistory();
   const formatITCY = itemcategory.find(
     (itm) => itm.id === bulk.itemCategories
   ).desc;
@@ -44,6 +50,16 @@ const CartDetails = ({
   const removeItemFromCart = () => {
     console.log(bulk.rxNumber, bulk.tempID);
     removeItem(bulk.rxNumber, bulk.tempID);
+  };
+
+  const editItem = () => {
+    editOrder(bulk);
+    history.push('/edit-order');
+  };
+
+  const removeC = () => {
+    console.log(bulk.tempID);
+    removeCurrent(bulk.tempID);
   };
   return (
     <div>
@@ -82,6 +98,11 @@ const CartDetails = ({
             <div className='col-md-2'>
               <p>Vertical : {bulk.vertical}</p>
             </div>
+            <div className='col-md-2'>
+              <button className='btn btn-info' onClick={editItem}>
+                EDIT
+              </button>
+            </div>
           </div>
           <div className='row'>
             <div className='col-md-4'>
@@ -96,16 +117,21 @@ const CartDetails = ({
             <div className='col-md-2'>
               <p>Bridge : {bulk.bridge}</p>
             </div>
+            <div className='col-md-2'>
+              <button className='btn btn-danger' onClick={removeC}>
+                CLEAR
+              </button>
+            </div>
           </div>
           <div className='row'>
             <div className='col-md-4'>
               <p>Model : {formatMDL}</p>
             </div>
             <div className='col-md-2'>
-              <p>OdAxis : {bulk.odAxis}</p>
+              <p>OdAdd : {bulk.odAdd}</p>
             </div>
             <div className='col-md-2'>
-              <p>OsAxis : {bulk.osAxis}</p>
+              <p>OsAdd : {bulk.osAdd}</p>
             </div>
 
             {bulk.orderType === 3 && (
@@ -160,4 +186,8 @@ const mapStateToProps = (state) => ({
   fsItems: state.catalogue.fsItems,
 });
 
-export default connect(mapStateToProps, { removeItem })(CartDetails);
+export default connect(mapStateToProps, {
+  removeItem,
+  editOrder,
+  removeCurrent,
+})(CartDetails);

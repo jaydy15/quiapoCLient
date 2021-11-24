@@ -5,3 +5,5 @@ export const FOR_APPROVAL = 'FOR_APPROVAL';
 export const REMOVE_FROM_LIST = 'REMOVE_FROM_LIST';
 export const APPROVE_ORDER = 'APPROVE_ORDER';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+export const EDIT_ITEM = 'EDIT_ITEM';
+export const REMOVE_CURRENT = 'REMOVE_CURRENT';

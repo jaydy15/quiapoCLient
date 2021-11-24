@@ -20,6 +20,12 @@ const OdOptions = ({
   OdAdd,
   OdPd,
   OdQty,
+  propOdSph,
+  propOdCyl,
+  propOdAxis,
+  propOdAdd,
+  propOdPd,
+  propOdQty,
 }) => {
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
 
@@ -140,6 +146,7 @@ const OdOptions = ({
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
 
+  console.log(optSph.find((ln) => ln.value == propOdSph));
   return (
     <Fragment>
       {switcher && (
@@ -174,8 +181,8 @@ const OdOptions = ({
                 <label htmlFor=''>OD SPH</label>
                 <Select
                   name={OdSph}
+                  defaultValue={optSph.find((ln) => ln.value == propOdSph)}
                   options={optSph}
-                  defaultValue={{ label: 'N/A', value: 0 }}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -191,7 +198,7 @@ const OdOptions = ({
                 <Select
                   name={OdCyl}
                   options={optCyl}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optCyl.find((ln) => ln.value == propOdCyl)}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -207,7 +214,7 @@ const OdOptions = ({
                 <Select
                   name={OdAxis}
                   options={optAxis}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optAxis.find((ln) => ln.value == propOdAxis)}
                   onChange={(selectedOption) => {
                     setFormData({
                       ...formData,
@@ -223,7 +230,7 @@ const OdOptions = ({
                 <Select
                   name={OdAdd}
                   options={optAdd}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optAdd.find((ln) => ln.value == propOdAdd)}
                   onChange={(selectedOption) => {
                     setFormData({
                       ...formData,
@@ -242,6 +249,7 @@ const OdOptions = ({
                   style={{ margin: '0' }}
                   name={OdPd}
                   onChange={onChange}
+                  value={propOdPd}
                 />
               </div>
             </div>
@@ -255,6 +263,7 @@ const OdOptions = ({
                   style={{ margin: '0' }}
                   name={OdQty}
                   onChange={onChange}
+                  value={propOdQty}
                 />
               </div>
             </div>
@@ -263,6 +272,15 @@ const OdOptions = ({
       )}
     </Fragment>
   );
+};
+
+OdOptions.defaultProps = {
+  OdSph: 'OdSph',
+  OdCyl: 'OdCyl',
+  OdAxis: 'OdAxis',
+  OdAdd: 'OdAdd',
+  OdPd: 'OdPd',
+  OdQty: 'OdQty',
 };
 
 const mapStateToProps = (state) => ({

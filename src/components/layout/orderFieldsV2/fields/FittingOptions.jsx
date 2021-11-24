@@ -2,7 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 
-const FittingOptions = ({ setFormData, formData, Model, lensParam, field }) => {
+const FittingOptions = ({
+  setFormData,
+  formData,
+  Model,
+  lensParam,
+  field,
+  propParam,
+}) => {
   let holder = '';
   if (field == undefined) {
     holder = 'LensParamId';
@@ -47,6 +54,7 @@ const FittingOptions = ({ setFormData, formData, Model, lensParam, field }) => {
         <Select
           name={holder}
           options={optFitting}
+          defaultValue={optFitting.find((ln) => ln.value == propParam)}
           onChange={(selectedOption, e) => {
             setFormData({
               ...formData,

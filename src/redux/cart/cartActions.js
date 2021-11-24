@@ -5,6 +5,8 @@ import {
   FOR_APPROVAL,
   REMOVE_FROM_LIST,
   REMOVE_CART_ITEM,
+  EDIT_ITEM,
+  REMOVE_CURRENT,
 } from './cartType';
 import axios from 'axios';
 
@@ -96,4 +98,18 @@ export const rejectOrder = (id, branch) => async (dispatch) => {
     updateBody: { status: 'REJECTED' },
   };
   await axios.put(`/api/orders/${id}`, obj, config);
+};
+
+export const editOrder = (data) => async (dispatch) => {
+  dispatch({
+    type: EDIT_ITEM,
+    payload: data,
+  });
+};
+
+export const removeCurrent = (id) => (dispatch) => {
+  dispatch({
+    type: REMOVE_CURRENT,
+    payload: id,
+  });
 };

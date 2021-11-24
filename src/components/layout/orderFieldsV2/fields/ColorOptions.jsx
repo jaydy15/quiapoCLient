@@ -12,6 +12,7 @@ const ColorOptions = ({
   lensParam,
   CAItems,
   FSItems,
+  propColor,
 }) => {
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -87,6 +88,7 @@ const ColorOptions = ({
         </label>
         <Select
           name='Color'
+          defaultValue={optColor.find((cl) => cl.value == propColor)}
           options={optColor}
           onChange={(selectedOption) => {
             setFormData({

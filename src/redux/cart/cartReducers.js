@@ -4,11 +4,14 @@ import {
   NEW_NUMBER,
   REMOVE_CART_ITEM,
   REMOVE_FROM_LIST,
+  EDIT_ITEM,
+  REMOVE_CURRENT,
 } from './cartType';
 
 const INITIAL_STATE = {
   lists: [],
   orders: [],
+  current: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -74,6 +77,16 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         orders: updatedArray,
+      };
+    case EDIT_ITEM:
+      return {
+        ...state,
+        current: [action.payload],
+      };
+    case REMOVE_CURRENT:
+      return {
+        ...state,
+        current: state.current.filter((elm) => elm.tempID !== action.payload),
       };
     default:
       return state;

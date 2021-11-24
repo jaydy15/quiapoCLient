@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 
-const RxOptions = ({ lists, setFormData, formData }) => {
+const RxOptions = ({ lists, setFormData, formData, propRx }) => {
   const optRxNumber = [];
   const optionFiller = (arrayName, arrayHolder) => {
     const list = arrayName.map((item) => item);
@@ -26,6 +26,7 @@ const RxOptions = ({ lists, setFormData, formData }) => {
         <Select
           name='RxNumber'
           options={optRxNumber}
+          defaultValue={optRxNumber.find((ln) => ln.value == propRx)}
           onChange={(selectedOption) => {
             setFormData({ ...formData, RxNumber: selectedOption.value });
           }}

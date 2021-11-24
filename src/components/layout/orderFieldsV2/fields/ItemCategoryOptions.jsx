@@ -9,6 +9,7 @@ const ItemCategoryOptions = ({
   RxNumber,
   ortyp,
   itmcat,
+  propItemCategory,
 }) => {
   const isBulk =
     lists
@@ -48,6 +49,9 @@ const ItemCategoryOptions = ({
           <Select
             name='OrderType'
             options={optItemCategory}
+            defaultValue={optItemCategory.find(
+              (ln) => ln.value == propItemCategory
+            )}
             onChange={(selectedOption) => {
               setFormData({
                 ...formData,
@@ -63,6 +67,9 @@ const ItemCategoryOptions = ({
           <Select
             name='OrderType'
             options={optItemCategory}
+            defaultValue={optItemCategory.find(
+              (ln) => ln.value == propItemCategory
+            )}
             onChange={(selectedOption) => {
               setFormData({
                 ...formData,

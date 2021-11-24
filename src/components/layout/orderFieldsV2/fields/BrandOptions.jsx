@@ -13,6 +13,7 @@ const BrandOptions = ({
   OrderType,
   lists,
   RxNumber,
+  propBrand,
 }) => {
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -75,6 +76,11 @@ const BrandOptions = ({
 
   brandFiller(SAID, optAccessories);
 
+  if (isLens) {
+    const num = optLens.find((ln) => ln.value == propBrand);
+    console.log(num);
+  }
+
   return (
     <div>
       <div className='form-group'>
@@ -121,6 +127,7 @@ const BrandOptions = ({
           <Select
             name='OrderType'
             options={optLens}
+            defaultValue={optLens.find((ln) => ln.value == propBrand)}
             onChange={(selectedOption) => {
               setFormData({
                 ...formData,

@@ -8,6 +8,7 @@ const OrderTypeOptions = ({
   formData,
   RxNumber,
   ortyp,
+  propOrderType,
 }) => {
   const isBulk =
     lists
@@ -46,6 +47,7 @@ const OrderTypeOptions = ({
           <Select
             name='OrderType'
             options={optOrderTypes}
+            defaultValue={optOrderTypes.find((ln) => ln.value == propOrderType)}
             onChange={(selectedOption) => {
               setFormData({ ...formData, OrderType: selectedOption.value });
             }}
@@ -55,6 +57,7 @@ const OrderTypeOptions = ({
           <Select
             name='OrderType'
             options={optOrderTypes}
+            defaultValue={optOrderTypes.find((ln) => ln.value == propOrderType)}
             onChange={(selectedOption) => {
               setFormData({ ...formData, OrderType: selectedOption.value });
             }}
