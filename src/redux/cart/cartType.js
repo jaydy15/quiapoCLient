@@ -7,3 +7,4 @@ export const APPROVE_ORDER = 'APPROVE_ORDER';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 export const EDIT_ITEM = 'EDIT_ITEM';
 export const REMOVE_CURRENT = 'REMOVE_CURRENT';
+export const UPDATE_CART = 'UPDATE_CART';

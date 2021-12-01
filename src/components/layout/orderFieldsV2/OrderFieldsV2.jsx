@@ -155,6 +155,8 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
       } else {
         return true;
       }
+    } else {
+      return true;
     }
   };
 

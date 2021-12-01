@@ -6,6 +6,7 @@ import {
   REMOVE_FROM_LIST,
   EDIT_ITEM,
   REMOVE_CURRENT,
+  UPDATE_CART,
 } from './cartType';
 
 const INITIAL_STATE = {

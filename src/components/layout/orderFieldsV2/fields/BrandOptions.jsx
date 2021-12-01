@@ -76,11 +76,6 @@ const BrandOptions = ({
 
   brandFiller(SAID, optAccessories);
 
-  if (isLens) {
-    const num = optLens.find((ln) => ln.value == propBrand);
-    console.log(num);
-  }
-
   return (
     <div>
       <div className='form-group'>

@@ -53,6 +53,7 @@ const CartDetails = ({
   };
 
   const editItem = () => {
+    console.log(bulk);
     editOrder(bulk);
     history.push('/edit-order');
   };

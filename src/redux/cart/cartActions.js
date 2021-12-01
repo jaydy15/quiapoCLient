@@ -7,6 +7,7 @@ import {
   REMOVE_CART_ITEM,
   EDIT_ITEM,
   REMOVE_CURRENT,
+  UPDATE_CART,
 } from './cartType';
 import axios from 'axios';
 
@@ -112,4 +113,10 @@ export const removeCurrent = (id) => (dispatch) => {
     type: REMOVE_CURRENT,
     payload: id,
   });
+};
+
+export const updateCart = (formData) => (dispatch) => {
+  console.log(formData);
+  removeItem(formData.rxNumber, formData.tempID);
+  addToCart(formData);
 };

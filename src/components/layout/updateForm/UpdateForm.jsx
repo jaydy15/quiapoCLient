@@ -14,8 +14,28 @@ import FrameDetails from '../orderFieldsV2/fields/FrameDetails';
 import AddInstruction from '../orderFieldsV2/fields/AddInstruction';
 import PXName from '../orderFieldsV2/fields/PXName';
 import NonLensDetails from '../orderFieldsV2/fields/NonLensDetails';
+import {
+  addToCart,
+  removeCurrent,
+  removeItem,
+  updateCart,
+} from '../../../redux/cart/cartActions';
+import { v4 as uuidv4 } from 'uuid';
+import { setAlert } from '../../../redux/alert/alertActions';
+import { useHistory } from 'react-router-dom';
+import { useAlert } from 'react-alert';
 
-const UpdateForm = ({ current, brands, lens, lensParam }) => {
+const UpdateForm = ({
+  current,
+  brands,
+  lens,
+  lensParam,
+  updateCart,
+  setAlert,
+  removeItem,
+  addToCart,
+  removeCurrent,
+}) => {
   const {
     register,
     handleSubmit,
@@ -23,21 +43,10 @@ const UpdateForm = ({ current, brands, lens, lensParam }) => {
     formState: { errors },
   } = useForm();
 
-  const isLens =
-    current[0].itemCategories == 1 || current[0].itemCategories == 2;
-  const isFrame =
-    current[0].itemCategories == 3 || current[0].itemCategories == 4;
-  const isAccessories =
-    current[0].itemCategories == 5 || current[0].itemCategories == 6;
-
-  const findBrand = brands.find((br) => br.id === current[0].brand).name;
-
-  let findModel;
-
-  if (isLens) {
-    findModel = lens.find((ln) => ln.id == current[0].model).name;
+  let history = useHistory();
+  const alert = useAlert();
+  if (current) {
   }
-
   const [formData, setFormData] = useState({
     RxNumber: current[0].rxNumber,
     OrderType: current[0].orderType,
@@ -111,8 +120,10 @@ const UpdateForm = ({ current, brands, lens, lensParam }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  let lensParamCounter = 0;
+  const isLens = ItemCategories == 2;
+
   let totalPower = 0;
+  let lensParamCounter = 0;
   if (Model !== '') {
     const lensFit = lensParam.filter((item) => item.lensItemKey === Model);
     lensParamCounter = lensFit.length;
@@ -129,11 +140,153 @@ const UpdateForm = ({ current, brands, lens, lensParam }) => {
     }
   }
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const valueChecker = (value, field) => {
+    if (value == '' || value == 0) {
+      setAlert(field + ' is required', 'danger');
+      return false;
+    } else {
+      return true;
+    }
   };
 
+  const numChecker = (value, field) => {
+    if (value == 0) {
+      setAlert(field + ' is required', 'danger');
+      return false;
+    } else if (value > 1) {
+      setAlert(
+        field + ' you reached the maximun quantity for your order',
+        'danger'
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const powerChecker = (sph, cyl) => {
+    if (totalPower !== 0) {
+      if (sph + cyl > totalPower) {
+        setAlert('Please Check the SPH or CYL for TOTAL POWER', 'danger');
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const isJO = OrderType == 1;
+  const isSO = OrderType == 3;
+  const isBulk = OrderType == 2;
+
+  const OdDetails =
+    OdSph + '|' + OdCyl + '|' + OdAxis + '|' + OdAdd + '|' + OdPd + '|' + OdQty;
+  const OsDetails =
+    OsSph + '|' + OsCyl + '|' + OsAxis + '|' + OsAdd + '|' + OsPd + '|' + OsQty;
+
+  const SoDetails =
+    Horizontal +
+    '|' +
+    Vertical +
+    '|' +
+    Bridge +
+    '|' +
+    FrameType +
+    '|' +
+    LenShape;
+
   console.log(current);
+
+  const onSubmit = (e) => {
+    const Validation = () => {
+      const arrayValidation = [];
+      arrayValidation.push(valueChecker(RxNumber, 'RxNumber'));
+      arrayValidation.push(valueChecker(OrderType, 'OrderType'));
+      arrayValidation.push(valueChecker(ItemCategories, 'Item Category'));
+      arrayValidation.push(valueChecker(Brand, 'Brand'));
+      arrayValidation.push(valueChecker(Model, 'Model'));
+      arrayValidation.push(valueChecker(Color, 'Color'));
+      arrayValidation.push(powerChecker(OdSph, OdCyl));
+      arrayValidation.push(powerChecker(OsSph, OsCyl));
+      // JOB ORDER LENS QUANTITY
+      if ((isJO || isSO) && isLens && valueChecker(OdSph, 'OdSph')) {
+        arrayValidation.push(numChecker(OdQty, 'OdQty'));
+      }
+      if ((isJO || isSO) && isLens && valueChecker(OsSph, 'OsSph')) {
+        arrayValidation.push(numChecker(OsQty, 'OsQty'));
+      }
+      // SO DETAILS FRAMES
+      if (isSO && isLens) {
+        arrayValidation.push(valueChecker(Horizontal, 'Horizontal'));
+        arrayValidation.push(valueChecker(Vertical, 'Vertical'));
+        arrayValidation.push(valueChecker(Bridge, 'Bridge'));
+        arrayValidation.push(valueChecker(FrameType, 'FrameType'));
+        arrayValidation.push(valueChecker(LenShape, 'LenShape'));
+      }
+
+      if (isBulk && ItemCategories !== 2) {
+        arrayValidation.push(valueChecker(NonLensQty, 'NonLensQty'));
+        arrayValidation.push(valueChecker(nonLensUnitName, 'nonLensUnitName'));
+      }
+
+      const oneFalse = arrayValidation.filter((itm) => itm == false);
+      if (oneFalse.length !== 0) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    const greenLight = Validation();
+
+    if (greenLight) {
+      const obj = {
+        tempID: current[0].tempID,
+        rxNumber: RxNumber,
+        orderType: OrderType,
+        itemCategories: ItemCategories,
+        brand: Brand,
+        model: Model,
+        color: Color,
+        size: 0,
+        nonLensQty: NonLensQty,
+        pxName: PatientsName,
+        horizontal: Horizontal,
+        vertical: Vertical,
+        bridge: Bridge,
+        frameType: FrameType,
+        additionalInstructions: AdditionalInstructions,
+        odDetails: OdDetails,
+        osDetails: OsDetails,
+        soDetails: SoDetails,
+        odSph: OdSph,
+        odCyl: OdCyl,
+        odAxis: OdAxis,
+        odAdd: OdAdd,
+        odPd: OdPd,
+        odQty: OdQty,
+        osSph: OsSph,
+        osCyl: OsCyl,
+        osAxis: OsAxis,
+        osAdd: OsAdd,
+        osPd: OsPd,
+        osQty: OsQty,
+        lensParamKey: LensParamId,
+        nonLensUnitName: nonLensUnitName,
+      };
+      console.log(obj);
+      removeItem(obj.rxNumber, obj.tempID);
+      addToCart(obj);
+      alert.show('Order have been added to the cart successfully');
+      setTimeout(() => {
+        history.push('/cart');
+      }, 1000);
+      removeCurrent(obj.tempID);
+    }
+  };
+
   return (
     <Fragment>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -302,7 +455,6 @@ const UpdateForm = ({ current, brands, lens, lensParam }) => {
 };
 
 const mapStateToProps = (state) => ({
-  current: state.cart.current,
   ordertype: state.catalogue.orderTypes,
   itemcategory: state.catalogue.supplyCategories,
   brands: state.catalogue.brands,
@@ -315,4 +467,46 @@ const mapStateToProps = (state) => ({
   lensParam: state.catalogue.lensParam,
 });
 
-export default connect(mapStateToProps)(UpdateForm);
+UpdateForm.defaultProps = {
+  current: [
+    {
+      RxNumber: 0,
+      OrderType: 0,
+      ItemCategories: 0,
+      Brand: 0,
+      Model: 0,
+      Color: 0,
+      Size: '0',
+      NonLensQty: 0,
+      OdSph: 0,
+      OdCyl: 0,
+      OdAxis: 0,
+      OdAdd: 0,
+      OdPd: 0,
+      OdQty: 0,
+      OsSph: 0,
+      OsCyl: 0,
+      OsAxis: 0,
+      OsAdd: 0,
+      OsPd: 0,
+      OsQty: 0,
+      PatientsName: 0,
+      Horizontal: 0,
+      Vertical: 0,
+      Bridge: 0,
+      FrameType: 0,
+      LenShape: 0,
+      AdditionalInstructions: 0,
+      LensParamId: 0,
+      nonLensUnitName: 0,
+    },
+  ],
+};
+
+export default connect(mapStateToProps, {
+  updateCart,
+  setAlert,
+  removeItem,
+  addToCart,
+  removeCurrent,
+})(UpdateForm);

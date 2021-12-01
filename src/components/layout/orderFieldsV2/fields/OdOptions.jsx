@@ -146,7 +146,6 @@ const OdOptions = ({
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
 
-  console.log(optSph.find((ln) => ln.value == propOdSph));
   return (
     <Fragment>
       {switcher && (
