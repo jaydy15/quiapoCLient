@@ -70,10 +70,10 @@ const UpdateForm = ({
     OsQty: current[0].osQty,
     PatientsName: current[0].pxName,
     Horizontal: current[0].horizontal,
-    Vertical: current[0].brand,
+    Vertical: current[0].vertical,
     Bridge: current[0].bridge,
     FrameType: current[0].frameType,
-    LenShape: current[0].brand,
+    LenShape: current[0].lenShape,
     AdditionalInstructions: current[0].additionalInstructions,
     LensParamId: current[0].lensParamKey,
     LensParamIdOd: '',
@@ -403,6 +403,10 @@ const UpdateForm = ({
                 onChange={onChange}
                 OrderType={OrderType}
                 ItemCategories={ItemCategories}
+                propHorizontal={Horizontal}
+                propVertical={Vertical}
+                propBridge={Bridge}
+                propFrameType={FrameType}
               />
             </div>
           </div>
@@ -414,6 +418,7 @@ const UpdateForm = ({
                 formData={formData}
                 OrderType={OrderType}
                 ItemCategories={ItemCategories}
+                propLenShape={LenShape}
               />
             </div>
           </div>
@@ -435,13 +440,18 @@ const UpdateForm = ({
                 setFormData={setFormData}
                 formData={formData}
                 onChange={onChange}
+                propAddIns={AdditionalInstructions}
               />
             </div>
           </div>
 
           <div className='row'>
             <div className='col-md-9'>
-              <PXName onChange={onChange} OrderType={OrderType} />
+              <PXName
+                onChange={onChange}
+                OrderType={OrderType}
+                propPxName={PatientsName}
+              />
             </div>
           </div>
 
@@ -466,42 +476,6 @@ const mapStateToProps = (state) => ({
   fsItems: state.catalogue.fsItems,
   lensParam: state.catalogue.lensParam,
 });
-
-UpdateForm.defaultProps = {
-  current: [
-    {
-      RxNumber: 0,
-      OrderType: 0,
-      ItemCategories: 0,
-      Brand: 0,
-      Model: 0,
-      Color: 0,
-      Size: '0',
-      NonLensQty: 0,
-      OdSph: 0,
-      OdCyl: 0,
-      OdAxis: 0,
-      OdAdd: 0,
-      OdPd: 0,
-      OdQty: 0,
-      OsSph: 0,
-      OsCyl: 0,
-      OsAxis: 0,
-      OsAdd: 0,
-      OsPd: 0,
-      OsQty: 0,
-      PatientsName: 0,
-      Horizontal: 0,
-      Vertical: 0,
-      Bridge: 0,
-      FrameType: 0,
-      LenShape: 0,
-      AdditionalInstructions: 0,
-      LensParamId: 0,
-      nonLensUnitName: 0,
-    },
-  ],
-};
 
 export default connect(mapStateToProps, {
   updateCart,

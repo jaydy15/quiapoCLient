@@ -9,6 +9,10 @@ const FrameDetails = ({
   onChange,
   OrderType,
   ItemCategories,
+  propHorizontal,
+  propVertical,
+  propBridge,
+  propFrameType,
 }) => {
   const switcher = OrderType == 3 && ItemCategories == 2;
   const optFrmTyp = [];
@@ -38,6 +42,7 @@ const FrameDetails = ({
                   className='form-control'
                   name='Horizontal'
                   onChange={onChange}
+                  value={propHorizontal}
                 />
               </div>
             </div>
@@ -51,6 +56,7 @@ const FrameDetails = ({
                   className='form-control'
                   name='Vertical'
                   onChange={onChange}
+                  value={propVertical}
                 />
               </div>
             </div>
@@ -64,6 +70,7 @@ const FrameDetails = ({
                   className='form-control'
                   name='Bridge'
                   onChange={onChange}
+                  value={propBridge}
                 />
               </div>
             </div>
@@ -75,6 +82,9 @@ const FrameDetails = ({
                 <Select
                   name='FrameType'
                   options={optFrmTyp}
+                  defaultValue={optFrmTyp.find(
+                    (ln) => ln.value == propFrameType
+                  )}
                   onChange={(selectedOption) => {
                     setFormData({
                       ...formData,

@@ -20,7 +20,14 @@ const OsOptions = ({
   OsAdd,
   OsPd,
   OsQty,
+  propOsSph,
+  propOsCyl,
+  propOsAxis,
+  propOsAdd,
+  propOsPd,
+  propOsQty,
 }) => {
+  console.log(propOsSph);
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
 
   const switcher = ItemCategories == 1 || ItemCategories == 2;
@@ -140,6 +147,8 @@ const OsOptions = ({
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
 
+  console.log(optSph);
+
   return (
     <Fragment>
       {switcher && (
@@ -173,7 +182,7 @@ const OsOptions = ({
                 <Select
                   name={OsSph}
                   options={optSph}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optSph.find((ln) => ln.label == propOsSph)}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -189,7 +198,7 @@ const OsOptions = ({
                 <Select
                   name={OsCyl}
                   options={optCyl}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optCyl.find((ln) => ln.value == propOsCyl)}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -205,7 +214,7 @@ const OsOptions = ({
                 <Select
                   options={optAxis}
                   name={OsAxis}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optAxis.find((ln) => ln.value == propOsAxis)}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -221,7 +230,7 @@ const OsOptions = ({
                 <Select
                   name={OsAdd}
                   options={optAdd}
-                  defaultValue={{ label: 'N/A', value: 0 }}
+                  defaultValue={optAdd.find((ln) => ln.value == propOsAdd)}
                   onChange={(selectedOption, e) => {
                     setFormData({
                       ...formData,
@@ -253,6 +262,7 @@ const OsOptions = ({
                   style={{ margin: '0' }}
                   name={OsQty}
                   onChange={onChange}
+                  value={propOsQty}
                 />
               </div>
             </div>

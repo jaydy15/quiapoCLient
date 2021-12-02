@@ -1,11 +1,16 @@
 import React from 'react';
 
-const AddInstruction = ({ setFormData, formData, onChange }) => {
+const AddInstruction = ({ setFormData, formData, onChange, propAddIns }) => {
   return (
     <div>
       <div className='form-group'>
         <label htmlFor=''>Additional Instructions</label>
-        <input type='text' name='AdditionalInstructions' onChange={onChange} />
+        <input
+          type='text'
+          name='AdditionalInstructions'
+          value={propAddIns}
+          onChange={onChange}
+        />
       </div>
     </div>
   );

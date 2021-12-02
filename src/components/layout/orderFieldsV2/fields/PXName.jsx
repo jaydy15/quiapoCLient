@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const PXName = ({ setFormData, formData, onChange, OrderType }) => {
+const PXName = ({ setFormData, formData, onChange, OrderType, propPxName }) => {
   const isBulk = OrderType == 2;
   return (
     <Fragment>
@@ -8,7 +8,12 @@ const PXName = ({ setFormData, formData, onChange, OrderType }) => {
         <div>
           <div className='form-group'>
             <label htmlFor=''>Patient's Name</label>
-            <input type='text' name='PatientsName' onChange={onChange} />
+            <input
+              type='text'
+              name='PatientsName'
+              value={propPxName}
+              onChange={onChange}
+            />
           </div>
         </div>
       )}
