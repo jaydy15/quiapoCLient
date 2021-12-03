@@ -407,6 +407,37 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
 
   console.log(odArray);
 
+  const loopChecker = (Od, Os) => {
+    let counter = 0;
+    if (Od !== '0' || Os !== '0') {
+      counter += 1;
+    }
+    return counter;
+  };
+
+  let c1 = loopChecker(OdQty1, OsQty1);
+  let c2 = loopChecker(OdQty2, OsQty2);
+  let c3 = loopChecker(OdQty3, OsQty3);
+  let c4 = loopChecker(OdQty4, OsQty4);
+  let c5 = loopChecker(OdQty5, OsQty5);
+
+  let loopCounter = c1 + c2 + c3 + c4 + c5;
+  console.log(loopCounter, 'LoopCounter');
+
+  const rowChecker = (Od, Os, array, id) => {
+    if (Od.charAt(0) !== '0' || Os.charAt(0) !== '0') {
+      array.push(id);
+    }
+  };
+
+  const lightBulb = [];
+  rowChecker(OdDetails1, OsDetails1, lightBulb, 0);
+  rowChecker(OdDetails2, OsDetails2, lightBulb, 1);
+  rowChecker(OdDetails3, OsDetails3, lightBulb, 2);
+  rowChecker(OdDetails4, OsDetails4, lightBulb, 3);
+  rowChecker(OdDetails5, OsDetails5, lightBulb, 4);
+
+  console.log(lightBulb);
   const SoDetails =
     Horizontal +
     '|' +
@@ -463,7 +494,9 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
     console.log(greenLight);
 
     if (greenLight) {
-      for (let x = 0; x < 5; x++) {
+      for (let x = 0; x < loopCounter; x++) {
+        console.log(lightBulb[x]);
+        let num = lightBulb[x];
         const tempID = uuidv4();
         const obj = {
           tempID,
@@ -481,8 +514,8 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
           bridge: Bridge,
           frameType: FrameType,
           additionalInstructions: AdditionalInstructions,
-          odDetails: odArray[x],
-          osDetails: osArray[x],
+          odDetails: odArray[num],
+          osDetails: osArray[num],
           soDetails: SoDetails,
           odSph: OdSph1,
           odCyl: OdCyl1,

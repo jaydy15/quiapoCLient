@@ -27,7 +27,6 @@ const OsOptions = ({
   propOsPd,
   propOsQty,
 }) => {
-  console.log(propOsSph);
   let maxSph, minSph, maxCyl, minCyl, maxAdd, minAdd;
 
   const switcher = ItemCategories == 1 || ItemCategories == 2;
@@ -146,8 +145,6 @@ const OsOptions = ({
   const optCyl = utils(cylGrades);
   const optAxis = utils(axisGrades);
   const optAdd = utils(addGrades);
-
-  console.log(optSph);
 
   return (
     <Fragment>
