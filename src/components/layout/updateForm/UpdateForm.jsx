@@ -45,6 +45,7 @@ const UpdateForm = ({
 
   let history = useHistory();
   const alert = useAlert();
+  console.log(current);
   if (current) {
   }
   const [formData, setFormData] = useState({

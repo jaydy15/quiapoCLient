@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, createContext } from 'react';
 import { connect } from 'react-redux';
 
 const LenShapeOptions = ({
@@ -7,7 +7,9 @@ const LenShapeOptions = ({
   frmshp,
   OrderType,
   ItemCategories,
+  propLenShape,
 }) => {
+  console.log(propLenShape);
   const switcher = OrderType == 3 && ItemCategories == 2;
 
   const [holder, setHolder] = useState('');
@@ -15,6 +17,17 @@ const LenShapeOptions = ({
   const optFrmShp = [];
 
   const type = frmshp.filter((ft) => ft.type == 0).map((ft) => ft);
+
+  const len = type.find((ty) => ty.id === propLenShape);
+
+  let labelHolder;
+
+  if (propLenShape) {
+    labelHolder = len.desc;
+  } else {
+    labelHolder = holder;
+  }
+
   if (type) {
     for (let x = 0; x < type.length; x++) {
       const obj = {
@@ -41,7 +54,7 @@ const LenShapeOptions = ({
             <div className='col-md-6'>
               <div className='form-group'>
                 <label htmlFor=''>Frame Shape</label>
-                <input type='text' disabled value={holder} />
+                <input type='text' disabled value={labelHolder} />
               </div>
             </div>
           </div>

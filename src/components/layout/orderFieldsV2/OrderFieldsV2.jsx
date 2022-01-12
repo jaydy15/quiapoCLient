@@ -243,6 +243,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
         vertical: Vertical,
         bridge: Bridge,
         frameType: FrameType,
+        lenShape: LenShape,
         additionalInstructions: AdditionalInstructions,
         odDetails: OdDetails,
         osDetails: OsDetails,
