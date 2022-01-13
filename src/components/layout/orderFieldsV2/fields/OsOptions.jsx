@@ -246,6 +246,7 @@ const OsOptions = ({
                   style={{ margin: '0' }}
                   name={OsPd}
                   onChange={onChange}
+                  value={propOsPd}
                 />
               </div>
             </div>

@@ -15,6 +15,7 @@ import searchItem from './components/layout/backend/SearchItem';
 import OrderFieldsV2Bulk from './components/layout/orderFieldsV2/OrderFieldsV2Bulk';
 import UpdateForm from './components/layout/updateForm/UpdateForm';
 import UpdateFormPage from './components/layout/updateForm/UpdateFormPage';
+import EditOrder from './components/layout/order/EditOrder';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -39,7 +40,7 @@ function App() {
             path='/test-order'
             component={OrderFieldsV2Bulk}
           />
-          <PrivateRoute exact path='/edit-order' component={UpdateFormPage} />
+          <PrivateRoute exact path='/edit-order' component={EditOrder} />
           <PrivateRoute exact path='/admin' component={searchItem} />
           <PrivateRoute
             exact
