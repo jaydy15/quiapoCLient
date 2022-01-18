@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Sidebar from './../Sidebar';
 import Navbar from './../Navbar';
 import { newNumber } from './../../../redux/cart/cartActions';
-import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
 import { getTransactions } from '../../../redux/order/orderActions';
 import Select from 'react-select';

@@ -4,12 +4,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 
 const AddLensParams = ({ lensItems }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit } = useForm();
   const [formData, setFormData] = useState({
     lensKey: '',
     brnd: '',
@@ -48,8 +43,7 @@ const AddLensParams = ({ lensItems }) => {
   optionFiller(lensItems, lensKeyOpt);
   optionFiller2(lensItems, lensNameOpt);
 
-  const { lensKey, lensName, lensTyp, brnd, ordrTyp, suppCat, indxTyp } =
-    formData;
+  const { lensKey, lensName } = formData;
 
   const lensNames = lensItems
     .filter((ls) => ls.id === lensKey)

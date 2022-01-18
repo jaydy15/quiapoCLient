@@ -66,7 +66,7 @@ const CartList = ({
     console.log(item[0]);
     e.preventDefault();
     const formattedItems = [];
-    const itemKey = [];
+
     for (let i = 0; i < item.length; i++) {
       if (item[i].nonLensQty === '') {
         item[i].nonLensQty = 0;

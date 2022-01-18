@@ -2,8 +2,7 @@ import React, { useState, Fragment } from 'react';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import Modal from 'react-bootstrap/Modal';
-import Select from 'react-select';
-import AddLensItem from './addItemForms/AddLensItem';
+
 import AddClassesForm from './addClassesForms/AddClassesForm';
 import AddNewItem from './addItemForms/AddNewItem';
 import AddLensParams from './addLensParams/AddLensParams';

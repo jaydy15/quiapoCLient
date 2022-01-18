@@ -65,8 +65,9 @@ const Models = ({
 
     let listBrandCSA = [];
     for (let x = 0; x < listCSAId.length; x++) {
-      let findCSAModel = model.find((elm) => elm.id === listCSAModelKey[x])
-        .modelName;
+      let findCSAModel = model.find(
+        (elm) => elm.id === listCSAModelKey[x]
+      ).modelName;
 
       listBrandCSA.push(findCSAModel);
     }
@@ -79,7 +80,6 @@ const Models = ({
       optCSAModel.push(formattObj);
     }
   }
-  const options = {};
   let finalOpt = [];
   if (ItemCategories === 2) {
     finalOpt = optLensModel;

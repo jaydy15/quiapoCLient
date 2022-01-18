@@ -66,7 +66,6 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
     Brand,
     Model,
     Color,
-    Size,
     NonLensQty,
     OdSph,
     OdCyl,
@@ -97,12 +96,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit } = useForm();
   // TOTAL POWER
   let totalPower = 0;
   let lensParamCounter = 0;

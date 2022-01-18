@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { login } from '../redux/auth/authActions';
 import { setAlert } from './../redux/alert/alertActions';
 import Alerts from './Alerts';
-import { useAlert } from 'react-alert';
 import { loadUser } from './../redux/auth/authActions';
 
 const LoginForm = ({ login, setAlert, auth, loadUser }) => {
