@@ -9,7 +9,6 @@ import { loadUser } from './../redux/auth/authActions';
 
 const LoginForm = ({ login, setAlert, auth, loadUser }) => {
   let history = useHistory();
-  const alert = useAlert();
   const { error, isAuthenticated } = auth;
   useEffect(() => {
     if (isAuthenticated) {

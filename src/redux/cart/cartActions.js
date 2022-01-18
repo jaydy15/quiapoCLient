@@ -7,7 +7,6 @@ import {
   REMOVE_CART_ITEM,
   EDIT_ITEM,
   REMOVE_CURRENT,
-  UPDATE_CART,
 } from './cartType';
 import axios from 'axios';
 

@@ -9,7 +9,6 @@ import { getTransactions } from '../../../redux/order/orderActions';
 import Select from 'react-select';
 import { setAlert } from '../../../redux/alert/alertActions';
 import Alerts from '../../Alerts';
-import { set } from 'lodash';
 import { useForm } from 'react-hook-form';
 
 const NewOrder = ({
@@ -27,7 +26,6 @@ const NewOrder = ({
   }, []);
 
   let history = useHistory();
-  const alert = useAlert();
   if (auth.user !== null) {
     if (auth.user.status === 0) {
       history.push('/confirm-password');
@@ -99,7 +97,7 @@ const NewOrder = ({
     }
   };
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (e) => {
     numberfunction();
