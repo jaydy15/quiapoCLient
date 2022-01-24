@@ -298,6 +298,7 @@ const OrderFieldsV2 = ({ setAlert, addToCart, lensParam }) => {
                 RxNumber={RxNumber}
                 ItemCategories={ItemCategories}
                 OrderType={OrderType}
+                Model={Model}
               />
             </div>
           </div>

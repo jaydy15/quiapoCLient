@@ -14,6 +14,7 @@ const BrandOptions = ({
   lists,
   RxNumber,
   propBrand,
+  Model,
 }) => {
   const unique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -90,6 +91,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />
@@ -102,6 +104,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />
@@ -114,6 +117,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />
@@ -127,6 +131,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />
@@ -139,6 +144,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />
@@ -152,6 +158,7 @@ const BrandOptions = ({
               setFormData({
                 ...formData,
                 Brand: selectedOption.value,
+                Model: '',
               });
             }}
           />

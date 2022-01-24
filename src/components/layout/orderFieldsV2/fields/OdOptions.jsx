@@ -44,6 +44,9 @@ const OdOptions = ({
       minCyl = parseFloat(arrayLensFitting[0].minCyl);
       maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
       minAdd = parseFloat(arrayLensFitting[0].minAdd);
+      console.log(arrayLensFitting);
+      let rules = arrayLensFitting[0].rules;
+      console.log(rules);
     }
   } else {
     if (lensFit[0]) {
@@ -53,6 +56,7 @@ const OdOptions = ({
       minCyl = parseFloat(lensFit[0].minCyl);
       maxAdd = parseFloat(lensFit[0].maxAdd);
       minAdd = parseFloat(lensFit[0].minAdd);
+      console.log(lensFit[0].rules[0].type);
     }
   }
 
