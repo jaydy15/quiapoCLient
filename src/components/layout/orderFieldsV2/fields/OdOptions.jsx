@@ -46,7 +46,11 @@ const OdOptions = ({
       minAdd = parseFloat(arrayLensFitting[0].minAdd);
       console.log(arrayLensFitting);
       let rules = arrayLensFitting[0].rules;
-      console.log(rules);
+      let rulesString = rules.slice(2, -2);
+      let rulesArray = rulesString.split(',');
+      console.log(rulesArray);
+      let ruleType = rulesArray[0].split(':')[1];
+      console.log(ruleType);
     }
   } else {
     if (lensFit[0]) {
