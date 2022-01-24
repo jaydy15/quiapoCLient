@@ -51,6 +51,8 @@ const OdOptions = ({
       console.log(rulesArray);
       let ruleType = rulesArray[0].split(':')[1];
       console.log(ruleType);
+      let ruleTarget = rulesArray[1].split(':')[1];
+      console.log(ruleTarget);
     }
   } else {
     if (lensFit[0]) {
