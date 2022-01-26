@@ -117,7 +117,7 @@ const SearchItem = () => {
         </Modal.Header>
         <Modal.Body className='show-grid'>
           <div>
-            <AddLensParams handleClose2={handleClose2} />
+            <AddLensParams handleClose3={handleClose3} />
           </div>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
