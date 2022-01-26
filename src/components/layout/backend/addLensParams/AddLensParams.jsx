@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { setAlert } from '../../../../redux/alert/alertActions';
 import { saveLensParams } from '../../../../redux/backend/backendActions';
 import { loadCatalogue } from '../../../../redux/localCatalog/localCatalogActions';
+import Alerts from '../../../Alerts';
 
 const AddLensParams = ({
   lensItems,
@@ -16,13 +17,6 @@ const AddLensParams = ({
 }) => {
   const { handleSubmit } = useForm();
   const [formData, setFormData] = useState({
-    lensKey: '',
-    brnd: '',
-    lensTyp: '',
-    indxTyp: '',
-    prodFam: '',
-    suppCat: '',
-    lensMat: '',
     maxSph: 0,
     minSph: 0,
     maxCyl: 0,
@@ -76,14 +70,10 @@ const AddLensParams = ({
   const lensNames = lensItems
     .filter((ls) => ls.id === lensKey)
     .map((li) => li.name);
-  console.log(lensKey);
-  console.log(lensName);
 
   const lensIDs = lensItems
     .filter((ls) => ls.name === lensName)
     .map((li) => li.id);
-  console.log(lensIDs);
-  console.log(lensName);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -103,15 +93,13 @@ const AddLensParams = ({
 
     if (lensName !== '0' || lensName !== undefined) {
       lensId = lensItems.find((ls) => ls.name == lensName).id;
-      console.log(lensId);
+
       suppKey = lensItems.find((ls) => ls.name == lensName).supplyCategoryKey;
       paddingSupp = suppKey.toString().padStart(2, '0');
-      console.log(paddingSupp);
     }
-    console.log(typeof lensName);
 
     const finalId = nextId.toString().padStart(8, '0') + paddingSupp;
-    console.log(finalId);
+
     const obj = {
       id: finalId,
       lensItemKey: lensId,
@@ -257,6 +245,7 @@ const AddLensParams = ({
         </div>
         <button className='btn btn-block btn-success'>Add Lens Item</button>
       </div>
+      <Alerts />
     </form>
   );
 };
