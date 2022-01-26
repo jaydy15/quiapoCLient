@@ -14,6 +14,7 @@ const AddLensParams = ({
   loadCatalogue,
   setAlert,
   handleClose3,
+  colors,
 }) => {
   const { handleSubmit } = useForm();
   const [formData, setFormData] = useState({
@@ -37,22 +38,14 @@ const AddLensParams = ({
     maxAdd,
     minAdd,
     totalPower,
+    color,
   } = formData;
 
   const lensKeyOpt = [];
   const lensNameOpt = [];
-  const optionFiller = (arrayName, arrayHolder) => {
-    const list = arrayName.map((item) => item);
+  const colorOpt = [];
 
-    for (let i = 0; i < list.length; i++) {
-      let formattObj = {
-        label: arrayName[i].id,
-        value: arrayName[i].id,
-      };
-      arrayHolder.push(formattObj);
-    }
-  };
-  const optionFiller2 = (arrayName, arrayHolder) => {
+  const lensNameOption = (arrayName, arrayHolder) => {
     const list = arrayName.map((item) => item);
 
     for (let i = 0; i < list.length; i++) {
@@ -64,16 +57,20 @@ const AddLensParams = ({
     }
   };
 
-  optionFiller(lensItems, lensKeyOpt);
-  optionFiller2(lensItems, lensNameOpt);
+  lensNameOption(lensItems, lensNameOpt);
 
-  const lensNames = lensItems
-    .filter((ls) => ls.id === lensKey)
-    .map((li) => li.name);
+  const colorOptionFiller = (arrayName, arrayHolder) => {
+    const list = arrayName.map((item) => item);
+    for (let i = 0; i < list.length; i++) {
+      let formattObj = {
+        label: arrayName[i].colorName,
+        value: arrayName[i].id,
+      };
+      arrayHolder.push(formattObj);
+    }
+  };
 
-  const lensIDs = lensItems
-    .filter((ls) => ls.name === lensName)
-    .map((li) => li.id);
+  colorOptionFiller(colors, colorOpt);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -85,6 +82,12 @@ const AddLensParams = ({
   const nextId = parseInt(lastId.slice(0, -2)) + 1;
 
   console.log(nextId);
+
+  const clrArray = [];
+  const addColorArray = () => {
+    clrArray.push(color);
+    console.log(clrArray);
+  };
 
   const onSubmit = (data) => {
     let suppKey;
@@ -130,18 +133,6 @@ const AddLensParams = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        {/* <div className='form-group'>
-          <label htmlFor='brand'>
-            Lens Item Key<span style={{ color: 'red' }}>*</span>
-          </label>
-          <Select
-            name='ordrTyp'
-            options={lensKeyOpt}
-            onChange={(selectedOption) => {
-              setFormData({ ...formData, lensKey: selectedOption.value });
-            }}
-          />
-        </div> */}
         <div className='form-group'>
           <label htmlFor='brand'>
             Lens Name<span style={{ color: 'red' }}>*</span>
@@ -154,17 +145,6 @@ const AddLensParams = ({
             }}
           />
         </div>
-        {/* <div className='form-group'>
-          <label htmlFor=''>
-            Lens Name<span style={{ color: 'red' }}>*</span>
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            name='lensName'
-            placeholder={lensNames}
-          />
-        </div> */}
 
         <div className='form-group'>
           <label htmlFor=''>
@@ -243,6 +223,33 @@ const AddLensParams = ({
             onChange={onChange}
           />
         </div>
+        <div className='form-group'>
+          <label htmlFor='brand'>
+            Color<span style={{ color: 'red' }}>*</span>
+          </label>
+          <Select
+            name='Color'
+            options={colorOpt}
+            onChange={(selectedOption) => {
+              setFormData({ ...formData, color: selectedOption.value });
+            }}
+          />
+        </div>
+        <button type='button' className='btn btn-info' onClick={addColorArray}>
+          Add Color
+        </button>
+        <div className='form-group'>
+          <label htmlFor=''>
+            Colors<span style={{ color: 'red' }}>*</span>
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            name='color'
+            onChange={onChange}
+            disabled={true}
+          />
+        </div>
         <button className='btn btn-block btn-success'>Add Lens Item</button>
       </div>
       <Alerts />
@@ -260,6 +267,7 @@ const mapStateToProps = (state) => ({
   lensMaterial: state.classes.lensMaterial,
   lensItems: state.catalogue.lensItems,
   lensParams: state.catalogue.lensParam,
+  colors: state.catalogue.colors,
 });
 
 export default connect(mapStateToProps, {
