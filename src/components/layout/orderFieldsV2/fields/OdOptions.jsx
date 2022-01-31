@@ -62,7 +62,7 @@ const OdOptions = ({
       minCyl = parseFloat(lensFit[0].minCyl);
       maxAdd = parseFloat(lensFit[0].maxAdd);
       minAdd = parseFloat(lensFit[0].minAdd);
-      console.log(lensFit[0].rules[0].type);
+      console.log(lensFit[0]);
     }
   }
 
