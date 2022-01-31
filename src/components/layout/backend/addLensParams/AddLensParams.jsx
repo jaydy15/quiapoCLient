@@ -29,7 +29,6 @@ const AddLensParams = ({
   });
 
   const {
-    lensKey,
     lensName,
     maxSph,
     minSph,
@@ -41,7 +40,6 @@ const AddLensParams = ({
     color,
   } = formData;
 
-  const lensKeyOpt = [];
   const lensNameOpt = [];
   const colorOpt = [];
 

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { changePassword } from '../../../redux/user/userActions';
 import axios from 'axios';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-import { useAlert } from 'react-alert';
+
 import { useHistory } from 'react-router-dom';
 import { setAlert } from '../../../redux/alert/alertActions';
 import Alerts from '../../Alerts';
@@ -13,7 +12,7 @@ import { clearList } from '../../../redux/cart/cartActions';
 
 const ConfirmPassword = ({ id, setAlert, logout, clearList }) => {
   let history = useHistory();
-  const alert = useAlert();
+
   const [passwordform, setpasswordForm] = useState({
     password: '',
     password2: '',

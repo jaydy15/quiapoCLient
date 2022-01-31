@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
 import Select from 'react-select';
 import AddCSAItem from './AddCSAItem';
 import AddFSItem from './AddFSItem';

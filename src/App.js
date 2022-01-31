@@ -13,8 +13,6 @@ import ConfirmPassword from './components/layout/user/ConfirmPassword';
 import { loadUser } from './redux/auth/authActions';
 import searchItem from './components/layout/backend/SearchItem';
 import OrderFieldsV2Bulk from './components/layout/orderFieldsV2/OrderFieldsV2Bulk';
-import UpdateForm from './components/layout/updateForm/UpdateForm';
-import UpdateFormPage from './components/layout/updateForm/UpdateFormPage';
 import EditOrder from './components/layout/order/EditOrder';
 
 if (localStorage.token) {

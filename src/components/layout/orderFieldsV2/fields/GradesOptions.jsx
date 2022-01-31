@@ -1,9 +1,5 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
-import { useForm } from 'react-hook-form';
-import FittingOptions from './FittingOptions';
-import ColorOptions from './ColorOptions';
 import OdOptions from './OdOptions';
 import OsOptions from './OsOptions';
 
@@ -45,13 +41,6 @@ const GradesOptions = ({
   propOsPd,
   propOsQty,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
   const switcher = ItemCategories == 1 || ItemCategories == 2;
 
   return (

@@ -20,12 +20,7 @@ const AddLensItem = ({
   setAlert,
   handleClose,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const [formData, setFormData] = useState({
     ordrTyp: '',
     brnd: '',
