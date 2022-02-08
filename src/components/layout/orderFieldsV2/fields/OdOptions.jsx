@@ -45,14 +45,32 @@ const OdOptions = ({
       maxAdd = parseFloat(arrayLensFitting[0].maxAdd);
       minAdd = parseFloat(arrayLensFitting[0].minAdd);
       console.log(arrayLensFitting);
-      let rules = arrayLensFitting[0].rules;
-      let rulesString = rules.slice(2, -2);
-      let rulesArray = rulesString.split(',');
-      console.log(rulesArray);
-      let ruleType = rulesArray[0].split(':')[1];
-      console.log(ruleType);
-      let ruleTarget = rulesArray[1].split(':')[1];
-      console.log(ruleTarget);
+      let rules, rulesString, rulesArray, ruleType, ruleTarget;
+      let valueArray = [];
+      if (arrayLensFitting[0].rules) {
+        rules = arrayLensFitting[0].rules;
+
+        rulesString = rules.slice(2, -2);
+        rulesArray = rulesString.split(',');
+
+        ruleType = rulesArray[0].split(':')[1];
+        console.log(ruleType);
+
+        ruleTarget = rulesArray[1].split(':')[1];
+        console.log(ruleTarget);
+
+        valueArray = [];
+        valueArray.push(rulesArray[2].split(':')[1].substring(1));
+        for (let x = 3; x < rulesArray.length; x++) {
+          if (x == rulesArray.length - 1) {
+            valueArray.push(rulesArray[x].slice(0, -1));
+          } else {
+            valueArray.push(rulesArray[x]);
+          }
+        }
+
+        console.log(valueArray);
+      }
     }
   } else {
     if (lensFit[0]) {
